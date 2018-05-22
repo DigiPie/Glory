@@ -123,8 +123,8 @@ GameObject:
   - component: {fileID: 184421659}
   - component: {fileID: 184421658}
   - component: {fileID: 184421657}
-  m_Layer: 0
-  m_Name: Floor (2)
+  m_Layer: 9
+  m_Name: wallLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 479444783}
   - component: {fileID: 479444782}
   m_Layer: 8
-  m_Name: Floor
+  m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: mainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,8 +396,8 @@ GameObject:
   - component: {fileID: 1180906307}
   - component: {fileID: 1180906306}
   - component: {fileID: 1180906305}
-  m_Layer: 0
-  m_Name: Floor (1)
+  m_Layer: 9
+  m_Name: wallRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
   m_Layer: 0
-  m_Name: Player1
+  m_Name: player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,7 +578,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2066096959}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -638,6 +639,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22c25bb432a69c41b9b47bf52884279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 30
+  moveForce: 50
   maxSpeed: 5
-  jumpForce: 100
+  jumpForce: 500
+--- !u!1 &2066096958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2066096959}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2066096959
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2066096958}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1701403907}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
