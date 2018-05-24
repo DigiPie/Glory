@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 314412453}
   - component: {fileID: 314412452}
   - component: {fileID: 314412451}
+  - component: {fileID: 314412457}
   - component: {fileID: 314412456}
   m_Layer: 10
   m_Name: Enemy1
@@ -351,7 +352,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &314412453
 Animator:
   serializedVersion: 3
@@ -438,9 +439,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 314412450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd66a8e495618343baac7f0667e2e17, type: 3}
+  m_Script: {fileID: 11500000, guid: bfed97677dba9994c886a3e967045daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &314412457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 314412450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4c30721148f174d9f2414d977dcbc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
 --- !u!1 &479444781
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +814,7 @@ GameObject:
   - component: {fileID: 1701403909}
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,7 +965,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2066096959}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: groundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
