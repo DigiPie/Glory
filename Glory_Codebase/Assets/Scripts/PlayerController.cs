@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    private Animator animator;
     private Rigidbody2D rb2d;
     private Transform groundCheck;
 
     private bool againstWall = false;
-    private bool collisionOnRight;
+    private bool againstEnemy = false;
+    private bool collisionOnRight = false;
     private bool facingRight = true;
     private bool onGround = false;
     
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
     public float jumpForce = 500f;
+    public float throwbackForce = 200f; // When hit by enemy
 
     private float jumpMoveForce; // Half of moveForce, slower horizontal speed in the air
     private float slowdownForce; // Quarter of moveForce, applied on character when no input
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         groundCheck = transform.Find("groundCheck");
         jumpMoveForce = moveForce * 0.5f;
@@ -42,11 +46,17 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        collisionOnRight = collision.contacts[0].point.x > transform.position.x;
+
         // If colliding with wall
         if (collision.gameObject.layer == 9)
         {
             againstWall = true;
-            collisionOnRight = collision.contacts[0].point.x > transform.position.x;
+        }
+
+        if (collision.gameObject.layer == 10)
+        {
+            againstEnemy = true;
         }
     }
 
@@ -57,11 +67,19 @@ public class PlayerController : MonoBehaviour {
         {
             againstWall = false;
         }
+
+        if (collision.gameObject.layer == 10)
+        {
+            againstEnemy = false;
+        }
     }
 
     // Move character
     void Move()
     {
+        onGround = Physics2D.Linecast(transform.position, groundCheck.position,
+            1 << LayerMask.NameToLayer("Ground"));
+
         // Get horizontal input for Left/Right movement
         float inputH = Input.GetAxis("Horizontal");
         float absVelocityX = Mathf.Abs(rb2d.velocity.x);
@@ -76,6 +94,20 @@ public class PlayerController : MonoBehaviour {
             else
             {
                 rb2d.AddForce(Vector2.right * moveForce);
+            }
+
+            return; // Disallow user-movement
+        }
+
+        if (againstEnemy)
+        {
+            if (collisionOnRight)
+            {
+                rb2d.AddForce(new Vector2(-1, 0.5f) * throwbackForce);
+            }
+            else
+            {
+                rb2d.AddForce(new Vector2(1, 0.5f) * throwbackForce);
             }
 
             return; // Disallow user-movement
@@ -99,7 +131,25 @@ public class PlayerController : MonoBehaviour {
                 }
             }
 
+            if (onGround)
+            {
+                animator.Play("Idle");
+            }
+            else
+            {
+                animator.Play("Jump");
+            }
+
             return; // If there is no input, no point calculating movement velocity
+        }
+
+        if (onGround)
+        {
+            animator.Play("Run");
+        }
+        else
+        {
+            animator.Play("Jump");
         }
 
         // If maxSpeed limit not reached
@@ -131,9 +181,6 @@ public class PlayerController : MonoBehaviour {
     // Jump
     void Jump()
     {
-        onGround = Physics2D.Linecast(transform.position, groundCheck.position,
-            1 << LayerMask.NameToLayer("Ground"));
-
         if (Input.GetButton("Jump"))
         {
             // Only apply if y velocity is smaller than deadzoneFactor
