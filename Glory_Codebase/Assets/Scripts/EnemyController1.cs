@@ -57,7 +57,8 @@ public class EnemyController1 : MonoBehaviour {
         if (collision.gameObject.layer == 11)
         {
             stunned = true;
-            healthSystem.DeductHealth(10);
+            healthSystem.DeductHealth(
+                collision.gameObject.GetComponent<Projectile>().damage);
         }
     }
 }

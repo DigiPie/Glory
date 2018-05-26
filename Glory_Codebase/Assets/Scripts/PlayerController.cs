@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 else
                 {
-                    rb2d.AddForce(moveRightV);
+                    rb2d.AddForce(moveRightInAirV);
                 }
             }
         }

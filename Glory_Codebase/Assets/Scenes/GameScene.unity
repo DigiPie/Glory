@@ -665,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfed97677dba9994c886a3e967045daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheck: {fileID: 1579209885}
   throwbackForce: 200
 --- !u!114 &314412457
 MonoBehaviour:
@@ -1676,7 +1677,7 @@ GameObject:
   - component: {fileID: 1701403909}
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2053,7 +2054,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2066096959}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: groundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
