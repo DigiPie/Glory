@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 48799431}
   - component: {fileID: 48799432}
   m_Layer: 10
-  m_Name: Health_Enemy_1_red
+  m_Name: healthbar_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 8c1791f05360d114eb960a3a1a4612ed, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -677,7 +677,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4c30721148f174d9f2414d977dcbc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  healthbarFront: {fileID: 48799431}
+  healthbarBack: {fileID: 1111187843}
+  health: 100
 --- !u!1 &321363716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1497,7 @@ GameObject:
   - component: {fileID: 1111187843}
   - component: {fileID: 1111187844}
   m_Layer: 10
-  m_Name: Health_Enemy_1_black
+  m_Name: healthbar_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1548,7 +1550,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 8c1791f05360d114eb960a3a1a4612ed, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0

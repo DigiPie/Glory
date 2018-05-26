@@ -3,40 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour {
-    private Transform healthBar;
-    private Renderer healthBarR, healthBarBackR;
+    public Transform healthbarFront;
+    public Transform healthbarBack;
+    private SpriteRenderer frontRend, backRend;
 
-    public float startingHealth = 100;
+    public float health = 100;
     private float currentHealth;
 
     // Use this for initialization
     void Start () {
-        healthBar = transform.Find("Health_Enemy_1_red");
-        healthBarR = healthBar.GetComponent<Renderer>();
-        healthBarBackR = transform.Find("Health_Enemy_1_black").GetComponent<Renderer>();
-        currentHealth = startingHealth;
+        currentHealth = health;
 
-        healthBarR.enabled = false;
-        healthBarBackR.enabled = false;
+        frontRend = healthbarFront.GetComponent<SpriteRenderer>();
+        backRend = healthbarBack.GetComponent<SpriteRenderer>();
+
+        // Hide it at first, only show when not at full health
+        frontRend.enabled = false;
+        backRend.enabled = false;
     }
 
     public void DeductHealth(float damage)
     {
         currentHealth -= damage;
-        SetHealthBarScale(currentHealth / startingHealth);
+        SetHealthBarScale(currentHealth / health);
 
-        healthBarR.enabled = true;
-        healthBarBackR.enabled = true;
+        // If invisible, show
+        frontRend.enabled = true;
+        backRend.enabled = true;
     }
 
     private void SetHealthBarScale(float scale)
     {
-        Vector3 tempScale = healthBar.localScale;
-        tempScale.x *= scale;
-        healthBar.localScale = tempScale;
+        frontRend.transform.localScale = new Vector3(scale, 1, 1);
     }
-
-	// Update is called once per frame
-	void Update () {
-	}
 }
