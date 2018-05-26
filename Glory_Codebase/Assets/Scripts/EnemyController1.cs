@@ -25,10 +25,6 @@ public class EnemyController1 : MonoBehaviour {
     // Update is called once per frame, independent of the physics engine
     void Update()
     {
-        if (healthSystem.IsDead())
-        {
-            Object.Destroy(this.gameObject);
-        }
     }
 
     // Update is called in-step with the physics engine

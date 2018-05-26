@@ -8,7 +8,7 @@ public class HealthSystem : MonoBehaviour {
     private SpriteRenderer frontRend, backRend;
 
     public float health = 100;
-    private float currentHealth;
+    private float currentHealth = 1;
 
     // Use this for initialization
     void Start () {
