@@ -2,39 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy1 : MonoBehaviour {
+public class EnemyController1 : MonoBehaviour {
     private Animator animator;
     private HealthSystem healthSystem;
     private Rigidbody2D rb2d;
-    private Transform groundCheck;
+
+    public Transform groundCheck;
 
     private bool collisionOnRight = false;
-    private bool stunned = false;
     private bool onGround = false;
+    private bool stunned = false;
 
-    public float throwbackForce = 200f; // When hit by projectile
+    public float throwbackForce = 200f; // When hit by attack
 
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
         healthSystem = GetComponent<HealthSystem>();
         rb2d = GetComponent<Rigidbody2D>();
-        groundCheck = transform.Find("groundCheck");
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame, independent of the physics engine
+    void Update()
+    {
+    }
+
+    // Update is called in-step with the physics engine
+    void FixedUpdate()
+    {
         onGround = Physics2D.Linecast(transform.position, groundCheck.position,
             1 << LayerMask.NameToLayer("Ground"));
-
-        if (onGround)
-        {
-            animator.Play("Idle");
-        }
-        else
-        {
-            animator.Play("Jump");
-        }
 
         if (stunned)
         {
@@ -48,7 +45,7 @@ public class Enemy1 : MonoBehaviour {
             }
 
             stunned = false;
-            return; // Disallow user-movement
+            return; // Disallow AI-movement
         }
     }
 
@@ -62,10 +59,5 @@ public class Enemy1 : MonoBehaviour {
             stunned = true;
             healthSystem.DeductHealth(10);
         }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-
     }
 }

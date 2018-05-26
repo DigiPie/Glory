@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
     private Rigidbody2D rb2d;
     private SpriteRenderer sprite;
-    private Transform groundCheck;
+
+    public Transform groundCheck;
 
     // Forces to be applied on character
     private Vector2 bounceWallLeftV, bounceWallRightV;
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        groundCheck = transform.Find("groundCheck");
 
         inAirMoveForce = moveForce * 0.5f;
         slowdownForce = moveForce * 0.25f;
@@ -66,6 +66,14 @@ public class PlayerController : MonoBehaviour {
     // Update is called in-step with the physics engine
     void FixedUpdate ()
     {
+        // Update physics information
+        onGround = Physics2D.Linecast(transform.position, groundCheck.position,
+            1 << LayerMask.NameToLayer("Ground"));
+
+        // Update input information
+        inputH = Input.GetAxis("Horizontal");
+        inputJump = Input.GetButton("Jump");
+
         Move();
     }
 
@@ -102,14 +110,6 @@ public class PlayerController : MonoBehaviour {
     // Move character
     void Move()
     {
-        // Update physics information
-        onGround = Physics2D.Linecast(transform.position, groundCheck.position,
-            1 << LayerMask.NameToLayer("Ground"));
-
-        // Update input information
-        inputH = Input.GetAxis("Horizontal");
-        inputJump = Input.GetButton("Jump");
-
         // Apply bounce-off forces when colliding with wall and enemies.
         HandleBounceOff();
 
