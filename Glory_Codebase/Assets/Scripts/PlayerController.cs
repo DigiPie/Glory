@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     private Animator animator;
     private Rigidbody2D rb2d;
+    private SpriteRenderer sprite;
     private Transform groundCheck;
 
     private bool againstWall = false;
     private bool againstEnemy = false;
     private bool collisionOnRight = false;
-    private bool facingRight = true;
     private bool onGround = false;
     
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
     {
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         groundCheck = transform.Find("groundCheck");
         jumpMoveForce = moveForce * 0.5f;
         slowdownForce = moveForce * 0.25f;
@@ -155,9 +156,10 @@ public class PlayerController : MonoBehaviour {
         // If maxSpeed limit not reached
         if (absVelocityX < maxSpeed)
         {
-            // Apply move force
-            UpdateFacing(inputH);
+            // Update facing
+            sprite.flipX = inputH < 0;
 
+            // Apply move force
             if (onGround)
             {
                 rb2d.AddForce(Vector2.right * inputH * moveForce);
@@ -190,16 +192,4 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-
-    void UpdateFacing(float inputH)
-    {
-        // If facing changed
-        if (inputH > 0 && !facingRight || inputH < 0 && facingRight)
-        {
-            facingRight = !facingRight; // Flip boolean switch
-            Vector3 tempScale = transform.localScale;
-            tempScale.x *= -1;
-            transform.localScale = tempScale; // Flip scale on x-axis
-        }
-    }  
 }
