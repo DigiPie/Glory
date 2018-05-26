@@ -13,7 +13,7 @@ public class EnemyController1 : MonoBehaviour {
     private bool onGround = false;
     private bool stunned = false;
 
-    public float throwbackForce = 200f; // When hit by attack
+    public float throwbackForce = 100f; // When hit by attack
 
     // Use this for initialization
     void Start () {
@@ -25,6 +25,10 @@ public class EnemyController1 : MonoBehaviour {
     // Update is called once per frame, independent of the physics engine
     void Update()
     {
+        if (healthSystem.IsDead())
+        {
+            Object.Destroy(this.gameObject);
+        }
     }
 
     // Update is called in-step with the physics engine
@@ -49,16 +53,16 @@ public class EnemyController1 : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        collisionOnRight = collision.contacts[0].point.x > transform.position.x;
+        collisionOnRight = collider.transform.position.x > transform.position.x;
 
         // If colliding with projectile
-        if (collision.gameObject.layer == 11)
+        if (collider.gameObject.layer == 11)
         {
             stunned = true;
             healthSystem.DeductHealth(
-                collision.gameObject.GetComponent<Projectile>().damage);
+                collider.GetComponent<Projectile>().damage);
         }
     }
 }

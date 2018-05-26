@@ -25,15 +25,29 @@ public class HealthSystem : MonoBehaviour {
     public void DeductHealth(float damage)
     {
         currentHealth -= damage;
-        SetHealthBarScale(currentHealth / health);
 
-        // If invisible, show
-        frontRend.enabled = true;
-        backRend.enabled = true;
+        if (currentHealth <= 0)
+        {
+            frontRend.enabled = false;
+            backRend.enabled = false;
+        }
+        else
+        {
+            SetHealthBarScale(currentHealth / health);
+
+            // If invisible, show
+            frontRend.enabled = true;
+            backRend.enabled = true;
+        }
     }
 
     private void SetHealthBarScale(float scale)
     {
         frontRend.transform.localScale = new Vector3(scale, 1, 1);
+    }
+
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
     }
 }

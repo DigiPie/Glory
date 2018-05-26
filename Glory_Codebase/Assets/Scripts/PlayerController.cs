@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer sprite;
 
     public Transform groundCheck;
+    public GameObject weapon1;
 
     // Forces to be applied on character
     private Vector2 bounceWallLeftV, bounceWallRightV;
@@ -19,9 +20,12 @@ public class PlayerController : MonoBehaviour {
     private bool againstWall = false;
     private bool againstEnemy = false;
     private bool collisionOnRight = false;
+    private bool facingLeft = false;
     private bool onGround = false;
-
-    private bool inputJump;
+    private bool inputJump, inputAttack1;
+    private bool attack1Ready = true;
+    private float attack1ReadyTime = 0;
+    private float attack1Cooldown;
     private float inputH;
 
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
@@ -56,6 +60,9 @@ public class PlayerController : MonoBehaviour {
         moveLeftInAirV = Vector2.left * inAirMoveForce;
         moveRightInAirV = Vector2.right * inAirMoveForce;
         jumpV = new Vector2(0f, jumpForce);
+
+        // Attack
+        attack1Cooldown = weapon1.GetComponent<Projectile>().cooldown;
     }
 
     // Update is called once per frame, independent of the physics engine
@@ -73,8 +80,10 @@ public class PlayerController : MonoBehaviour {
         // Update input information
         inputH = Input.GetAxis("Horizontal");
         inputJump = Input.GetButton("Jump");
+        inputAttack1 = Input.GetButton("Attack1");
 
         Move();
+        Attack();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -124,7 +133,8 @@ public class PlayerController : MonoBehaviour {
             // If there is horizontal input
             HandleRunning();
             animator.SetBool("Running", true);
-            sprite.flipX = inputH < 0;
+            facingLeft = inputH < 0;
+            sprite.flipX = facingLeft;
         }
 
         if(inputJump)
@@ -222,6 +232,39 @@ public class PlayerController : MonoBehaviour {
         if (onGround && Mathf.Abs(rb2d.velocity.y) < deadzoneFactor)
         {
             rb2d.AddForce(jumpV);
+        }
+    }
+
+    void Attack()
+    {
+        if (attack1Ready)
+        {
+            if (inputAttack1)
+            {
+                // Create a melee projectile
+                GameObject projectile = Instantiate(weapon1, this.transform);
+
+                // Assign weapon direction
+                if (facingLeft)
+                {
+                    projectile.GetComponent<Projectile>().SetDir(new Vector2(-1, 0));
+                }
+                else
+                {
+                    projectile.GetComponent<Projectile>().SetDir(new Vector2(1, 0));
+                }
+
+                // Cooldown
+                attack1Ready = false;
+                attack1ReadyTime = Time.time + attack1Cooldown;
+            }
+        }
+        else
+        {
+            if (Time.time > attack1ReadyTime)
+            {
+                attack1Ready = true;
+            }
         }
     }
 }

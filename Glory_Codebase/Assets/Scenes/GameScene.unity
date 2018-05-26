@@ -1820,6 +1820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 2066096959}
+  weapon1: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258, type: 2}
   moveForce: 50
   maxSpeed: 5
   jumpForce: 500

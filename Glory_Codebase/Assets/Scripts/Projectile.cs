@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
-    public Vector2 dir;
+    private Vector2 dirV;
 
+    public float cooldown = 1f;
     public float damage = 10;
-    public float lifespan = 1.0f;
-    public float speed = 10;
+    public float lifespan = 0.5f;
+    public float speed = 0.1f;
 
 	// Use this for initialization
 	void Start () {
         Object.Destroy(this.gameObject, lifespan);
     }
 
-    void Update()
+    public void SetDir(Vector2 dir)
     {
-        this.transform.Translate(dir);
+        dirV = speed * dir;
+    }
+
+    void FixedUpdate()
+    {
+        transform.Translate(dirV.x, dirV.y, 0);
     }
 }
