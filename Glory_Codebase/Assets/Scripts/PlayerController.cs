@@ -22,10 +22,16 @@ public class PlayerController : MonoBehaviour {
     private bool collisionOnRight = false;
     private bool facingLeft = false;
     private bool onGround = false;
-    private bool inputJump, inputAttack1;
+    private bool inputJump, inputAttack1, inputDash;
+    // Dash
+    private float dashCooldown;
+    private bool dashReady = true;
+    private float dashReadyTime = 0;
+    // Attack1
+    private float attack1Cooldown;
     private bool attack1Ready = true;
     private float attack1ReadyTime = 0;
-    private float attack1Cooldown;
+
     private float inputH;
 
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
@@ -45,7 +51,7 @@ public class PlayerController : MonoBehaviour {
         sprite = GetComponent<SpriteRenderer>();
 
         inAirMoveForce = moveForce * 0.5f;
-        slowdownForce = moveForce * 0.25f;
+        slowdownForce = moveForce * 0.35f;
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -60,9 +66,12 @@ public class PlayerController : MonoBehaviour {
         moveLeftInAirV = Vector2.left * inAirMoveForce;
         moveRightInAirV = Vector2.right * inAirMoveForce;
         jumpV = new Vector2(0f, jumpForce);
+        // Dash Cooldown
+        dashCooldown = 2f;
 
         // Attack
         attack1Cooldown = weapon1.GetComponent<Projectile>().cooldown;
+
     }
 
     // Update is called once per frame, independent of the physics engine
@@ -80,10 +89,12 @@ public class PlayerController : MonoBehaviour {
         // Update input information
         inputH = Input.GetAxis("Horizontal");
         inputJump = Input.GetButton("Jump");
+        inputDash = Input.GetButton("Dash");
         inputAttack1 = Input.GetButton("Attack1");
 
         Move();
         Attack();
+        Dash();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -148,6 +159,7 @@ public class PlayerController : MonoBehaviour {
     // Apply bounce-off forces when colliding with wall and enemies.
     bool HandleBounceOff()
     {
+
         // If against wall
         if (againstWall)
         {
@@ -265,6 +277,26 @@ public class PlayerController : MonoBehaviour {
             {
                 attack1Ready = true;
             }
+        }
+    }
+    void Dash()
+    {
+        if (Time.time > dashReadyTime)
+        {
+            dashReady = true;
+        }
+        if (inputDash && dashReady)
+        {
+            if (facingLeft)
+            {
+                rb2d.AddForce(moveLeftV * 12);
+            }
+            else
+            {
+                rb2d.AddForce(moveRightV * 12);
+            }
+            dashReady = false;
+            dashReadyTime = Time.time + dashCooldown;
         }
     }
 }
