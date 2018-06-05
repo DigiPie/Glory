@@ -24,13 +24,16 @@ public class PlayerController : MonoBehaviour {
     private bool onGround = false;
     private bool inputJump, inputAttack1, inputDash;
     // Dash
-    private float dashCooldown;
+    public float dashCooldown;
     private bool dashReady = true;
     private float dashReadyTime = 0;
     // Attack1
     private float attack1Cooldown;
     private bool attack1Ready = true;
     private float attack1ReadyTime = 0;
+    // Invulnerabilty Time
+    public float dashInvuln;
+    private float dashInvulnTime;
 
     private float inputH;
 
@@ -66,9 +69,9 @@ public class PlayerController : MonoBehaviour {
         moveLeftInAirV = Vector2.left * inAirMoveForce;
         moveRightInAirV = Vector2.right * inAirMoveForce;
         jumpV = new Vector2(0f, jumpForce);
-        // Dash Cooldown
+        // Dash
         dashCooldown = 2f;
-
+        dashInvulnTime = 0.5f;
         // Attack
         attack1Cooldown = weapon1.GetComponent<Projectile>().cooldown;
 
@@ -87,7 +90,7 @@ public class PlayerController : MonoBehaviour {
             1 << LayerMask.NameToLayer("Ground"));
 
         // Update input information
-        inputH = Input.GetAxis("Horizontal");
+        inputH = Input.GetAxisRaw("Horizontal");
         inputJump = Input.GetButton("Jump");
         inputDash = Input.GetButton("Dash");
         inputAttack1 = Input.GetButton("Attack1");
@@ -209,6 +212,18 @@ public class PlayerController : MonoBehaviour {
     // Apply horizontal movement forces if horizontal input is registered.
     void HandleRunning()
     {
+        // Slows down character if maxSpeed reached
+        if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+        {
+            if (rb2d.velocity.x > 0)
+            {
+                rb2d.AddForce(slowdownLeft);
+            }
+            else
+            {
+                rb2d.AddForce(slowdownRightV);
+            }
+        }
         // Apply forces if max speed is not yet reached
         if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
         {
@@ -279,6 +294,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
     void Dash()
     {
         if (Time.time > dashReadyTime)
@@ -287,16 +303,26 @@ public class PlayerController : MonoBehaviour {
         }
         if (inputDash && dashReady)
         {
+            Physics2D.IgnoreLayerCollision(10, 12, true);
+
             if (facingLeft)
             {
-                rb2d.AddForce(moveLeftV * 12);
+                // Float number determines dash length
+                rb2d.velocity = moveLeftV*0.25f;
+                //rb2d.AddForce(moveLeftV * 12);
             }
             else
             {
-                rb2d.AddForce(moveRightV * 12);
+                rb2d.velocity = moveRightV*0.25f;
+                //rb2d.AddForce(moveRightV * 12);
             }
             dashReady = false;
             dashReadyTime = Time.time + dashCooldown;
+            dashInvulnTime = Time.time + dashInvuln;
+        }
+        if (Time.time > dashInvulnTime)
+        {
+            Physics2D.IgnoreLayerCollision(10, 12, false);
         }
     }
 }

@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     public Transform spawnPoint1, spawnPoint2;
-    public GameObject enemy1;
+    public GameObject enemy1, enemy2;
 
     private List<GameObject> enemies;
     private bool hasDeadEnemy;
