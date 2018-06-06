@@ -71,7 +71,8 @@ GameObject:
   - component: {fileID: 50321861668913476}
   - component: {fileID: 61338821252778624}
   - component: {fileID: 114544597889018228}
-  - component: {fileID: 114335003495568256}
+  - component: {fileID: 58456896488239842}
+  - component: {fileID: 114288805180474824}
   m_Layer: 10
   m_Name: enemy2
   m_TagString: Untagged
@@ -154,6 +155,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58456896488239842
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1966347777649626}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8
 --- !u!61 &61338821252778624
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -197,7 +213,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114335003495568256
+--- !u!114 &114288805180474824
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -205,11 +221,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1966347777649626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfed97677dba9994c886a3e967045daf, type: 3}
+  m_Script: {fileID: 11500000, guid: b6dc23f4e99bdb745a9040f401fb8576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4447143543408404}
-  throwbackForce: 200
+  throwbackForce: 100
 --- !u!114 &114544597889018228
 MonoBehaviour:
   m_ObjectHideFlags: 1

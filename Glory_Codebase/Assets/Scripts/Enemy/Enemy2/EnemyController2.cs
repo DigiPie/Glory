@@ -12,6 +12,8 @@ public class EnemyController2 : MonoBehaviour {
     private bool collisionOnRight = false;
     private bool onGround = false;
     private bool stunned = false;
+    private float timeHit;
+    private float invulnTime = 0.4f;
 
     public float throwbackForce = 100f; // When hit by attack
 
@@ -54,11 +56,11 @@ public class EnemyController2 : MonoBehaviour {
         collisionOnRight = collider.transform.position.x > transform.position.x;
 
         // If colliding with projectile
-        if (collider.gameObject.layer == 11)
+        if ((collider.gameObject.layer == 11) && (Time.time > (timeHit+invulnTime)))
         {
             stunned = true;
-            healthSystem.DeductHealth(
-                collider.GetComponent<Projectile>().damage);
+            healthSystem.DeductHealth(collider.GetComponent<Projectile>().damage);
+            timeHit = Time.time;
         }
     }
 }

@@ -46,11 +46,14 @@ public class GameManager : MonoBehaviour {
         {
             if (spawnOnLeft)
             {
-                enemies.Add(Instantiate(enemy1, spawnPoint1));
+                // Testing working of enemy2
+                //enemies.Add(Instantiate(enemy1, spawnPoint1));
+                enemies.Add(Instantiate(enemy2, spawnPoint1));
             }
             else
             {
-                enemies.Add(Instantiate(enemy1, spawnPoint2));
+                //enemies.Add(Instantiate(enemy1, spawnPoint2));
+                enemies.Add(Instantiate(enemy2, spawnPoint2));
             }
 
             spawnOnLeft = !spawnOnLeft;
