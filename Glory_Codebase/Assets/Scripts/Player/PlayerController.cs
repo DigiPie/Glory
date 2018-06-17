@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 bounceEnemyLeftV, bounceEnemyRightV;
     private Vector2 slowdownLeft, slowdownRightV;
     private Vector2 moveLeftV, moveRightV, moveLeftInAirV, moveRightInAirV;
+    private Vector2 dashLeftV, dashRightV; // 25% of moveLeftV and moveRightV
     private Vector2 jumpV;
 
     private bool againstWall = false;
@@ -23,17 +24,21 @@ public class PlayerController : MonoBehaviour {
     private bool facingLeft = false;
     private bool onGround = false;
     private bool inputJump, inputAttack1, inputDash;
+
+    // Attack 1
+    private float attack1Cooldown; // Minimum wait-time before next attack can be triggered
+    private bool attack1Ready = true; // Reliant on attack1Cooldown
+    private float attack1ReadyTime = 0; // The time at which attack1Ready will be set to true again
+
     // Dash
-    public float dashCooldown;
-    private bool dashReady = true;
-    private float dashReadyTime = 0;
-    // Attack1
-    private float attack1Cooldown;
-    private bool attack1Ready = true;
-    private float attack1ReadyTime = 0;
-    // Invulnerabilty Time
-    public float dashInvuln;
-    private float dashInvulnTime;
+    public float dashCooldown; // Minimum wait-time before next dash can be triggered
+    public float dashInvulDuration; // How long is the character invulnerable for when dashing
+    private bool dashReady = true; // Reliant on dashCooldown
+    private float dashReadyTime = 0; // The time at which dashReady will be set to true again
+
+    // Invulnerability
+    private bool isInvul = false;
+    private float invulEndTime; // The time at which the character is no longer invulnerable
 
     private float inputH;
 
@@ -66,15 +71,14 @@ public class PlayerController : MonoBehaviour {
         slowdownRightV = Vector2.right * slowdownForce;
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
+        dashLeftV = moveLeftV * 0.25f;
+        dashRightV = moveRightV * 0.25f;
         moveLeftInAirV = Vector2.left * inAirMoveForce;
         moveRightInAirV = Vector2.right * inAirMoveForce;
         jumpV = new Vector2(0f, jumpForce);
-        // Dash
-        dashCooldown = 2f;
-        dashInvulnTime = 0.5f;
-        // Attack
-        attack1Cooldown = weapon1.GetComponent<Projectile>().cooldown;
 
+        // Attack
+        attack1Cooldown = weapon1.GetComponent<Weapon>().cooldown;
     }
 
     // Update is called once per frame, independent of the physics engine
@@ -97,7 +101,7 @@ public class PlayerController : MonoBehaviour {
 
         Move();
         Attack();
-        Dash();
+        Invulnerability();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -134,7 +138,10 @@ public class PlayerController : MonoBehaviour {
     void Move()
     {
         // Apply bounce-off forces when colliding with wall and enemies.
-        HandleBounceOff();
+        if (HandleBounceOff())
+        {
+            return; // If bouncing off, do not allow user movement while doing so
+        }
 
         if (inputH == 0)
         {
@@ -151,7 +158,13 @@ public class PlayerController : MonoBehaviour {
             sprite.flipX = facingLeft;
         }
 
-        if(inputJump)
+        if (inputDash)
+        {
+            HandleDash();
+            return; // If both dash and jump input are pressed at the same time, dash only
+        }
+
+        if (inputJump)
         {
             HandleJumping();
         }
@@ -162,7 +175,6 @@ public class PlayerController : MonoBehaviour {
     // Apply bounce-off forces when colliding with wall and enemies.
     bool HandleBounceOff()
     {
-
         // If against wall
         if (againstWall)
         {
@@ -190,6 +202,51 @@ public class PlayerController : MonoBehaviour {
 
         // Return true if bouncing off either against wall or enemy
         return againstWall || againstEnemy;
+    }
+
+    void HandleDash()
+    {
+        if (dashReady)
+        {
+            if (inputDash)
+            {
+                Physics2D.IgnoreLayerCollision(10, 12, true);
+
+                if (facingLeft)
+                {
+                    rb2d.velocity = dashLeftV;
+                }
+                else
+                {
+                    rb2d.velocity = dashRightV;
+                }
+
+                dashReady = false;
+                dashReadyTime = Time.time + dashCooldown;
+                isInvul = true;
+                invulEndTime = Time.time + dashInvulDuration;
+            }
+        }
+        else
+        {
+            if (Time.time > dashReadyTime)
+            {
+                dashReady = true;
+            }
+        }
+    }
+
+    void Invulnerability()
+    {
+        // Invulnerability can be triggered by dashing and ...
+        if (isInvul)
+        {
+            if (Time.time > invulEndTime)
+            {
+                Physics2D.IgnoreLayerCollision(10, 12, false);
+                isInvul = false;
+            }
+        }
     }
 
     // Apply slowdown forces when no horizontal input is registered.
@@ -274,11 +331,11 @@ public class PlayerController : MonoBehaviour {
                 // Assign weapon direction
                 if (facingLeft)
                 {
-                    projectile.GetComponent<Projectile>().SetDir(new Vector2(-1, 0));
+                    projectile.GetComponent<Weapon>().SetDir(new Vector2(-1, 0));
                 }
                 else
                 {
-                    projectile.GetComponent<Projectile>().SetDir(new Vector2(1, 0));
+                    projectile.GetComponent<Weapon>().SetDir(new Vector2(1, 0));
                 }
 
                 // Cooldown
@@ -292,37 +349,6 @@ public class PlayerController : MonoBehaviour {
             {
                 attack1Ready = true;
             }
-        }
-    }
-
-    void Dash()
-    {
-        if (Time.time > dashReadyTime)
-        {
-            dashReady = true;
-        }
-        if (inputDash && dashReady)
-        {
-            Physics2D.IgnoreLayerCollision(10, 12, true);
-
-            if (facingLeft)
-            {
-                // Float number determines dash length
-                rb2d.velocity = moveLeftV*0.25f;
-                //rb2d.AddForce(moveLeftV * 12);
-            }
-            else
-            {
-                rb2d.velocity = moveRightV*0.25f;
-                //rb2d.AddForce(moveRightV * 12);
-            }
-            dashReady = false;
-            dashReadyTime = Time.time + dashCooldown;
-            dashInvulnTime = Time.time + dashInvuln;
-        }
-        if (Time.time > dashInvulnTime)
-        {
-            Physics2D.IgnoreLayerCollision(10, 12, false);
         }
     }
 }

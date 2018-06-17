@@ -190,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 99082933}
   m_Layer: 5
-  m_Name: HealthUI
+  m_Name: player1healthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -547,7 +547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 321363717}
   m_Layer: 0
-  m_Name: DecorativeTerrain
+  m_Name: decorativeTerrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -888,7 +888,7 @@ GameObject:
   - component: {fileID: 602584607}
   - component: {fileID: 602584606}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -955,7 +955,7 @@ GameObject:
   - component: {fileID: 647856006}
   - component: {fileID: 647856007}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: gameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -970,7 +970,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1204222015}
+  - {fileID: 897010361}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1000,7 +1002,7 @@ GameObject:
   - component: {fileID: 666246353}
   - component: {fileID: 666246352}
   m_Layer: 5
-  m_Name: Heart
+  m_Name: heartIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1216,7 +1218,7 @@ GameObject:
   - component: {fileID: 823737996}
   - component: {fileID: 823737995}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: eventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1265,7 +1267,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &846806233
 GameObject:
@@ -1424,7 +1426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 897010361}
   m_Layer: 0
-  m_Name: SpawnPoint2
+  m_Name: spawnPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,12 +1438,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 897010360}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 647856006}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947927642
 GameObject:
@@ -1626,7 +1628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1204222015}
   m_Layer: 0
-  m_Name: SpawnPoint1
+  m_Name: spawnPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1638,12 +1640,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1204222014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 647856006}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1303328448
 GameObject:
@@ -1658,7 +1660,7 @@ GameObject:
   - component: {fileID: 1303328450}
   - component: {fileID: 1303328449}
   m_Layer: 5
-  m_Name: HUDCanvas
+  m_Name: hud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1745,7 +1747,7 @@ RectTransform:
   - {fileID: 99082933}
   - {fileID: 68635686}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1762,7 +1764,7 @@ GameObject:
   - component: {fileID: 1360661160}
   - component: {fileID: 1360661161}
   m_Layer: 5
-  m_Name: HealthSlider
+  m_Name: healthSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1919,7 +1921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1543446918}
   m_Layer: 5
-  m_Name: Fill Area
+  m_Name: fillArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2103,11 +2105,11 @@ MonoBehaviour:
   groundCheck: {fileID: 2066096959}
   weapon1: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258, type: 2}
   dashCooldown: 2
-  dashInvuln: 0.25
+  dashInvulDuration: 0.25
   moveForce: 50
   maxSpeed: 5
   jumpForce: 500
-  throwbackForce: 200
+  throwbackForce: 100
 --- !u!114 &1701403911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2137,7 +2139,7 @@ GameObject:
   - component: {fileID: 1867646223}
   - component: {fileID: 1867646222}
   m_Layer: 5
-  m_Name: Background
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2527,7 +2529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2077044480}
   m_Layer: 9
-  m_Name: RealTerrain
+  m_Name: realTerrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

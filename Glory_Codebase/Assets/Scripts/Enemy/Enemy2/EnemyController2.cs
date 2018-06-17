@@ -59,7 +59,7 @@ public class EnemyController2 : MonoBehaviour {
         if ((collider.gameObject.layer == 11) && (Time.time > (timeHit+invulnTime)))
         {
             stunned = true;
-            healthSystem.DeductHealth(collider.GetComponent<Projectile>().damage);
+            healthSystem.DeductHealth(collider.GetComponent<Weapon>().damage);
             timeHit = Time.time;
         }
     }

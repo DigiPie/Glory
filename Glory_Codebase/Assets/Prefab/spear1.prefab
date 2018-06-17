@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61774098457487138}
   - component: {fileID: 114788225922978716}
   m_Layer: 11
-  m_Name: spearStabProjectile
+  m_Name: spear1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5482a10d4df80704f82c206f5bf94b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dirV: {x: 0, y: 0}
   cooldown: 1
   damage: 20
   lifespan: 0.3

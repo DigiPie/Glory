@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour {
+public class Weapon : MonoBehaviour {
     private Vector2 dirV;
 
     public float cooldown = 1f;

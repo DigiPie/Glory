@@ -58,7 +58,7 @@ public class EnemyController1 : MonoBehaviour {
         {
             stunned = true;
             healthSystem.DeductHealth(
-                collider.GetComponent<Projectile>().damage);
+                collider.GetComponent<Weapon>().damage);
         }
     }
 }
