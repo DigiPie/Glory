@@ -18,12 +18,16 @@ public class PlayerController : MonoBehaviour {
     private Vector2 dashLeftV, dashRightV; // 25% of moveLeftV and moveRightV
     private Vector2 jumpV;
 
+    // States
     private bool againstWall = false;
     private bool againstEnemy = false;
     private bool collisionOnRight = false;
     private bool facingLeft = false;
     private bool onGround = false;
+
+    // Input
     private bool inputJump, inputAttack1, inputDash;
+    private float inputH;
 
     // Attack 1
     private float attack1Cooldown; // Minimum wait-time before next attack can be triggered
@@ -40,8 +44,7 @@ public class PlayerController : MonoBehaviour {
     private bool isInvul = false;
     private float invulEndTime; // The time at which the character is no longer invulnerable
 
-    private float inputH;
-
+    // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
     public float jumpForce = 500f;

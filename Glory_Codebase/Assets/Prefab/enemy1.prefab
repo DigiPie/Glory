@@ -209,6 +209,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4447143543408404}
+  moveForce: 15
+  maxSpeed: 2
   throwbackForce: 200
 --- !u!114 &114544597889018228
 MonoBehaviour:

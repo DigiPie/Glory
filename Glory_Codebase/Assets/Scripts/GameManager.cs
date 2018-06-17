@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
-    public Transform spawnPoint1, spawnPoint2;
-    public GameObject enemy1, enemy2;
+    public Transform[] path1, path2;
+    public GameObject enemy1, enemy2, objective;
 
     private List<GameObject> enemies;
     private bool hasDeadEnemy;
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour {
     void InitGame()
     {
         enemies = new List<GameObject>();
+
     }
 
     //Update is called every frame.
@@ -44,18 +45,19 @@ public class GameManager : MonoBehaviour {
     {
         if (enemies.Count == 0)
         {
+            GameObject enemy;
             if (spawnOnLeft)
             {
-                // Testing working of enemy2
-                //enemies.Add(Instantiate(enemy1, spawnPoint1));
-                enemies.Add(Instantiate(enemy2, spawnPoint1));
+                enemy = Instantiate(enemy1, path1[0]);
+                enemy.GetComponent<EnemyController1>().Setup(path1);
             }
             else
             {
-                //enemies.Add(Instantiate(enemy1, spawnPoint2));
-                enemies.Add(Instantiate(enemy2, spawnPoint2));
+                enemy = Instantiate(enemy1, path2[0]);
+                enemy.GetComponent<EnemyController1>().Setup(path2);
             }
 
+            enemies.Add(enemy);
             spawnOnLeft = !spawnOnLeft;
         }
 

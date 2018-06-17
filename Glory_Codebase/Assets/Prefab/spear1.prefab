@@ -78,11 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5482a10d4df80704f82c206f5bf94b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dirV: {x: 0, y: 0}
-  cooldown: 1
-  damage: 20
-  lifespan: 0.3
-  speed: 0.1
+  cooldown: 0.4
+  damage: 34
+  lifespan: 0.2
+  speed: 0.15
 --- !u!212 &212887211270599804
 SpriteRenderer:
   m_ObjectHideFlags: 1
