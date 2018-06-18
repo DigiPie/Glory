@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 61338821252778624}
   - component: {fileID: 114544597889018228}
   - component: {fileID: 114335003495568256}
+  - component: {fileID: 114026440984356966}
   m_Layer: 10
   m_Name: enemy1
   m_TagString: Untagged
@@ -197,6 +198,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114026440984356966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1966347777649626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8ae3cc957c66c429563b7ab83bfcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniBlinkDuration: 0.15
+  blinkDuration: 1
 --- !u!114 &114335003495568256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4447143543408404}
+  stunDuration: 1
   moveForce: 15
   maxSpeed: 2
   throwbackForce: 200

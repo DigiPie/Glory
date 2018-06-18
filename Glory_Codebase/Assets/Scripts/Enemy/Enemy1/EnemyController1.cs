@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController1 : MonoBehaviour {
     private Animator animator;
     private HealthSystem healthSystem;
+    private BlinkSystem blinkSystem;
     private Rigidbody2D rb2d;
     public Transform groundCheck;
 
@@ -41,6 +42,7 @@ public class EnemyController1 : MonoBehaviour {
     void Start () {
         animator = GetComponent<Animator>();
         healthSystem = GetComponent<HealthSystem>();
+        blinkSystem = GetComponent<BlinkSystem>();
         rb2d = GetComponent<Rigidbody2D>();
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
@@ -167,6 +169,9 @@ public class EnemyController1 : MonoBehaviour {
             {
                 rb2d.AddForce(bounceHurtLeftV);
             }
+
+            // Blink effect
+            blinkSystem.StartBlink(); // Default blink timing is 1s, can override def parameter with float
 
             // Health deduction
             healthSystem.DeductHealth(
