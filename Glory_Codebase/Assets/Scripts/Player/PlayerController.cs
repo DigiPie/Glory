@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     // States
     private bool againstWall = false;
-    private bool againstEnemy = false;
+    private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
     private bool facingLeft = false;
     private bool onGround = false;
@@ -117,9 +117,9 @@ public class PlayerController : MonoBehaviour {
             againstWall = true;
         }
 
-        if (collision.gameObject.layer == 10)
+        if (collision.gameObject.layer == 13)
         {
-            againstEnemy = true;
+            againstEnemyAttack = true;
         }
     }
 
@@ -131,9 +131,9 @@ public class PlayerController : MonoBehaviour {
             againstWall = false;
         }
 
-        if (collision.gameObject.layer == 10)
+        if (collision.gameObject.layer == 13)
         {
-            againstEnemy = false;
+            againstEnemyAttack = false;
         }
     }
 
@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if (againstEnemy)
+        if (againstEnemyAttack)
         {
             if (collisionOnRight)
             {
@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Return true if bouncing off either against wall or enemy
-        return againstWall || againstEnemy;
+        return againstWall || againstEnemyAttack;
     }
 
     void HandleDash()

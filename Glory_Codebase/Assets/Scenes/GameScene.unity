@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 378491264}
   - component: {fileID: 378491263}
   - component: {fileID: 378491262}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
