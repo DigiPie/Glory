@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour {
 
         Move();
         Attack();
-        Invulnerability();
+        UpdateInvulnerability();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void Invulnerability()
+    void UpdateInvulnerability()
     {
         // Invulnerability can be triggered by dashing and ...
         if (isInvul)

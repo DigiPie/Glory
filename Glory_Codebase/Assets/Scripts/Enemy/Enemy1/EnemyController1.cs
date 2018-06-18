@@ -8,14 +8,17 @@ public class EnemyController1 : MonoBehaviour {
     private Rigidbody2D rb2d;
     public Transform groundCheck;
 
+    // Forces to be applied on character
+    private Vector2 bounceHurtLeftV, bounceHurtRightV;
+
     // AI
-    private Transform[] path;
-    private float AImoveH = 0; // Used by AI to move character
-    private int currentWaypointTarget = 0;
-    private float distToTargetX = 0;
-    private float absDistToTargetX = 0;
-    private float distDeadzone = 2;
-    private bool isDone = false;
+    private Transform[] path; // The AI path, it will move to path[0], path[1]...path[n]
+    private float AImoveH = 0; // Used by the AI to move character
+    private int currentTarget = 0; // Current target, path[currentTarget]
+    private float distToTargetX = 0; // Distance from this to target
+    private float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
+    private readonly float distDeadzone = 2; // If within 2 unit distance from target, currentTarget++
+    private bool isPathDone = false; // True if reached the end of the designated path
 
     // Forces to be applied on character
     private Vector2 moveLeftV, moveRightV;
@@ -23,12 +26,16 @@ public class EnemyController1 : MonoBehaviour {
     // States
     private bool collisionOnRight = false;
     private bool onGround = false;
-    private bool stunned = false;
+
+    // Stunned
+    public float stunDuration = 1; // How long is the character stunned each time it is damaged
+    private bool isStunned = false;
+    private float stunEndTime = 0; // The time at which stunned is set to false again
 
     // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
-    public float throwbackForce = 100f; // When hit by attack
+    public float throwbackForce = 200f; // When hit by attack
 
     // Use this for initialization
     void Start () {
@@ -40,6 +47,8 @@ public class EnemyController1 : MonoBehaviour {
         // calculate them once, as they never change. For optimisation.
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
+        bounceHurtLeftV = new Vector2(1, 0.5f) * throwbackForce;
+        bounceHurtRightV = new Vector2(-1, 0.5f) * throwbackForce;
     }
 
     // Update is called once per frame, independent of the physics engine
@@ -53,9 +62,9 @@ public class EnemyController1 : MonoBehaviour {
         onGround = Physics2D.Linecast(transform.position, groundCheck.position,
             1 << LayerMask.NameToLayer("Ground"));
 
-        if (stunned)
+        if (isStunned)
         {
-            HandleStun();
+            UpdateStun();
             return; // Disallow AI-movement
         }
 
@@ -74,21 +83,21 @@ public class EnemyController1 : MonoBehaviour {
 
     void AI()
     {
-        if (isDone)
+        if (isPathDone)
         {
             return;
         }
 
-        distToTargetX = path[currentWaypointTarget].position.x - transform.position.x;
+        distToTargetX = path[currentTarget].position.x - transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
 
         if (absDistToTargetX < distDeadzone)
         {
-            currentWaypointTarget++;
+            currentTarget++;
 
-            if (path.Length == currentWaypointTarget)
+            if (path.Length == currentTarget)
             {
-                isDone = true;
+                isPathDone = true;
                 AImoveH = 0;
                 return;
             }
@@ -126,18 +135,16 @@ public class EnemyController1 : MonoBehaviour {
         }
     }
 
-    void HandleStun()
+    void UpdateStun()
     {
-        if (collisionOnRight)
+        if (isStunned)
         {
-            rb2d.AddForce(new Vector2(-0.25f, 1) * throwbackForce);
-        }
-        else
-        {
-            rb2d.AddForce(new Vector2(0.25f, 1) * throwbackForce);
+            if (Time.time > stunEndTime)
+            {
+                isStunned = false;
+            }
         }
 
-        stunned = false;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -147,7 +154,21 @@ public class EnemyController1 : MonoBehaviour {
         // If colliding with projectile
         if (collider.gameObject.layer == 11)
         {
-            stunned = true;
+            // Unable to move while stunned
+            isStunned = true;
+            stunEndTime = Time.time + stunDuration;
+
+            // Throwback effect
+            if (collisionOnRight)
+            {
+                rb2d.AddForce(bounceHurtRightV);
+            }
+            else
+            {
+                rb2d.AddForce(bounceHurtLeftV);
+            }
+
+            // Health deduction
             healthSystem.DeductHealth(
                 collider.GetComponent<Weapon>().damage);
         }
