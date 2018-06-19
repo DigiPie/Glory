@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+    private PlayerHealthSystem playerHealthSystem;
     public static GameManager instance = null;
 
     public Transform[] path1, path2;
     public GameObject enemy1, enemy2, objective;
-
+    
     private List<GameObject> enemies;
     private bool hasDeadEnemy;
     private bool spawnOnLeft = false;
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
     // Initializes the game for each level.
     void InitGame()
     {
+        playerHealthSystem = GetComponent<PlayerHealthSystem>();
         enemies = new List<GameObject>();
 
     }
@@ -43,18 +45,18 @@ public class GameManager : MonoBehaviour {
     //Update is called every frame.
     void Update()
     {
-        if (enemies.Count == 0)
+        if (enemies.Count < 2)
         {
             GameObject enemy;
             if (spawnOnLeft)
             {
                 enemy = Instantiate(enemy1, path1[0]);
-                enemy.GetComponent<EnemyController1>().Setup(path1);
+                enemy.GetComponent<EnemyController1>().Setup(this, path1);
             }
             else
             {
                 enemy = Instantiate(enemy1, path2[0]);
-                enemy.GetComponent<EnemyController1>().Setup(path2);
+                enemy.GetComponent<EnemyController1>().Setup(this, path2);
             }
 
             enemies.Add(enemy);
@@ -68,7 +70,7 @@ public class GameManager : MonoBehaviour {
         {
             foreach (GameObject enemy in enemies)
             {
-                if (enemy.GetComponent<HealthSystem>().IsDead())
+                if (enemy.GetComponent<EnemyHealthSystem>().IsDead())
                 {
                     enemies.Remove(enemy);
                     Destroy(enemy);
@@ -77,5 +79,10 @@ public class GameManager : MonoBehaviour {
                 }
             }
         } while (hasDeadEnemy);
+    }
+
+    public void DamageObjective(int damage)
+    {
+        playerHealthSystem.TakeDamage(damage);
     }
 }

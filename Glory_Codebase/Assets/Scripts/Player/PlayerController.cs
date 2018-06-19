@@ -213,8 +213,6 @@ public class PlayerController : MonoBehaviour {
         {
             if (inputDash)
             {
-                Physics2D.IgnoreLayerCollision(10, 12, true);
-
                 if (facingLeft)
                 {
                     rb2d.velocity = dashLeftV;
@@ -246,7 +244,6 @@ public class PlayerController : MonoBehaviour {
         {
             if (Time.time > invulEndTime)
             {
-                Physics2D.IgnoreLayerCollision(10, 12, false);
                 isInvul = false;
             }
         }

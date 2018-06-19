@@ -740,6 +740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 647856006}
   - component: {fileID: 647856007}
+  - component: {fileID: 647856008}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -782,6 +783,24 @@ MonoBehaviour:
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1966347777649626, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   objective: {fileID: 0}
+--- !u!114 &647856008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 647856005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bce14d8a819f441a5d9cd2b77c417f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 100
+  healthSlider: {fileID: 1360661161}
+  damageImage: {fileID: 68635687}
+  deathClip: {fileID: 0}
+  flashSpeed: 5
+  flashColour: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!1 &666246350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
+  m_ScaleFactor: 2
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -1306,7 +1325,6 @@ GameObject:
   - component: {fileID: 1701403909}
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
-  - component: {fileID: 1701403911}
   m_Layer: 12
   m_Name: player1
   m_TagString: Untagged
@@ -1457,24 +1475,6 @@ MonoBehaviour:
   maxSpeed: 5
   jumpForce: 500
   throwbackForce: 100
---- !u!114 &1701403911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1701403904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24bce14d8a819f441a5d9cd2b77c417f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  currentHealth: 100
-  healthSlider: {fileID: 1360661161}
-  damageImage: {fileID: 68635687}
-  deathClip: {fileID: 0}
-  flashSpeed: 5
-  flashColour: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!1 &1867646220
 GameObject:
   m_ObjectHideFlags: 0

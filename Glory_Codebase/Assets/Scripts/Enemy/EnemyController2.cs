@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController2 : MonoBehaviour {
     private Animator animator;
-    private HealthSystem healthSystem;
+    private EnemyHealthSystem healthSystem;
     private Rigidbody2D rb2d;
 
     public Transform groundCheck;
@@ -20,7 +20,7 @@ public class EnemyController2 : MonoBehaviour {
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
-        healthSystem = GetComponent<HealthSystem>();
+        healthSystem = GetComponent<EnemyHealthSystem>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 

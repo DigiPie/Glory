@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour {
+public class EnemyHealthSystem : MonoBehaviour {
     public Transform healthbarFront;
     public Transform healthbarBack;
     private SpriteRenderer frontRend, backRend;

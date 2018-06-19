@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController1 : MonoBehaviour {
+    private GameManager gameManager;
     private Animator animator;
-    private HealthSystem healthSystem;
+    private EnemyHealthSystem healthSystem;
     private BlinkSystem blinkSystem;
     private Rigidbody2D rb2d;
     private SpriteRenderer sprite;
@@ -40,10 +41,16 @@ public class EnemyController1 : MonoBehaviour {
     public float maxSpeed = 5f; // Maximum horziontal velocity
     public float throwbackForce = 200f; // When hit by attack
 
+    // Objective Attack
+    public float attackCooldown = 1.5f; // Minimum wait-time before next attack can be triggered
+    public int attackDamag = 7;
+    private bool attackReady = true; // Reliant on attack1Cooldown
+    private float attackReadyTime = 0; // The time at which attack1Ready will be set to true again
+
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
-        healthSystem = GetComponent<HealthSystem>();
+        healthSystem = GetComponent<EnemyHealthSystem>();
         blinkSystem = GetComponent<BlinkSystem>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -71,9 +78,10 @@ public class EnemyController1 : MonoBehaviour {
         Move();
     }
 
-    public void Setup(Transform[] designatedPath)
+    public void Setup(GameManager gameManager, Transform[] path)
     {
-        path = designatedPath;
+        this.gameManager = gameManager;
+        this.path = path;
     }
 
     void AI()
@@ -103,10 +111,22 @@ public class EnemyController1 : MonoBehaviour {
                 AImoveH = 0;
 
                 // Attack
+                if (attackReady)
+                {
+                    gameManager.DamageObjective(5);
+                    attackReady = false;
+                    attackReadyTime = Time.time + attackCooldown;
+                }
+                else
+                {
+                    if (Time.time > attackReadyTime)
+                    {
+                        attackReady = true;
+                    }
+                }
             }
             else
             {
-                Debug.Log(absDistToTargetX + " " + distDeadzone);
                 // Move to the final target
                 if (distToTargetX > 0)
                 {
