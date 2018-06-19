@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlinkSystem : MonoBehaviour {
     private float miniBlinkEndTime;
-    public float miniBlinkDuration = 0.1f;
+    private float miniBlinkDuration = 0.1f;
     private float blinkEndTime;
     public float blinkDuration = 1.0f;
     private bool isBlinking = false;

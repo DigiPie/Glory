@@ -7,6 +7,7 @@ public class EnemyController1 : MonoBehaviour {
     private HealthSystem healthSystem;
     private BlinkSystem blinkSystem;
     private Rigidbody2D rb2d;
+    private SpriteRenderer sprite;
     public Transform groundCheck;
 
     // Forces to be applied on character
@@ -18,7 +19,7 @@ public class EnemyController1 : MonoBehaviour {
     private int currentTarget = 0; // Current target, path[currentTarget]
     private float distToTargetX = 0; // Distance from this to target
     private float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
-    private readonly float distDeadzone = 2; // If within 2 unit distance from target, currentTarget++
+    private readonly float distDeadzone = 0.5f; // If within 2 unit distance from target, currentTarget++
     private bool isPathDone = false; // True if reached the end of the designated path
 
     // Forces to be applied on character
@@ -26,10 +27,11 @@ public class EnemyController1 : MonoBehaviour {
 
     // States
     private bool collisionOnRight = false;
+    private bool facingLeft = false;
     private bool onGround = false;
 
     // Stunned
-    public float stunDuration = 1; // How long is the character stunned each time it is damaged
+    public float defaultStunDuration = 0.3f; // How long is the character stunned when damaged by any attacks
     private bool isStunned = false;
     private float stunEndTime = 0; // The time at which stunned is set to false again
 
@@ -44,6 +46,7 @@ public class EnemyController1 : MonoBehaviour {
         healthSystem = GetComponent<HealthSystem>();
         blinkSystem = GetComponent<BlinkSystem>();
         rb2d = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -64,18 +67,8 @@ public class EnemyController1 : MonoBehaviour {
         onGround = Physics2D.Linecast(transform.position, groundCheck.position,
             1 << LayerMask.NameToLayer("Ground"));
 
-        if (isStunned)
-        {
-            UpdateStun();
-            return; // Disallow AI-movement
-        }
-
         AI();
-
-        if (AImoveH != 0)
-        {
-            HandleRunning();
-        }
+        Move();
     }
 
     public void Setup(Transform[] designatedPath)
@@ -85,32 +78,91 @@ public class EnemyController1 : MonoBehaviour {
 
     void AI()
     {
-        if (isPathDone)
+        // Stunned for defaultStunDuration when damaged by any attacks.
+        // If stunned by weapon effect, weapon stun duration is used instead
+        if (isStunned)
         {
+            if (Time.time > stunEndTime)
+            {
+                isStunned = false;
+            }
+
             return;
         }
 
         distToTargetX = path[currentTarget].position.x - transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
 
-        if (absDistToTargetX < distDeadzone)
+        if (isPathDone)
         {
-            currentTarget++;
-
-            if (path.Length == currentTarget)
+            // If completed path and targetting final target aka city gate or player
+            // If within deadzone distance to the final target
+            if (absDistToTargetX < distDeadzone)
             {
-                isPathDone = true;
+                // Stop
                 AImoveH = 0;
-                return;
+
+                // Attack
+            }
+            else
+            {
+                Debug.Log(absDistToTargetX + " " + distDeadzone);
+                // Move to the final target
+                if (distToTargetX > 0)
+                {
+                    AImoveH = 1;
+                }
+                else
+                {
+                    AImoveH = -1;
+                }
             }
         }
+        else
+        {
+            // If not at final target and still enroute
+            // If reached current target
+            if (absDistToTargetX < distDeadzone)
+            {
+                // If at final target
+                if (currentTarget + 1 == path.Length)
+                {
+                    // Indicate that character is at final target
+                    isPathDone = true;
+                }
+                else
+                {
+                    // Move on to next target
+                    currentTarget++;
+                }
+            }
+            else
+            {
+                // Move to the current target
+                if (distToTargetX > 0)
+                {
+                    AImoveH = 1;
+                }
+                else
+                {
+                    AImoveH = -1;
+                }
+            }
+        }
+    }
 
-        if (distToTargetX > 0)
+    void Move()
+    {
+        if (AImoveH == 0)
         {
-            AImoveH = 1;
-        } else
+            animator.SetBool("Running", false);
+        }
+        else
         {
-            AImoveH = -1;
+            HandleRunning();
+            animator.SetBool("Running", true);
+            facingLeft = AImoveH < 0;
+            sprite.flipX = facingLeft;
         }
     }
 
@@ -137,18 +189,6 @@ public class EnemyController1 : MonoBehaviour {
         }
     }
 
-    void UpdateStun()
-    {
-        if (isStunned)
-        {
-            if (Time.time > stunEndTime)
-            {
-                isStunned = false;
-            }
-        }
-
-    }
-
     void OnTriggerEnter2D(Collider2D collider)
     {
         collisionOnRight = collider.transform.position.x > transform.position.x;
@@ -157,8 +197,9 @@ public class EnemyController1 : MonoBehaviour {
         if (collider.gameObject.layer == 11)
         {
             // Unable to move while stunned
+            AImoveH = 0;
             isStunned = true;
-            stunEndTime = Time.time + stunDuration;
+            stunEndTime = Time.time + defaultStunDuration;
 
             // Throwback effect
             if (collisionOnRight)
@@ -171,7 +212,7 @@ public class EnemyController1 : MonoBehaviour {
             }
 
             // Blink effect
-            blinkSystem.StartBlink(); // Default blink timing is 1s, can override def parameter with float
+            blinkSystem.StartBlink(defaultStunDuration);
 
             // Health deduction
             healthSystem.DeductHealth(

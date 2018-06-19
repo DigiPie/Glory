@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3cc957c66c429563b7ab83bfcfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniBlinkDuration: 0.15
   blinkDuration: 1
 --- !u!114 &114335003495568256
 MonoBehaviour:
@@ -223,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4447143543408404}
-  stunDuration: 1
+  defaultStunDuration: 0.3
   moveForce: 15
   maxSpeed: 2
   throwbackForce: 200
