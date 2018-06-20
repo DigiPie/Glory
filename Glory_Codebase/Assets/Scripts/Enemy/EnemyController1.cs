@@ -20,7 +20,7 @@ public class EnemyController1 : MonoBehaviour {
     private int currentTarget = 0; // Current target, path[currentTarget]
     private float distToTargetX = 0; // Distance from this to target
     private float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
-    private readonly float distDeadzone = 0.5f; // If within 2 unit distance from target, currentTarget++
+    private readonly float distDeadzone = 1.0f; // If within 2 unit distance from target, currentTarget++
     private bool isPathDone = false; // True if reached the end of the designated path
 
     // Forces to be applied on character
