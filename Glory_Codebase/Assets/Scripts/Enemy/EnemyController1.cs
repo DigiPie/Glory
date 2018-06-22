@@ -20,7 +20,7 @@ public class EnemyController1 : MonoBehaviour {
     private int currentTarget = 0; // Current target, path[currentTarget]
     private float distToTargetX = 0; // Distance from this to target
     private float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
-    private readonly float distDeadzone = 1.0f; // If within 2 unit distance from target, currentTarget++
+    private float distDeadzone; // If within deadzone unit distance from target, currentTarget++
     private bool isPathDone = false; // True if reached the end of the designated path
 
     // Forces to be applied on character
@@ -54,6 +54,8 @@ public class EnemyController1 : MonoBehaviour {
         blinkSystem = GetComponent<BlinkSystem>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+
+        distDeadzone = 0.5f + Random.Range(0, 0.2f);
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -124,6 +126,8 @@ public class EnemyController1 : MonoBehaviour {
                         attackReady = true;
                     }
                 }
+
+                animator.Play("Attack");
             }
             else
             {
@@ -230,6 +234,9 @@ public class EnemyController1 : MonoBehaviour {
             {
                 rb2d.AddForce(bounceHurtLeftV);
             }
+
+            // Hurt animation
+            animator.Play("Hurt");
 
             // Blink effect
             blinkSystem.StartBlink(defaultStunDuration);

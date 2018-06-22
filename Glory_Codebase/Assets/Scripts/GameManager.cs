@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     public Transform[] path1, path2;
-    public GameObject enemy1, enemy2, objective;
+    public GameObject boomEffect, enemy1, enemy2;
     
     private List<GameObject> enemies;
     private bool hasDeadEnemy;
@@ -52,11 +52,13 @@ public class GameManager : MonoBehaviour {
             {
                 enemy = Instantiate(enemy1, path1[0]);
                 enemy.GetComponent<EnemyController1>().Setup(this, path1);
+                enemy.GetComponent<SpriteRenderer>().sortingOrder = 20 + enemies.Count;
             }
             else
             {
                 enemy = Instantiate(enemy1, path2[0]);
                 enemy.GetComponent<EnemyController1>().Setup(this, path2);
+                enemy.GetComponent<SpriteRenderer>().sortingOrder = 20 + enemies.Count;
             }
 
             enemies.Add(enemy);
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour {
             {
                 if (enemy.GetComponent<EnemyHealthSystem>().IsDead())
                 {
+                    Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
                     enemies.Remove(enemy);
                     Destroy(enemy);
                     hasDeadEnemy = true;
