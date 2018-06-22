@@ -222,6 +222,8 @@ public class PlayerController : MonoBehaviour {
                     rb2d.velocity = dashRightV;
                 }
 
+                animator.Play("Slide");
+
                 dashReady = false;
                 dashReadyTime = Time.time + dashCooldown;
                 isInvul = true;
@@ -325,6 +327,8 @@ public class PlayerController : MonoBehaviour {
         {
             if (inputAttack1)
             {
+                animator.Play("Attack");
+
                 // Create a melee projectile
                 GameObject projectile = Instantiate(weapon1, this.transform);
 
