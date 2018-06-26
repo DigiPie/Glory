@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-    private PlayerHealthSystem playerHealthSystem;
+    //private ObjectiveHealth objectiveHealth;
     public static GameManager instance = null;
-
+    private ObjectiveHealth objHealth;
     public Transform[] path1, path2;
     public GameObject boomEffect, enemy1, enemy2;
     
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
     // Initializes the game for each level.
     void InitGame()
     {
-        playerHealthSystem = GetComponent<PlayerHealthSystem>();
+        objHealth = GetComponent<ObjectiveHealth>();
         enemies = new List<GameObject>();
 
     }
@@ -86,6 +86,6 @@ public class GameManager : MonoBehaviour {
 
     public void DamageObjective(int damage)
     {
-        playerHealthSystem.TakeDamage(damage);
+        objHealth.TakeDamage(damage);
     }
 }

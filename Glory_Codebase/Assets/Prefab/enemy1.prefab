@@ -227,7 +227,7 @@ MonoBehaviour:
   maxSpeed: 2
   throwbackForce: 200
   attackCooldown: 1.5
-  attackDamag: 7
+  attackDamag: 15
 --- !u!114 &114544597889018228
 MonoBehaviour:
   m_ObjectHideFlags: 1

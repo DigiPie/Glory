@@ -115,7 +115,7 @@ public class EnemyController1 : MonoBehaviour {
                 // Attack
                 if (attackReady)
                 {
-                    gameManager.DamageObjective(5);
+                    gameManager.DamageObjective(12);
                     attackReady = false;
                     attackReadyTime = Time.time + attackCooldown;
                 }

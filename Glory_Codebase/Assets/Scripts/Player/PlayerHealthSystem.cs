@@ -83,7 +83,7 @@ public class PlayerHealthSystem : MonoBehaviour
     // Self implemented function for future use
     public void HealDamage(int amount)
     {
-        if ((currentHealth+amount) < startingHealth)
+        if ((currentHealth+amount) > startingHealth)
         {
             currentHealth = startingHealth;
         }
