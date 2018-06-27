@@ -225,7 +225,7 @@ MonoBehaviour:
   defaultStunDuration: 0.5
   moveForce: 15
   maxSpeed: 2
-  throwbackForce: 200
+  throwbackForce: 5
   attackCooldown: 1.5
   attackDamag: 15
 --- !u!114 &114544597889018228

@@ -61,8 +61,8 @@ public class EnemyController1 : MonoBehaviour {
         // calculate them once, as they never change. For optimisation.
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
-        bounceHurtLeftV = new Vector2(1, 0.5f) * throwbackForce;
-        bounceHurtRightV = new Vector2(-1, 0.5f) * throwbackForce;
+        bounceHurtLeftV = new Vector2(0.5f, 0.6f) * throwbackForce;
+        bounceHurtRightV = new Vector2(-0.5f, 0.6f) * throwbackForce;
     }
 
     // Update is called once per frame, independent of the physics engine
@@ -228,11 +228,11 @@ public class EnemyController1 : MonoBehaviour {
             // Throwback effect
             if (collisionOnRight)
             {
-                rb2d.AddForce(bounceHurtRightV);
+                rb2d.velocity = bounceHurtRightV;
             }
             else
             {
-                rb2d.AddForce(bounceHurtLeftV);
+                rb2d.velocity = bounceHurtLeftV;
             }
 
             // Hurt animation

@@ -29,8 +29,9 @@ public class PlayerController : MonoBehaviour {
     private bool inputJump, inputAttack1, inputDash;
     private float inputH;
 
-    // Attack Animation
-    private readonly float comboDuration = 1.2f; // If no next attack within comboDuration of last attack, combo ends
+    // Attack System
+    private readonly float comboDuration = 1.0f; // If no next attack within comboDuration of last attack, combo ends
+    private bool isCriticalStrike = false; // Every 3rd strike in a combo is a critical strike
     private int combo = 0; // Number of attacks within comboDuration intervals
     private float comboEndTime;
 
@@ -337,9 +338,10 @@ public class PlayerController : MonoBehaviour {
                     // If existing combo
                     combo++;
                     comboEndTime = Time.time + comboDuration;
+                    isCriticalStrike = combo % 3 == 0;
 
                     // For every 3rd hit, play attack 3 (360 backhand strike)
-                    if (combo%3 == 0)
+                    if (isCriticalStrike)
                     {
                         // TODO: Critical strike every 3rd hit, increased damage
                         animator.Play("Attack3");
@@ -362,6 +364,7 @@ public class PlayerController : MonoBehaviour {
                     // If new combo
                     combo = 1;
                     comboEndTime = Time.time + comboDuration;
+                    isCriticalStrike = false;
 
                     // Randomly select between attack 1 and attack 2 animation
                     if (Random.Range(0, 2) == 0)
@@ -380,11 +383,11 @@ public class PlayerController : MonoBehaviour {
                 // Assign weapon direction
                 if (facingLeft)
                 {
-                    projectile.GetComponent<Weapon>().SetDir(new Vector2(-1, 0));
+                    projectile.GetComponent<Weapon>().Setup(isCriticalStrike, new Vector2(-1, 0));
                 }
                 else
                 {
-                    projectile.GetComponent<Weapon>().SetDir(new Vector2(1, 0));
+                    projectile.GetComponent<Weapon>().Setup(isCriticalStrike, new Vector2(1, 0));
                 }
 
                 // Cooldown
