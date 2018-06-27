@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour {
     private bool inputJump, inputAttack1, inputDash;
     private float inputH;
 
+    // Attack Animation
+    private readonly float comboDuration = 1.2f; // If no next attack within comboDuration of last attack, combo ends
+    private int combo = 0; // Number of attacks within comboDuration intervals
+    private float comboEndTime;
+
     // Attack 1
     private float attack1Cooldown; // Minimum wait-time before next attack can be triggered
     private bool attack1Ready = true; // Reliant on attack1Cooldown
@@ -327,7 +332,47 @@ public class PlayerController : MonoBehaviour {
         {
             if (inputAttack1)
             {
-                animator.Play("Attack");
+                if (Time.time < comboEndTime)
+                {
+                    // If existing combo
+                    combo++;
+                    comboEndTime = Time.time + comboDuration;
+
+                    // For every 3rd hit, play attack 3 (360 backhand strike)
+                    if (combo%3 == 0)
+                    {
+                        // TODO: Critical strike every 3rd hit, increased damage
+                        animator.Play("Attack3");
+                    }
+                    else
+                    {
+                        // Else randomly select between attack 1 and attack 2 animation
+                        if (Random.Range(0, 2) == 0)
+                        {
+                            animator.Play("Attack");
+                        }
+                        else
+                        {
+                            animator.Play("Attack2");
+                        }
+                    }
+                }
+                else
+                {
+                    // If new combo
+                    combo = 1;
+                    comboEndTime = Time.time + comboDuration;
+
+                    // Randomly select between attack 1 and attack 2 animation
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        animator.Play("Attack");
+                    }
+                    else
+                    {
+                        animator.Play("Attack2");
+                    }
+                }
 
                 // Create a melee projectile
                 GameObject projectile = Instantiate(weapon1, this.transform);
