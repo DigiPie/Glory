@@ -638,6 +638,7 @@ GameObject:
   - component: {fileID: 647856007}
   - component: {fileID: 647856008}
   - component: {fileID: 647856009}
+  - component: {fileID: 647856010}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -715,6 +716,19 @@ MonoBehaviour:
   damageImage: {fileID: 483936835}
   flashSpeed: 5
   flashColour: {r: 1, g: 0, b: 0, a: 0.1}
+--- !u!114 &647856010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 647856005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce95f58ff050b94b8a644e542bf79fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 519420031}
+  camTarget: {fileID: 1701403907}
 --- !u!1 &666246350
 GameObject:
   m_ObjectHideFlags: 0

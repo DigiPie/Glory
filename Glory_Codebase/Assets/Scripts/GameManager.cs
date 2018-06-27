@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
     //private ObjectiveHealth objectiveHealth;
     public static GameManager instance = null;
     private ObjectiveHealth objHealth;
+    private CameraController camController;
     public Transform[] path1, path2;
     public GameObject boomEffect, enemy1, enemy2;
     
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour {
     void InitGame()
     {
         objHealth = GetComponent<ObjectiveHealth>();
+        camController = GetComponent<CameraController>();
         enemies = new List<GameObject>();
 
     }
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour {
 
     public void DamageObjective(int damage)
     {
+        camController.Shake(0.1f);
         objHealth.TakeDamage(damage);
     }
 }
