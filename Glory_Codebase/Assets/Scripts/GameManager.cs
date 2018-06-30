@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     private ObjectiveHealth objHealth;
     private CameraController camController;
-    public GameObject boomEffect, enemy1;
+    public GameObject boomEffect, enemy1, enemy2;
 
     // Spawning and pathing
     public Transform[] path1, path2;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
     private bool isWaveFullySpawned = true;
     private bool isWaveCleared = true;
     private float waveInterval = 8.0f; // Delay between each wave
-    private float nextWaveReadyTime = 8.0f;
+    private float nextWaveReadyTime = 2.0f;
     private int currentSpawn = 0; // Current minion to spawn for this wave
     private float spawnReadyTime;
 
@@ -72,12 +72,21 @@ public class GameManager : MonoBehaviour {
         EnemySpawnInfo harmlessRight = new EnemySpawnInfo(0, 1, 0.8f); // Does not attack player, spawns at spawn point 0
         EnemySpawnInfo harmlessLeft2 = new EnemySpawnInfo(0, 0, 2.0f);
         EnemySpawnInfo harmlessRight2 = new EnemySpawnInfo(0, 1, 2.0f);
+        
+        EnemySpawnInfo harmfulLeft = new EnemySpawnInfo(1, 0, 2.0f); // Attacks player, spawns at spawn point 0
+        EnemySpawnInfo harmfulRight = new EnemySpawnInfo(1, 1, 2.0f); // Attacks player, spawns at spawn point 1
 
         // Number of waves
-        waves = new EnemySpawnInfo[3][];
+        waves = new EnemySpawnInfo[1][];
 
         // Wave 1
         waves[0] = new EnemySpawnInfo[4];
+        waves[0][0] = harmlessLeft;
+        waves[0][1] = harmfulRight;
+        waves[0][2] = harmfulLeft;
+        waves[0][3] = harmlessRight;
+
+        /*waves[0] = new EnemySpawnInfo[4];
         waves[0][0] = harmlessLeft;
         waves[0][1] = harmlessLeft;
         waves[0][2] = harmlessLeft;
@@ -107,13 +116,13 @@ public class GameManager : MonoBehaviour {
         waves[2][8] = harmlessRight2;
         waves[2][9] = harmlessLeft2;
         waves[2][10] = harmlessRight2;
-        waves[2][11] = harmlessLeft2;
+        waves[2][11] = harmlessLeft2;*/
     }
 
     // Update is called every frame
     void Update()
     {
-        Debug.Log(currentWave + " " + currentSpawn);
+        //Debug.Log(currentWave + " " + currentSpawn);
         Spawn();
         ClearDead();
     }
@@ -172,18 +181,18 @@ public class GameManager : MonoBehaviour {
 
                 if (waves[currentWave][currentSpawn].enemyType == 1)
                 {
-                    //TODO enemy type 2
+                    enemy = enemy2;
                 }
 
                 if (waves[currentWave][currentSpawn].pathChoice == 0)
                 {
                     enemy = Instantiate(enemy, path1[0]);
-                    enemy.GetComponent<EnemyController1>().Setup(this, path1);
+                    enemy.GetComponent<EnemyController>().Setup(this, path1);
                 }
                 else if (waves[currentWave][currentSpawn].pathChoice == 1)
                 {
                     enemy = Instantiate(enemy, path2[0]);
-                    enemy.GetComponent<EnemyController1>().Setup(this, path2);
+                    enemy.GetComponent<EnemyController>().Setup(this, path2);
                 }
 
                 enemy.GetComponent<SpriteRenderer>().sortingOrder = 20 + enemies.Count;

@@ -675,12 +675,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boomEffect: {fileID: 1580309508211972, guid: 63bac3298792c154c88fd6c61b80441c, type: 2}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
+  enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   path1:
   - {fileID: 1204222015}
   - {fileID: 378491264}
   path2:
   - {fileID: 897010361}
   - {fileID: 378491264}
+  isGameDone: 0
 --- !u!114 &647856008
 MonoBehaviour:
   m_ObjectHideFlags: 0
