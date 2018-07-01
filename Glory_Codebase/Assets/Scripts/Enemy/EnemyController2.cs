@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController1 : EnemyController
+public class EnemyController2 : EnemyController
 {
+    private bool isAttackAnimStarted = false;
+
     override protected void AI()
     {
         // Stunned for defaultStunDuration when damaged by any attacks.
@@ -13,9 +15,18 @@ public class EnemyController1 : EnemyController
             if (Time.time > stunEndTime)
             {
                 isStunned = false;
+                isAttackAnimStarted = false; // Cancel any ongoing attack
             }
 
             return;
+        }
+
+        // If attack animation was started and is at weapon slam frame, damage objective
+        if (isAttackAnimStarted && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
+            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.45f)
+        {
+            gameManager.DamageObjective(attackDamage);
+            isAttackAnimStarted = false;
         }
 
         distToTargetX = path[currentTarget].position.x - transform.position.x;
@@ -33,10 +44,10 @@ public class EnemyController1 : EnemyController
                 // Attack
                 if (attackReady)
                 {
-                    gameManager.DamageObjective(attackDamage);
                     attackReady = false;
                     attackReadyTime = Time.time + attackCooldown;
                     animator.Play("Attack");
+                    isAttackAnimStarted = true;
                 }
                 else
                 {
