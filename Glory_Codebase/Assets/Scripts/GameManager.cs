@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour {
     // Update is called every frame
     void Update()
     {
-        Debug.Log(currentWave + " " + currentSpawn);
+        // Debug.Log(currentWave + " " + currentSpawn);
         Spawn();
         ClearDead();
     }
