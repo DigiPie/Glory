@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController1 : EnemyController
 {
-    override protected void AI()
+    protected override void AI()
     {
         // Stunned for defaultStunDuration when damaged by any attacks.
         // If stunned by weapon effect, weapon stun duration is used instead

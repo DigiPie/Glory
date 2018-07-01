@@ -90,7 +90,7 @@ public abstract class EnemyController : MonoBehaviour {
             1 << LayerMask.NameToLayer("Ground"));
     }
 
-    abstract protected void AI();
+    protected abstract void AI();
 
     protected void Move()
     {

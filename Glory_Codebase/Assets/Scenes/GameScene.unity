@@ -676,6 +676,7 @@ MonoBehaviour:
   boomEffect: {fileID: 1580309508211972, guid: 63bac3298792c154c88fd6c61b80441c, type: 2}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
+  player1: {fileID: 1701403904}
   path1:
   - {fileID: 1204222015}
   - {fileID: 378491264}
@@ -6181,6 +6182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22c25bb432a69c41b9b47bf52884279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 647856007}
   groundCheck: {fileID: 2066096959}
   weapon1: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258, type: 2}
   dashCooldown: 2

@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour {
     //private ObjectiveHealth objectiveHealth;
     public static GameManager instance = null;
     private ObjectiveHealth objHealth;
+    private PlayerHealthSystem plyHealth;
     private CameraController camController;
-    public GameObject boomEffect, enemy1, enemy2;
+    public GameObject boomEffect, enemy1, enemy2, player1;
 
     // Spawning and pathing
     public Transform[] path1, path2;
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour {
     void InitGame()
     {
         objHealth = GetComponent<ObjectiveHealth>();
+        plyHealth = GetComponent<PlayerHealthSystem>();
         camController = GetComponent<CameraController>();
         enemies = new List<GameObject>();
 
@@ -122,11 +124,6 @@ public class GameManager : MonoBehaviour {
     // Update is called every frame
     void Update()
     {
-<<<<<<< HEAD
-        // Debug.Log(currentWave + " " + currentSpawn);
-=======
-        //Debug.Log(currentWave + " " + currentSpawn);
->>>>>>> 62c20a5422ba079ec55000fd05921d305d8ec2f5
         Spawn();
         ClearDead();
     }
@@ -231,5 +228,20 @@ public class GameManager : MonoBehaviour {
     {
         camController.Shake(0.1f);
         objHealth.TakeDamage(damage);
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        plyHealth.TakeDamage(damage);
+    }
+
+    public void DamagePlayer(float damage)
+    {
+        plyHealth.TakeDamage((int) damage);
+    }
+
+    public Transform GetPlayerPosition()
+    {
+        return player1.transform;
     }
 }

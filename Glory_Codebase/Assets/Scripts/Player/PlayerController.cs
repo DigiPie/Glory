@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    public GameManager gameManager;
     private Animator animator;
     private Rigidbody2D rb2d;
     private SpriteRenderer sprite;
@@ -122,11 +123,6 @@ public class PlayerController : MonoBehaviour {
         {
             againstWall = true;
         }
-
-        if (collision.gameObject.layer == 13)
-        {
-            againstEnemyAttack = true;
-        }
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -136,10 +132,21 @@ public class PlayerController : MonoBehaviour {
         {
             againstWall = false;
         }
+    }
 
-        if (collision.gameObject.layer == 13)
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        collisionOnRight = collider.transform.position.x > transform.position.x;
+
+        if (collider.gameObject.layer == 13)
         {
-            againstEnemyAttack = false;
+            if (isInvul)
+            {
+                return;
+            }
+
+            gameManager.DamagePlayer(collider.GetComponent<EnemyWeapon>().damage);
+            againstEnemyAttack = true;
         }
     }
 
@@ -207,6 +214,8 @@ public class PlayerController : MonoBehaviour {
             {
                 rb2d.AddForce(bounceEnemyLeftV);
             }
+
+            againstEnemyAttack = false;
         }
 
         // Return true if bouncing off either against wall or enemy

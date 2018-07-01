@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class EnemyController2 : EnemyController
 {
-    private bool isAttackAnimStarted = false;
+    public GameObject enemyWeapon;
 
-    override protected void AI()
+    private bool isAttackingPlayer = false;
+    private bool isAttackingObjective = false;
+
+    protected override void AI()
     {
         // Stunned for defaultStunDuration when damaged by any attacks.
         // If stunned by weapon effect, weapon stun duration is used instead
@@ -15,20 +18,65 @@ public class EnemyController2 : EnemyController
             if (Time.time > stunEndTime)
             {
                 isStunned = false;
-                isAttackAnimStarted = false; // Cancel any ongoing attack
+                isAttackingObjective = false; // Cancel any ongoing attack
             }
 
             return;
         }
 
-        // If attack animation was started and is at weapon slam frame, damage objective
-        if (isAttackAnimStarted && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
-            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.45f)
+        // Distance calculations to check proximity to player
+        distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
+        absDistToTargetX = Mathf.Abs(distToTargetX);
+
+        // If attack for player was started and is at weapon slam frame, spawn a melee projectile that damages player
+        if (isAttackingPlayer && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
+            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
         {
-            gameManager.DamageObjective(attackDamage);
-            isAttackAnimStarted = false;
+            AttackPlayer();
+            isAttackingPlayer = false;
         }
 
+        // If within attack range to player
+        if (absDistToTargetX < distDeadzone)
+        {
+            // Stop
+            AImoveH = 0;
+
+            // Face Player
+            if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                facingLeft = distToTargetX < 0;
+                sprite.flipX = facingLeft;
+            }
+
+            // Attack
+            if (attackReady)
+            {
+                attackReady = false;
+                attackReadyTime = Time.time + attackCooldown;
+                animator.Play("Attack");
+                isAttackingPlayer = true;
+            }
+            else
+            {
+                if (Time.time > attackReadyTime)
+                {
+                    attackReady = true;
+                }
+            }
+
+            return;
+        }
+
+        // If attack for objective was started and is at weapon slam frame, damage objective
+        if (isAttackingObjective && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
+            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
+        {
+            gameManager.DamageObjective(attackDamage);
+            isAttackingObjective = false;
+        }
+
+        // Distance calculations for path movement and objective attack
         distToTargetX = path[currentTarget].position.x - transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
 
@@ -47,7 +95,7 @@ public class EnemyController2 : EnemyController
                     attackReady = false;
                     attackReadyTime = Time.time + attackCooldown;
                     animator.Play("Attack");
-                    isAttackAnimStarted = true;
+                    isAttackingObjective = true;
                 }
                 else
                 {
@@ -100,6 +148,22 @@ public class EnemyController2 : EnemyController
                     AImoveH = -1;
                 }
             }
+        }
+    }
+
+    void AttackPlayer()
+    {
+        // Create a melee projectile
+        GameObject projectile = Instantiate(enemyWeapon, this.transform);
+
+        // Assign weapon direction
+        if (facingLeft)
+        {
+            projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(-1, 0));
+        }
+        else
+        {
+            projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(1, 0));
         }
     }
 }
