@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+        //mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
     }
 
     public void Shake(float shakeAmount)
