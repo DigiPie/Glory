@@ -12,7 +12,11 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD:Glory_Codebase/Assets/Scripts/CameraController.cs
         mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+=======
+        //mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+>>>>>>> parent of 745cbc7... Merge branch 'master' of https://github.com/DigiPie/Glory:Glory_Codebase/Assets/Scripts/CameraController.cs
     }
 
     public void Shake(float shakeAmount)
