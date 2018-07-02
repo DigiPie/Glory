@@ -14,29 +14,29 @@ public class BlinkSystem : MonoBehaviour {
 	void Update () {
         if (isBlinking)
         {
-            if (Time.timeSinceLevelLoad > blinkEndTime)
+            if (Time.time > blinkEndTime)
             {
                 isBlinking = false;
                 this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 return;
             }
             
-            if (Time.timeSinceLevelLoad > miniBlinkEndTime)
+            if (Time.time > miniBlinkEndTime)
             {
                 isVisible = !isVisible;
                 this.gameObject.GetComponent<SpriteRenderer>().enabled = isVisible;
-                miniBlinkEndTime = Time.timeSinceLevelLoad + miniBlinkDuration;
+                miniBlinkEndTime = Time.time + miniBlinkDuration;
             }
         }
     }
 
     public void StartBlink() {
         isBlinking = true;
-        blinkEndTime = Time.timeSinceLevelLoad + blinkDuration;
+        blinkEndTime = Time.time + blinkDuration;
 
         isVisible = false;
         this.gameObject.GetComponent<SpriteRenderer>().enabled = isVisible;
-        miniBlinkEndTime = Time.timeSinceLevelLoad + miniBlinkDuration;
+        miniBlinkEndTime = Time.time + miniBlinkDuration;
     }
 
     public void StartBlink(float blinkDuration)
@@ -44,10 +44,10 @@ public class BlinkSystem : MonoBehaviour {
         this.blinkDuration = blinkDuration;
 
         isBlinking = true;
-        blinkEndTime = Time.timeSinceLevelLoad + blinkDuration;
+        blinkEndTime = Time.time + blinkDuration;
 
         isVisible = false;
         this.gameObject.GetComponent<SpriteRenderer>().enabled = isVisible;
-        miniBlinkEndTime = Time.timeSinceLevelLoad + miniBlinkDuration;
+        miniBlinkEndTime = Time.time + miniBlinkDuration;
     }
 }

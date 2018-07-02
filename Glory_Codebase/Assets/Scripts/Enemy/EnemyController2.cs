@@ -15,7 +15,7 @@ public class EnemyController2 : EnemyController
         // If stunned by weapon effect, weapon stun duration is used instead
         if (isStunned)
         {
-            if (Time.timeSinceLevelLoad > stunEndTime)
+            if (Time.time > stunEndTime)
             {
                 isStunned = false;
                 isAttackingObjective = false; // Cancel any ongoing attack
@@ -53,13 +53,13 @@ public class EnemyController2 : EnemyController
             if (attackReady)
             {
                 attackReady = false;
-                attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
+                attackReadyTime = Time.time + attackCooldown;
                 animator.Play("Attack");
                 isAttackingPlayer = true;
             }
             else
             {
-                if (Time.timeSinceLevelLoad > attackReadyTime)
+                if (Time.time > attackReadyTime)
                 {
                     attackReady = true;
                 }
@@ -93,13 +93,13 @@ public class EnemyController2 : EnemyController
                 if (attackReady)
                 {
                     attackReady = false;
-                    attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
+                    attackReadyTime = Time.time + attackCooldown;
                     animator.Play("Attack");
                     isAttackingObjective = true;
                 }
                 else
                 {
-                    if (Time.timeSinceLevelLoad > attackReadyTime)
+                    if (Time.time > attackReadyTime)
                     {
                         attackReady = true;
                     }
