@@ -14,7 +14,7 @@ public class ObjectiveHealth : MonoBehaviour
 
     // Animator anim;                                              // Reference to the Animator component.
     // AudioSource playerAudio;                                    // Reference to the AudioSource component.
-    bool isDestroyed;                                              // Whether the objective is destroyed.
+    public bool isDestroyed;                                       // Whether the objective is destroyed.
     bool damaged;                                                  // True when the objective gets damaged.
 
 
@@ -86,7 +86,7 @@ public class ObjectiveHealth : MonoBehaviour
         // playerAudio.Play();
 
         // If the player has lost all it's health and the death flag hasn't been set yet...
-        if (currentHealth != 0 && !isDestroyed)
+        if (currentHealth <= 0 && !isDestroyed)
         {
             // ... it should die.
             Destroyed();
