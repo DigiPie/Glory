@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomCamController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     Vector3 originalPosition;
     float shakeAmount = 0;
+    public Camera mainCamera;
     public Transform camTarget;
     private bool isShaking = false;
 
     void Update()
     {
-        transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+<<<<<<< HEAD:Glory_Codebase/Assets/Scripts/CameraController.cs
+        mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+=======
+        //mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+>>>>>>> parent of 745cbc7... Merge branch 'master' of https://github.com/DigiPie/Glory:Glory_Codebase/Assets/Scripts/CameraController.cs
     }
 
     public void Shake(float shakeAmount)
@@ -32,16 +37,16 @@ public class CustomCamController : MonoBehaviour
         if (shakeAmount > 0)
         {
             float quakeAmt = Random.value * shakeAmount * 2 - shakeAmount;
-            Vector3 pp = transform.position;
+            Vector3 pp = mainCamera.transform.position;
             pp.y += quakeAmt; // can also add to x and/or z
-            transform.position = pp;
+            mainCamera.transform.position = pp;
         }
     }
 
     void EndShake()
     {
         CancelInvoke("StartShake");
-        transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+        mainCamera.transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
         isShaking = false;
     }
 }

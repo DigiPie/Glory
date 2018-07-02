@@ -240,14 +240,14 @@ public class PlayerController : MonoBehaviour {
                 animator.Play("Slide");
 
                 dashReady = false;
-                dashReadyTime = Time.timeSinceLevelLoad + dashCooldown;
+                dashReadyTime = Time.time + dashCooldown;
                 isInvul = true;
-                invulEndTime = Time.timeSinceLevelLoad + dashInvulDuration;
+                invulEndTime = Time.time + dashInvulDuration;
             }
         }
         else
         {
-            if (Time.timeSinceLevelLoad > dashReadyTime)
+            if (Time.time > dashReadyTime)
             {
                 dashReady = true;
             }
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour {
         // Invulnerability can be triggered by dashing and ...
         if (isInvul)
         {
-            if (Time.timeSinceLevelLoad > invulEndTime)
+            if (Time.time > invulEndTime)
             {
                 isInvul = false;
             }
@@ -342,11 +342,11 @@ public class PlayerController : MonoBehaviour {
         {
             if (inputAttack1)
             {
-                if (Time.timeSinceLevelLoad < comboEndTime)
+                if (Time.time < comboEndTime)
                 {
                     // If existing combo
                     combo++;
-                    comboEndTime = Time.timeSinceLevelLoad + comboDuration;
+                    comboEndTime = Time.time + comboDuration;
                     isCriticalStrike = combo % 3 == 0;
 
                     // For every 3rd hit, play attack 3 (360 backhand strike)
@@ -372,7 +372,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     // If new combo
                     combo = 1;
-                    comboEndTime = Time.timeSinceLevelLoad + comboDuration;
+                    comboEndTime = Time.time + comboDuration;
                     isCriticalStrike = false;
 
                     // Randomly select between attack 1 and attack 2 animation
@@ -401,12 +401,12 @@ public class PlayerController : MonoBehaviour {
 
                 // Cooldown
                 attack1Ready = false;
-                attack1ReadyTime = Time.timeSinceLevelLoad + attack1Cooldown;
+                attack1ReadyTime = Time.time + attack1Cooldown;
             }
         }
         else
         {
-            if (Time.timeSinceLevelLoad > attack1ReadyTime)
+            if (Time.time > attack1ReadyTime)
             {
                 attack1Ready = true;
             }

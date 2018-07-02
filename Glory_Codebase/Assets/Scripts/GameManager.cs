@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     public struct EnemySpawnInfo
@@ -18,15 +17,11 @@ public class GameManager : MonoBehaviour {
         public float spawnInterval; // The interval between this enemy spawn and the next's enemy spawn.
     }
 
-    // Game State
-    private bool isGameRunning = false;
-
     //private ObjectiveHealth objectiveHealth;
     public static GameManager instance = null;
-
-    public CustomCamController camController;
-    public ObjectiveHealth objHealth;
-    public PlayerHealthSystem plyHealth;
+    private ObjectiveHealth objHealth;
+    private PlayerHealthSystem plyHealth;
+    private CameraController camController;
     public GameObject boomEffect, enemy1, enemy2, player1;
 
     // Spawning and pathing
@@ -60,26 +55,18 @@ public class GameManager : MonoBehaviour {
         }
 
         // Do not destroy this when reloading scene
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         // Start game
         InitGame();
     }
 
-    public void RunGame(bool isGameRunning)
-    {
-        this.isGameRunning = isGameRunning;
-    }
-
-    public void ExitGame()
-    {
-        isGameRunning = false;
-    }
-
-
     // Initializes the game for each level.
     void InitGame()
     {
+        objHealth = GetComponent<ObjectiveHealth>();
+        plyHealth = GetComponent<PlayerHealthSystem>();
+        camController = GetComponent<CameraController>();
         enemies = new List<GameObject>();
 
         // Enemy spawn type and path
@@ -106,12 +93,14 @@ public class GameManager : MonoBehaviour {
         // Number of waves
         waves = new EnemySpawnInfo[5][];
 
-        /*waves[0] = new EnemySpawnInfo[4];
+        // Wave 1
+        waves[0] = new EnemySpawnInfo[4];
         waves[0][0] = harmlessLeft;
         waves[0][1] = harmfulRight;
         waves[0][2] = harmfulLeft;
-        waves[0][3] = harmlessRight;*/
+        waves[0][3] = harmlessRight;
 
+<<<<<<< HEAD
         // Wave 1
         waves[0] = new EnemySpawnInfo[10];
         waves[0][0] = foxL1_5;
@@ -124,6 +113,13 @@ public class GameManager : MonoBehaviour {
         waves[0][7] = foxR1_5;
         waves[0][8] = foxL0;
         waves[0][9] = foxR0;
+=======
+        /*waves[0] = new EnemySpawnInfo[4];
+        waves[0][0] = harmlessLeft;
+        waves[0][1] = harmlessLeft;
+        waves[0][2] = harmlessLeft;
+        waves[0][3] = harmlessLeft;
+>>>>>>> 7fd42758665eb91efa00002105c2cb4be9b4b3ae
 
         // Wave 2
         waves[1] = new EnemySpawnInfo[16];
@@ -211,11 +207,6 @@ public class GameManager : MonoBehaviour {
     // Update is called every frame
     void Update()
     {
-        /*if (!isGameRunning)
-        {
-            return;
-        }*/
-
         Spawn();
         ClearDead();
     }
@@ -236,6 +227,7 @@ public class GameManager : MonoBehaviour {
             }
 
             if (Time.timeSinceLevelLoad > nextWaveReadyTime)
+            if (Time.time > nextWaveReadyTime)
             {
                 isWaveFullySpawned = false;
                 isWaveCleared = false;
@@ -252,12 +244,14 @@ public class GameManager : MonoBehaviour {
                 currentWave++;
                 currentSpawn = 0;
                 nextWaveReadyTime = Time.timeSinceLevelLoad + waveInterval;
+                nextWaveReadyTime = Time.time + waveInterval;
             }
 
             return;
         }
 
         if (Time.timeSinceLevelLoad > spawnReadyTime)
+        if (Time.time > spawnReadyTime)
         {
             if (enemies.Count < 40)
             {
@@ -268,6 +262,7 @@ public class GameManager : MonoBehaviour {
                 }
 
                 spawnReadyTime = Time.timeSinceLevelLoad + waves[currentWave][currentSpawn].spawnInterval;
+                spawnReadyTime = Time.time + waves[currentWave][currentSpawn].spawnInterval;
 
                 // Get enemy
                 GameObject enemy = enemy1; // Default enemy type
