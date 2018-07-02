@@ -140,7 +140,7 @@ public abstract class EnemyController : MonoBehaviour {
             // Unable to move while stunned
             AImoveH = 0;
             isStunned = true;
-            stunEndTime = Time.time + defaultStunDuration;
+            stunEndTime = Time.timeSinceLevelLoad + defaultStunDuration;
 
             // Throwback effect
             if (collisionOnRight)
