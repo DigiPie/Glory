@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyController2 : EnemyController
 {
-    public GameObject enemyWeapon;
-
     private bool isAttackingPlayer = false;
     private bool isAttackingObjective = false;
 
@@ -72,7 +70,7 @@ public class EnemyController2 : EnemyController
         if (isAttackingObjective && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
             && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
         {
-            gameManager.DamageObjective(attackDamage);
+            gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
             isAttackingObjective = false;
         }
 

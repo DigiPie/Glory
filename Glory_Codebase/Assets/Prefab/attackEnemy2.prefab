@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212202889397029226}
   - component: {fileID: 114931101854327666}
   m_Layer: 13
-  m_Name: enemy2Attack
+  m_Name: attackEnemy2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,8 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56d52db8d1598b4a995cc69239bbb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 1
-  damage: 20
+  cooldown: 2
+  damage: 12
   lifespan: 0.25
   speed: 0.05
 --- !u!212 &212202889397029226

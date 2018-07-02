@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour {
     public bool isGameDone = false;
     private bool isWaveFullySpawned = true;
     private bool isWaveCleared = true;
-    private float waveInterval = 8.0f; // Delay between each wave
-    private float nextWaveReadyTime = 2.0f;
+    private float waveInterval = 5.0f; // Delay between each wave
+    private float nextWaveReadyTime = 5.0f;
     private int currentSpawn = 0; // Current minion to spawn for this wave
     private float spawnReadyTime;
 
@@ -83,16 +83,28 @@ public class GameManager : MonoBehaviour {
         enemies = new List<GameObject>();
 
         // Enemy spawn type and path
-        EnemySpawnInfo harmlessLeft = new EnemySpawnInfo(0, 0, 1.5f); // Does not attack player, spawns at spawn point 0
-        EnemySpawnInfo harmlessRight = new EnemySpawnInfo(0, 1, 0.8f); // Does not attack player, spawns at spawn point 0
-        EnemySpawnInfo harmlessLeft2 = new EnemySpawnInfo(0, 0, 2.0f);
-        EnemySpawnInfo harmlessRight2 = new EnemySpawnInfo(0, 1, 2.0f);
-        
-        EnemySpawnInfo harmfulLeft = new EnemySpawnInfo(1, 0, 2.0f); // Attacks player, spawns at spawn point 0
-        EnemySpawnInfo harmfulRight = new EnemySpawnInfo(1, 1, 2.0f); // Attacks player, spawns at spawn point 1
+        // Fox - Does not attack player
+        EnemySpawnInfo foxL0 = new EnemySpawnInfo(0, 0, 0);
+        EnemySpawnInfo foxL0_5 = new EnemySpawnInfo(0, 0, 0.5f);
+        EnemySpawnInfo foxL1_5 = new EnemySpawnInfo(0, 0, 1.5f);
+        EnemySpawnInfo foxL5 = new EnemySpawnInfo(0, 0, 5.0f);
+
+        EnemySpawnInfo foxR0 = new EnemySpawnInfo(0, 1, 0);
+        EnemySpawnInfo foxR0_5 = new EnemySpawnInfo(0, 1, 0.5f);
+        EnemySpawnInfo foxR1_5 = new EnemySpawnInfo(0, 1, 1.5f);
+        EnemySpawnInfo foxR5 = new EnemySpawnInfo(0, 1, 5.0f);
+
+        // Fox - Does not attack player
+        EnemySpawnInfo skeL0 = new EnemySpawnInfo(1, 0, 0);
+        EnemySpawnInfo skeL1 = new EnemySpawnInfo(1, 0, 1.0f);
+        EnemySpawnInfo skeL3 = new EnemySpawnInfo(1, 0, 3.0f);
+
+        EnemySpawnInfo skeR0 = new EnemySpawnInfo(1, 1, 0);
+        EnemySpawnInfo skeR1 = new EnemySpawnInfo(1, 1, 1.0f);
+        EnemySpawnInfo skeR3 = new EnemySpawnInfo(1, 1, 3.0f);
 
         // Number of waves
-        waves = new EnemySpawnInfo[1][];
+        waves = new EnemySpawnInfo[5][];
 
         /*waves[0] = new EnemySpawnInfo[4];
         waves[0][0] = harmlessLeft;
@@ -101,37 +113,99 @@ public class GameManager : MonoBehaviour {
         waves[0][3] = harmlessRight;*/
 
         // Wave 1
-        waves[0] = new EnemySpawnInfo[4];
-        waves[0][0] = harmlessLeft;
-        waves[0][1] = harmlessLeft;
-        waves[0][2] = harmlessLeft;
-        waves[0][3] = harmlessLeft;
+        waves[0] = new EnemySpawnInfo[10];
+        waves[0][0] = foxL1_5;
+        waves[0][1] = foxL1_5;
+        waves[0][2] = foxR1_5;
+        waves[0][3] = foxR5;
+        waves[0][4] = foxL0;
+        waves[0][5] = foxR5;
+        waves[0][6] = foxL0;
+        waves[0][7] = foxR1_5;
+        waves[0][8] = foxL0;
+        waves[0][9] = foxR0;
 
         // Wave 2
-        waves[1] = new EnemySpawnInfo[8];
-        waves[1][0] = harmlessRight;
-        waves[1][1] = harmlessRight;
-        waves[1][2] = harmlessRight;
-        waves[1][3] = harmlessRight;
-        waves[1][4] = harmlessRight;
-        waves[1][5] = harmlessRight;
-        waves[1][6] = harmlessRight;
-        waves[1][7] = harmlessRight;
+        waves[1] = new EnemySpawnInfo[16];
+        waves[1][0] = foxL0_5;
+        waves[1][1] = foxL0_5;
+        waves[1][2] = foxL0_5;
+        waves[1][3] = foxL5;
+        waves[1][4] = foxR0_5;
+        waves[1][5] = foxR0_5;
+        waves[1][6] = foxR0_5;
+        waves[1][7] = foxR5;
+
+        waves[1][8] = foxL0;
+        waves[1][9] = foxR0;
+        waves[1][10] = foxL0;
+        waves[1][11] = foxR0_5;
+        waves[1][12] = foxL0;
+        waves[1][13] = foxR0_5;
+        waves[1][14] = foxL0;
+        waves[1][15] = foxL5;
 
         // Wave 3
-        waves[2] = new EnemySpawnInfo[12];
-        waves[2][0] = harmlessLeft2;
-        waves[2][1] = harmlessLeft2;
-        waves[2][2] = harmlessRight2;
-        waves[2][3] = harmlessRight2;
-        waves[2][4] = harmlessLeft2;
-        waves[2][5] = harmlessLeft2;
-        waves[2][6] = harmlessRight2;
-        waves[2][7] = harmlessLeft2;
-        waves[2][8] = harmlessRight2;
-        waves[2][9] = harmlessLeft2;
-        waves[2][10] = harmlessRight2;
-        waves[2][11] = harmlessLeft2;*/
+        waves[2] = new EnemySpawnInfo[20];
+        waves[2][0] = foxL0_5;
+        waves[2][1] = foxL0_5;
+        waves[2][2] = foxL1_5;
+        waves[2][3] = foxR0_5;
+        waves[2][4] = foxR0_5;
+        waves[2][5] = foxR5;
+
+        waves[2][6] = foxL0;
+        waves[2][7] = foxR0_5;
+        waves[2][8] = foxL0;
+        waves[2][9] = foxR5;
+
+        waves[2][7] = foxL0;
+        waves[2][8] = foxR0_5;
+        waves[2][9] = foxL0;
+        waves[2][10] = foxR0_5;
+        waves[2][11] = foxL0;
+        waves[2][12] = foxR0_5;
+        waves[2][13] = foxL0;
+        waves[2][14] = foxR0_5;
+        waves[2][15] = foxL0;
+        waves[2][16] = foxR0_5;
+        waves[2][17] = foxL0;
+        waves[2][18] = foxR0_5;
+        waves[2][19] = foxL5;
+
+        // Wave 4
+        waves[3] = new EnemySpawnInfo[12];
+        waves[3][0] = foxL0_5;
+        waves[3][1] = foxL0_5;
+        waves[3][2] = foxL0_5;
+        waves[3][3] = foxL1_5;
+        waves[3][4] = foxR0_5;
+        waves[3][5] = foxR0_5;
+        waves[3][6] = foxR0_5;
+        waves[3][7] = foxR5;
+
+        waves[3][8] = skeL3;
+        waves[3][9] = skeL3;
+        waves[3][10] = skeL0;
+        waves[3][11] = skeR0;
+
+        // Wave 5
+        waves[4] = new EnemySpawnInfo[12];
+        waves[4][0] = skeL1;
+        waves[4][1] = skeL3;
+
+        waves[4][2] = foxR0_5;
+        waves[4][3] = foxR0_5;
+        waves[4][4] = foxR0_5;
+        waves[4][5] = foxR5;
+
+        waves[4][6] = skeL1;
+        waves[4][7] = foxL0_5;
+        waves[4][8] = foxL0_5;
+        waves[4][9] = foxL5;
+
+        waves[4][10] = skeL0;
+        waves[4][11] = skeR0;
     }
 
     // Update is called every frame
@@ -232,6 +306,7 @@ public class GameManager : MonoBehaviour {
             {
                 if (enemy.GetComponent<EnemyHealthSystem>().IsDead())
                 {
+                    camController.Shake(0.01f);
                     Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
                     enemies.Remove(enemy);
                     Destroy(enemy);
@@ -248,14 +323,21 @@ public class GameManager : MonoBehaviour {
         objHealth.TakeDamage(damage);
     }
 
+    public void DamageObjective(float damage)
+    {
+        DamageObjective((int)damage);
+    }
+
+
     public void DamagePlayer(int damage)
     {
+        camController.Shake(0.2f);
         plyHealth.TakeDamage(damage);
     }
 
     public void DamagePlayer(float damage)
     {
-        plyHealth.TakeDamage((int) damage);
+        DamagePlayer((int) damage);
     }
 
     public Transform GetPlayerPosition()

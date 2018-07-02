@@ -46,8 +46,8 @@ public abstract class EnemyController : MonoBehaviour {
     public float throwbackForce = 2f; // When hit by attack
 
     // Objective Attack
-    public float attackCooldown = 1.5f; // Minimum wait-time before next attack can be triggered
-    public int attackDamage = 7;
+    public GameObject enemyWeapon;
+    protected float attackCooldown; // Minimum wait-time before next attack can be triggered
     protected bool attackReady = true; // Reliant on attack1Cooldown
     protected float attackReadyTime = 0; // The time at which attack1Ready will be set to true again
 
@@ -59,6 +59,8 @@ public abstract class EnemyController : MonoBehaviour {
         blinkSystem = GetComponent<BlinkSystem>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+
+        attackCooldown = enemyWeapon.GetComponent<EnemyWeapon>().cooldown;
 
         distDeadzone = Random.Range(minAttackRange, maxAttackRange);
 
