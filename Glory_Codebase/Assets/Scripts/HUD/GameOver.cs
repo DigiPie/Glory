@@ -24,6 +24,12 @@ public class GameOver : MonoBehaviour {
             txtGameOver.text = "GAME OVER!";
             Time.timeScale = 0f;
         }
+        if (FindObjectOfType<PlayerHealthSystem>().isDead)
+        {
+            GameOverScreenUI.SetActive(true);
+            txtGameOver.text = "GAME OVER!";
+            Time.timeScale = 0f;
+        }
         if (FindObjectOfType<GameManager>().isGameDone)
         {
             GameOverScreenUI.SetActive(true);
