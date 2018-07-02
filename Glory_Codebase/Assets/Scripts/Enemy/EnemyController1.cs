@@ -10,7 +10,7 @@ public class EnemyController1 : EnemyController
         // If stunned by weapon effect, weapon stun duration is used instead
         if (isStunned)
         {
-            if (Time.time > stunEndTime)
+            if (Time.timeSinceLevelLoad > stunEndTime)
             {
                 isStunned = false;
             }
@@ -35,12 +35,12 @@ public class EnemyController1 : EnemyController
                 {
                     gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
                     attackReady = false;
-                    attackReadyTime = Time.time + attackCooldown;
+                    attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
                     animator.Play("Attack");
                 }
                 else
                 {
-                    if (Time.time > attackReadyTime)
+                    if (Time.timeSinceLevelLoad > attackReadyTime)
                     {
                         attackReady = true;
                     }
