@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
     // Spawning and pathing
     public Transform[] path1, path2;
     private EnemySpawnInfo[][] waves;
-    public int currentWave = 0;
+    private int currentWave = 0;
     public bool isGameDone = false;
     private bool isWaveFullySpawned = true;
     private bool isWaveCleared = true;
@@ -343,5 +343,10 @@ public class GameManager : MonoBehaviour {
     public Transform GetPlayerPosition()
     {
         return player1.transform;
+    }
+
+    public int GetWave()
+    {
+        return currentWave + 1;
     }
 }

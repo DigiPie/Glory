@@ -18,6 +18,6 @@ public class OtherInfo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         txtEnemiesLeft.text = GameObject.FindGameObjectsWithTag("Enemy").Length.ToString();
-        txtWaveNumber.text = "WAVE " + FindObjectOfType<GameManager>().currentWave;
+        txtWaveNumber.text = "Wave: " + gameManager.GetWave();
 	}
 }
