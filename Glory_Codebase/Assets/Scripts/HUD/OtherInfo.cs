@@ -17,7 +17,7 @@ public class OtherInfo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        txtEnemiesLeft.text = GameObject.FindGameObjectsWithTag("Enemy").Length.ToString();
+        txtEnemiesLeft.text = gameManager.GetEnemyCount().ToString();
         txtWaveNumber.text = "Wave: " + gameManager.GetWave();
 	}
 }

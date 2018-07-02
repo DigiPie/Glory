@@ -349,4 +349,9 @@ public class GameManager : MonoBehaviour {
     {
         return currentWave + 1;
     }
+
+    public int GetEnemyCount()
+    {
+        return enemies.Count;
+    }
 }
