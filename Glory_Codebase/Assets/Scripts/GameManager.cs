@@ -104,16 +104,14 @@ public class GameManager : MonoBehaviour {
         EnemySpawnInfo skeR3 = new EnemySpawnInfo(1, 1, 3.0f);
 
         // Number of waves
-        waves = new EnemySpawnInfo[5][];
+        waves = new EnemySpawnInfo[1][];
 
-        /*waves[0] = new EnemySpawnInfo[4];
-        waves[0][0] = harmlessLeft;
-        waves[0][1] = harmfulRight;
-        waves[0][2] = harmfulLeft;
-        waves[0][3] = harmlessRight;*/
+        waves[0] = new EnemySpawnInfo[2];
+        waves[0][0] = skeR0;
+        waves[0][1] = skeR3;
 
         // Wave 1
-        waves[0] = new EnemySpawnInfo[10];
+        /*waves[0] = new EnemySpawnInfo[10];
         waves[0][0] = foxL1_5;
         waves[0][1] = foxL1_5;
         waves[0][2] = foxR1_5;
@@ -205,7 +203,7 @@ public class GameManager : MonoBehaviour {
         waves[4][9] = foxL5;
 
         waves[4][10] = skeL0;
-        waves[4][11] = skeR0;
+        waves[4][11] = skeR0;*/
     }
 
     // Update is called every frame

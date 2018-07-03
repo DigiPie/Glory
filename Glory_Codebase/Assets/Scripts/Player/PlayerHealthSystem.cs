@@ -91,6 +91,7 @@ public class PlayerHealthSystem : MonoBehaviour
         {
             currentHealth += amount;
         }
+
         healthSlider.value = currentHealth;
     }
 
