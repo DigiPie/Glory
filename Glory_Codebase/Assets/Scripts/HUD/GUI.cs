@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class OtherInfo : MonoBehaviour {
+public class GUI : MonoBehaviour {
 
     public GameManager gameManager;
     public TextMeshProUGUI txtWaveNumber;
@@ -17,7 +17,7 @@ public class OtherInfo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        txtEnemiesLeft.text = gameManager.GetEnemyCount().ToString();
+        txtEnemiesLeft.text = "Monsters: " + gameManager.GetEnemyCount().ToString();
         txtWaveNumber.text = "Wave: " + gameManager.GetWave();
 	}
 }
