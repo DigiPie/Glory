@@ -106,9 +106,10 @@ public class GameManager : MonoBehaviour {
         // Number of waves
         waves = new EnemySpawnInfo[1][];
 
-        waves[0] = new EnemySpawnInfo[2];
-        waves[0][0] = skeR0;
-        waves[0][1] = skeR3;
+        waves[0] = new EnemySpawnInfo[3];
+        waves[0][0] = skeR1;
+        waves[0][1] = foxL0;
+        waves[0][2] = skeR3;
 
         // Wave 1
         /*waves[0] = new EnemySpawnInfo[10];
