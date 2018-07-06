@@ -6,16 +6,16 @@ public class ObjectiveHealth : MonoBehaviour
 {
     public int startingHealth = 200;                            // The amount of health the objective starts the game with.
     public int currentHealth;                                   // The current health the player has.
-    public Slider objHealthSlider;                              // Reference to the UI's health bar.
-    public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
+    //public Slider objHealthSlider;                              // Reference to the UI's health bar.
+    // public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
     // public AudioClip deathClip;                                 // The audio clip to play when the player dies.
-    public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
-    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
+    // public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
+    // public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
 
     // Animator anim;                                              // Reference to the Animator component.
     // AudioSource playerAudio;                                    // Reference to the AudioSource component.
     public bool isDestroyed;                                       // Whether the objective is destroyed.
-    bool damaged;                                                  // True when the objective gets damaged.
+    public bool damaged;                                                  // True when the objective gets damaged.
 
 
     void Awake()
@@ -34,6 +34,7 @@ public class ObjectiveHealth : MonoBehaviour
 
     void Update()
     {
+        /*
         // If the player has just been damaged...
         if (damaged)
         {
@@ -46,7 +47,7 @@ public class ObjectiveHealth : MonoBehaviour
             // ... transition the colour back to clear.
             damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
-
+        */
         // Reset the damaged flag.
         damaged = false;
 
@@ -67,7 +68,7 @@ public class ObjectiveHealth : MonoBehaviour
         {
             currentHealth += amount;
         }
-        objHealthSlider.value = currentHealth;
+        // objHealthSlider.value = currentHealth;
     }
 
 
@@ -80,7 +81,7 @@ public class ObjectiveHealth : MonoBehaviour
         currentHealth -= amount;
 
         // Set the health bar's value to the current health.
-        objHealthSlider.value = currentHealth;
+        // objHealthSlider.value = currentHealth;
 
         // Play the hurt sound effect.
         // playerAudio.Play();
@@ -91,6 +92,11 @@ public class ObjectiveHealth : MonoBehaviour
             // ... it should die.
             Destroyed();
         }
+    }
+    
+    public int getCurrentHealth()
+    {
+        return currentHealth;
     }
 
 
