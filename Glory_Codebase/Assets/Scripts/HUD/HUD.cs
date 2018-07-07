@@ -23,17 +23,20 @@ public class HUD : MonoBehaviour {
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
     public Color flashColour2 = new Color(1f, 0f, 0f, 0.5f);    // PlayerDamageImage
 
+    private bool inputNext;
+    private bool allowInputNext = true;
+
     // Use this for initialization
     void Start () {
 
 	}
 
-    // Update is called once per frame
-    void Update() {
+    // Update is called in-step with the physics engine
+    void FixedUpdate() {
         objHealthSlider.value = objectiveHealth.getCurrentHealth();
         healthSlider.value = playerHealthSystem.getCurrentHealth();
-        txtEnemiesLeft.text = "Monsters: " + gameManager.GetEnemyCount().ToString();
-        txtWaveNumber.text = "Wave: " + gameManager.GetWave();
+        txtEnemiesLeft.text = gameManager.GetEnemyDisplay();
+        txtWaveNumber.text = gameManager.GetWaveDisplay();
 
         if (objectiveHealth.damaged)
         {
@@ -52,10 +55,30 @@ public class HUD : MonoBehaviour {
         {
             playerDamageImage.color = Color.Lerp(playerDamageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
+
+        inputNext = Input.GetButton("Submit");
+
+        if (inputNext)
+        {
+            OnClickNextWaveBtn();
+        }
     }
 
-    public void waveTransition()
+
+    public void ShowNextWaveBtn()
     {
+        allowInputNext = true;
         popUpHUD.SetActive(true);
+    }
+
+    public void OnClickNextWaveBtn()
+    {
+        if (allowInputNext)
+        {
+            allowInputNext = false;
+            Debug.Log("Click");
+            popUpHUD.SetActive(false);
+            gameManager.StartNextWave();
+        }
     }
 }

@@ -263,7 +263,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1303328453}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1359,7 +1359,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -200, y: -40}
-  m_SizeDelta: {x: 250, y: 40}
+  m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &528678060
 MonoBehaviour:
@@ -1380,7 +1380,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'WAVE: 1'
+  m_text: 'Wave: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d62a573c923f5cb47b8ff65261033b90, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: d62a573c923f5cb47b8ff65261033b90, type: 2}
@@ -1448,10 +1448,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 528678060}
-    characterCount: 7
+    characterCount: 6
     spriteCount: 0
     spaceCount: 1
-    wordCount: 2
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1557,6 +1557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 647856006}
   - component: {fileID: 647856007}
+  - component: {fileID: 647856008}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -1588,6 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1dbab42d2084b47a379da8cb643fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hud: {fileID: 1303328454}
   camController: {fileID: 519420030}
   objHealth: {fileID: 2062986160}
   plyHealth: {fileID: 2062986161}
@@ -1595,14 +1597,25 @@ MonoBehaviour:
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   player1: {fileID: 1701403904}
+  isGameDone: 0
+  isWaveCleared: 1
   path1:
   - {fileID: 1204222015}
   - {fileID: 378491264}
   path2:
   - {fileID: 897010361}
   - {fileID: 378491264}
-  isGameDone: 0
-  isWaveCleared: 1
+--- !u!114 &647856008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 647856005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0304e25000778734db3a5693b4b00f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &652482220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1649,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 200, y: -40}
-  m_SizeDelta: {x: 250, y: 40}
+  m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &652482222
 MonoBehaviour:
@@ -1657,7 +1670,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'MONSTERS: 1'
+  m_text: 'Left: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d62a573c923f5cb47b8ff65261033b90, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: d62a573c923f5cb47b8ff65261033b90, type: 2}
@@ -1725,10 +1738,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 652482222}
-    characterCount: 11
+    characterCount: 6
     spriteCount: 0
     spaceCount: 1
-    wordCount: 2
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -7365,8 +7378,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 68635686}
   - {fileID: 2039385222}
+  - {fileID: 68635686}
   - {fileID: 1360661160}
   - {fileID: 1701422119}
   - {fileID: 652482221}
@@ -8134,8 +8147,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.19607843}
-    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.43137255}
+    m_HighlightedColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0.19607843}
+    m_PressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.43137255}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8153,8 +8166,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 647856007}
-        m_MethodName: nextWave
+      - m_Target: {fileID: 1303328454}
+        m_MethodName: OnClickNextWaveBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8163,7 +8176,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1580532933
@@ -8698,7 +8711,7 @@ RectTransform:
   m_Children:
   - {fileID: 1580532931}
   m_Father: {fileID: 1303328453}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

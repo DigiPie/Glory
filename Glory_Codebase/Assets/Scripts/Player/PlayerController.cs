@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour {
         inputJump = Input.GetButton("Jump");
         inputDash = Input.GetButton("Dash");
         inputAttack1 = Input.GetButton("Attack1");
-
         Move();
         Attack();
         UpdateInvulnerability();
