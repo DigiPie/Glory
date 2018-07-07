@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
     private int currentWave = 0;
     public bool isGameDone = false;
     private bool isWaveFullySpawned = true;
-    private bool isWaveCleared = true;
+    public bool isWaveCleared = true;
     private float waveInterval = 5.0f; // Delay between each wave
     private float nextWaveReadyTime = 5.0f;
     private int currentSpawn = 0; // Current minion to spawn for this wave
@@ -111,8 +111,9 @@ public class GameManager : MonoBehaviour {
         waves[0][1] = foxL0;
         waves[0][2] = skeR3;
 
+        /*
         // Wave 1
-        /*waves[0] = new EnemySpawnInfo[10];
+        waves[0] = new EnemySpawnInfo[10];
         waves[0][0] = foxL1_5;
         waves[0][1] = foxL1_5;
         waves[0][2] = foxR1_5;
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviour {
         waves[0][7] = foxR1_5;
         waves[0][8] = foxL0;
         waves[0][9] = foxR0;
-
+        
         // Wave 2
         waves[1] = new EnemySpawnInfo[16];
         waves[1][0] = foxL0_5;
@@ -352,5 +353,10 @@ public class GameManager : MonoBehaviour {
     public int GetEnemyCount()
     {
         return enemies.Count;
+    }
+
+    public void nextWave()
+    {
+        Debug.Log("Next Wave Spawn");
     }
 }

@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour {
     public GameManager gameManager;
     public PlayerHealthSystem playerHealthSystem;
     public ObjectiveHealth objectiveHealth;
+    public GameObject popUpHUD;
     public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
     public Image playerDamageImage;
 
@@ -24,7 +25,7 @@ public class HUD : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+
 	}
 
     // Update is called once per frame
@@ -51,5 +52,10 @@ public class HUD : MonoBehaviour {
         {
             playerDamageImage.color = Color.Lerp(playerDamageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
+    }
+
+    public void waveTransition()
+    {
+        popUpHUD.SetActive(true);
     }
 }
