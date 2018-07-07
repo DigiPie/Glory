@@ -1,14 +1,21 @@
 fileFormatVersion: 2
-guid: d4e9ceaad33cc8944b242cffb5e3e8c8
+guid: c3b16935390ccb346a933c88ddeb49c2
 TextureImporter:
   fileIDToRecycleName:
-    21300000: RPG Style (1)_0
-    21300002: RPG Style (1)_1
-    21300004: RPG Style (1)_2
-    21300006: RPG Style (1)_3
-    21300008: RPG Style (1)_4
-    21300010: RPG Style (1)_5
-    21300012: RPG Style (1)_6
+    21300000: RedHP
+    21300002: GreenHP
+    21300004: BlackHP
+    21300006: PlayerHP
+    21300008: ObjectiveHP
+    21300010: BossHP
+    21300012: YellowHP
+    21300014: RedHP
+    21300016: Mana
+    21300018: HealthBars_1
+    21300020: PlayerBar
+    21300022: ObjectiveBar
+    21300024: BossBar
+    21300026: ManaHP
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -50,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -65,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -76,7 +83,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -89,11 +96,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RPG Style (1)_0
+      name: RedHP
       rect:
         serializedVersion: 2
-        x: 16
-        y: 123
+        x: 15
+        y: 85
         width: 73
         height: 7
       alignment: 0
@@ -103,17 +110,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9ae06a4292c8cf4489208e7be091c6f
+      spriteID: 830ca8fdc4375a148a4bb51b10fe45b3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RPG Style (1)_1
+      name: BlackHP
       rect:
         serializedVersion: 2
-        x: 16
-        y: 114
+        x: 15
+        y: 58
         width: 73
         height: 7
       alignment: 0
@@ -123,57 +130,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b475fb7f5a4fc6488bdfa28f5c20aad
+      spriteID: 0045fc5c106b042499f869a24a4d6452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RPG Style (1)_2
+      name: PlayerBar
       rect:
         serializedVersion: 2
-        x: 16
-        y: 105
-        width: 73
-        height: 7
-      alignment: 9
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ccae3c6e1ad9934480a3decbd79ea59
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RPG Style (1)_3
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 96
-        width: 73
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 052e23426806e97478351886bfc0b0ad
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RPG Style (1)_4
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 75
+        x: 1
+        y: 37
         width: 89
         height: 15
       alignment: 0
@@ -183,19 +150,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd6d9f370ca847948b9fc8c3732ccbdf
+      spriteID: 856050e679eeb1b49848d79802b03503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RPG Style (1)_5
+      name: ObjectiveBar
       rect:
         serializedVersion: 2
-        x: 2
-        y: 56
-        width: 89
-        height: 15
+        x: 12
+        y: 23
+        width: 80
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,27 +170,87 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0af7b6f2fc9093c4b872da08cc86d00e
+      spriteID: c89867afbd9fb8645ade28bd7ff33d0c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RPG Style (1)_6
+      name: BossBar
       rect:
         serializedVersion: 2
-        x: 17
-        y: 92
+        x: 12
+        y: 11
+        width: 80
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 638f67a229f14284a8e53c50c4d0b354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowHP
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 76
+        width: 73
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91ba5050e3cf846498b26a6a5c85548f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenHP
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 67
+        width: 73
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f4da90cfad66e14c84308f5543bfa32
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ManaHP
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 54
         width: 72
         height: 2
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdf38253eee58604abcf6145012ea885
+      spriteID: 96404627840ada64c8574e19c186e8d7
       vertices: []
       indices: 
       edges: []
@@ -231,7 +258,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 23331913e81ab5d4a954dbb4bd973c98
+    spriteID: 1446848175f06d6469f05eb24576d197
     vertices: []
     indices: 
     edges: []
