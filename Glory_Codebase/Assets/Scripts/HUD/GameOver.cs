@@ -38,7 +38,7 @@ public class GameOver : MonoBehaviour {
         if (FindObjectOfType<GameManager>().isGameDone)
         {
             GameOverScreenUI.SetActive(true);
-            txtGameOver.text = "YOU WON!";
+            txtGameOver.text = "YOU WIN!";
             Time.timeScale = 0f;
             hud.SetActive(false);
         }
@@ -53,5 +53,27 @@ public class GameOver : MonoBehaviour {
     {
         Debug.Log("QUIT!");
         Application.Quit();
+    }
+
+    // GameOver Function Version
+    public void GameOverCall(int state)
+    {
+        // State == 0 ? Players all dead : Objective dead
+        if (state == 0)
+        {
+            GameOverScreenUI.SetActive(true);
+            txtGameOver.text = "GAME OVER!";
+            Time.timeScale = 0f;
+            hud.SetActive(false);
+        }
+
+        // State == 1 : Game Completed
+        if (state == 1)
+        {
+            GameOverScreenUI.SetActive(true);
+            txtGameOver.text = "YOU WIN!";
+            Time.timeScale = 0f;
+            hud.SetActive(false);
+        }
     }
 }
