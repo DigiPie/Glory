@@ -77,7 +77,6 @@ public class HUD : MonoBehaviour {
         if (allowInputNext)
         {
             allowInputNext = false;
-            Debug.Log("Click");
             popUpHUD.SetActive(false);
             gameManager.StartNextWave();
         }

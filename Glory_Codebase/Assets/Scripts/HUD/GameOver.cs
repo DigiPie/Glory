@@ -35,7 +35,7 @@ public class GameOver : MonoBehaviour {
             Time.timeScale = 0f;
             hud.SetActive(false);
         }
-        if (FindObjectOfType<GameManager>().isGameDone)
+        if (FindObjectOfType<GameManager>().gameState == GameManager.GameState.GameDone)
         {
             GameOverScreenUI.SetActive(true);
             txtGameOver.text = "YOU WIN!";
@@ -46,7 +46,6 @@ public class GameOver : MonoBehaviour {
     }
     public void LoadMenu()
     {
-        gameManager.ExitGame();
         SceneManager.LoadScene("Menu");
     }
     public void ExitGame()

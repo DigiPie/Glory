@@ -7,11 +7,9 @@ public class GameManager : MonoBehaviour {
     // Game State
     public enum GameState { GameDone, WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn };
     public GameState gameState = GameState.WaitingNextWave;
-    private bool isGameRunning = false;
 
     // References
     private WaveSystem waveSystem;
-    public static GameManager instance = null;
 
     public HUD hud;
     public CustomCamController camController;
@@ -20,7 +18,6 @@ public class GameManager : MonoBehaviour {
     public GameObject boomEffect, enemy1, enemy2, player1;
 
     // Spawning and pathing
-    public bool isGameDone = false;
     public bool isWaveCleared = true;
 
     public Transform[] path1, path2;
@@ -38,76 +35,23 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
-        //Check if instance already exists
-        if (instance == null)
-        {
-            // If not, assign to this
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            // Then destroy this to enforce singleton pattern
-            Destroy(gameObject);
-        }
-
-        // Do not destroy this when reloading scene
-        //DontDestroyOnLoad(gameObject);
-
         waveSystem = GetComponent<WaveSystem>();
-
-        // Start game
-        InitGame();
-    }
-
-    public void RunGame(bool isGameRunning)
-    {
-        this.isGameRunning = isGameRunning;
-    }
-
-    public void ExitGame()
-    {
-        isGameRunning = false;
-    }
-
-
-    // Initializes the game for each level.
-    void InitGame()
-    {
         enemies = new List<GameObject>();
-
         hud.ShowNextWaveBtn();
     }
 
     // Update is called every frame
     void Update()
     {
-        /*if (!isGameRunning)
-        {
-            return;
-        }*/
-
-        Wave();
-        ClearDead();
+        HandleWave();
+        HandleDead();
     }
 
-    public void StartNextWave()
-    {
-        if (gameState != GameState.GameDone)
-        {
-            gameState = GameState.WaitingWaveSpawn;
-            waveSystem.SetNextWave();
-            waveCount = waveSystem.GetWaveCount();
-            waveKilled = 0;
-
-            getNewSpawn = true;
-        }
-    }
-
-    void Wave()
+    void HandleWave()
     {
         if (gameState == GameState.GameDone)
         {
-            isGameDone = true;
+            // Call game over screen
         }
         else if (gameState == GameState.WaitingNextWave)
         {
@@ -152,6 +96,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    // Spawn an enemy using the spawn system
     void Spawn()
     {
         // Get enemy
@@ -177,7 +122,8 @@ public class GameManager : MonoBehaviour {
         enemies.Add(enemy);
     }
 
-    void ClearDead()
+    // Clear dead enemies
+    void HandleDead()
     {
         hasDeadEnemy = false;
 
@@ -200,6 +146,21 @@ public class GameManager : MonoBehaviour {
         } while (hasDeadEnemy);
     }
 
+    // Called by the HUD script upon clicking of next wave button or Enter key press
+    public void StartNextWave()
+    {
+        if (gameState != GameState.GameDone)
+        {
+            gameState = GameState.WaitingWaveSpawn;
+            waveSystem.SetNextWave();
+            waveCount = waveSystem.GetWaveCount();
+            waveKilled = 0;
+
+            getNewSpawn = true;
+        }
+    }
+
+    // Called by spawned enemies to damage the objective
     public void DamageObjective(int damage)
     {
         camController.Shake(0.1f);
@@ -211,7 +172,7 @@ public class GameManager : MonoBehaviour {
         DamageObjective((int)damage);
     }
 
-
+    // Used by spawned enemies to damage the player
     public void DamagePlayer(int damage)
     {
         camController.Shake(0.2f);
@@ -223,11 +184,14 @@ public class GameManager : MonoBehaviour {
         DamagePlayer((int) damage);
     }
 
+
+    // Used by enemies
     public Transform GetPlayerPosition()
     {
         return player1.transform;
     }
 
+    // Used by the HUD script and displayed by txtInfo under the objective health
     public string GetInfo()
     {
         if (gameState == GameState.WaitingNextWave)
@@ -240,6 +204,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    // Used by the HUD script and displayed by txtNextWave which is on the next wave button
     public string GetNextWaveInfo()
     {
         return waveSystem.GetNextWaveInfo();
