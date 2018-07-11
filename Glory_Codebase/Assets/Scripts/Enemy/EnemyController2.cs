@@ -9,39 +9,74 @@ public class EnemyController2 : EnemyController
 
     protected override void AI()
     {
-        // Stunned for defaultStunDuration when damaged by any attacks.
-        // If stunned by weapon effect, weapon stun duration is used instead
-        if (isStunned)
+        if (HandleStun())
         {
-            if (Time.timeSinceLevelLoad > stunEndTime)
-            {
-                isStunned = false;
-                isAttackingObjective = false; // Cancel any ongoing attack
-            }
-
-            return;
+            return; // If stunned don't bother executing any AI behaviour.
         }
 
         // Distance calculations to check proximity to player
         distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
 
+        if (HandleAttackPlayer())
+        {
+            return; // If attacking player, don't attack objective.
+        }
+
+        if (HandleAttackObjective())
+        {
+            return; // If attacking objective, don't bother pathing.
+        }
+
+        // Distance calculations for path movement and objective attack
+        distToTargetX = path[currentTarget].position.x - transform.position.x;
+        absDistToTargetX = Mathf.Abs(distToTargetX);
+
+        if (isPathDone)
+        {
+            // If completed path and targetting final target aka city gate or player
+            // If within deadzone distance to the final target
+            if (absDistToTargetX < range)
+            {
+                HandleStartAttack();
+            }
+            else
+            {
+                // Move to the final target
+                if (distToTargetX > 0)
+                {
+                    AImoveH = 1;
+                }
+                else
+                {
+                    AImoveH = -1;
+                }
+            }
+        }
+        else
+        {
+            MoveAlongPath();
+        }
+    }
+
+    bool HandleAttackPlayer()
+    {
         // If attack for player was started and is at weapon slam frame, spawn a melee projectile that damages player
         if (isAttackingPlayer && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
             && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
         {
-            AttackPlayer();
+            SpawnAttackProjectile();
             isAttackingPlayer = false;
         }
 
         // If within attack range to player
-        if (absDistToTargetX < distDeadzone)
+        if (absDistToTargetX < range)
         {
             // Stop
             AImoveH = 0;
 
             // Face Player
-            if(this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
                 facingLeft = distToTargetX < 0;
                 sprite.flipX = facingLeft;
@@ -63,93 +98,13 @@ public class EnemyController2 : EnemyController
                 }
             }
 
-            return;
+            return true;
         }
 
-        // If attack for objective was started and is at weapon slam frame, damage objective
-        if (isAttackingObjective && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
-            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
-        {
-            gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
-            isAttackingObjective = false;
-        }
-
-        // Distance calculations for path movement and objective attack
-        distToTargetX = path[currentTarget].position.x - transform.position.x;
-        absDistToTargetX = Mathf.Abs(distToTargetX);
-
-        if (isPathDone)
-        {
-            // If completed path and targetting final target aka city gate or player
-            // If within deadzone distance to the final target
-            if (absDistToTargetX < distDeadzone)
-            {
-                // Stop
-                AImoveH = 0;
-
-                // Attack
-                if (attackReady)
-                {
-                    attackReady = false;
-                    attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
-                    animator.Play("Attack");
-                    isAttackingObjective = true;
-                }
-                else
-                {
-                    if (Time.timeSinceLevelLoad > attackReadyTime)
-                    {
-                        attackReady = true;
-                    }
-                }
-            }
-            else
-            {
-                // Move to the final target
-                if (distToTargetX > 0)
-                {
-                    AImoveH = 1;
-                }
-                else
-                {
-                    AImoveH = -1;
-                }
-            }
-        }
-        else
-        {
-            // If not at final target and still enroute
-            // If reached current target
-            if (absDistToTargetX < distDeadzone)
-            {
-                // If at final target
-                if (currentTarget + 1 == path.Length)
-                {
-                    // Indicate that character is at final target
-                    isPathDone = true;
-                }
-                else
-                {
-                    // Move on to next target
-                    currentTarget++;
-                }
-            }
-            else
-            {
-                // Move to the current target
-                if (distToTargetX > 0)
-                {
-                    AImoveH = 1;
-                }
-                else
-                {
-                    AImoveH = -1;
-                }
-            }
-        }
+        return false;
     }
 
-    void AttackPlayer()
+    void SpawnAttackProjectile()
     {
         // Create a melee projectile
         GameObject projectile = Instantiate(enemyWeapon, this.transform);
@@ -162,6 +117,60 @@ public class EnemyController2 : EnemyController
         else
         {
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(1, 0));
+        }
+    }
+
+    bool HandleAttackObjective()
+    {
+        // If attack for objective was started and is at weapon slam frame, damage objective
+        if (isAttackingObjective && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
+            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
+        {
+            gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
+            isAttackingObjective = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    bool HandleStun()
+    {
+        // Stunned for defaultStunDuration when damaged by any attacks.
+        // If stunned by weapon effect, weapon stun duration is used instead
+        if (isStunned)
+        {
+            if (Time.timeSinceLevelLoad > stunEndTime)
+            {
+                isStunned = false;
+                isAttackingObjective = false; // Cancel any ongoing attack
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    void HandleStartAttack()
+    {
+        // Stop
+        AImoveH = 0;
+
+        // Attack
+        if (attackReady)
+        {
+            attackReady = false;
+            attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
+            animator.Play("Attack");
+            isAttackingObjective = true;
+        }
+        else
+        {
+            if (Time.timeSinceLevelLoad > attackReadyTime)
+            {
+                attackReady = true;
+            }
         }
     }
 }

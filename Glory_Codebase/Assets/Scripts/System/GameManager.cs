@@ -105,8 +105,6 @@ public class GameManager : MonoBehaviour {
 
     void Wave()
     {
-        Debug.Log(gameState);
-
         if (gameState == GameState.GameDone)
         {
             isGameDone = true;

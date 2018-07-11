@@ -98,7 +98,8 @@ public class WaveSystem : MonoBehaviour {
         CreateNewWave();
 
         // Spawns Fox, at Spawn Point 0, after initial delay of 2s, 3 times, with 2s intervals
-        AddEnemy(0, 0, 2f, 3, 1.8f);
+        AddEnemy(1, 0, 1.8f);
+        //AddEnemy(0, 0, 2f, 3, 1.8f);
         //AddEnemy(0, 1, 4f, 3, 1.8f);
 
         // Spawns a Fox at each spawn point, after initial delay of 1.5s
@@ -110,9 +111,9 @@ public class WaveSystem : MonoBehaviour {
         waves.Add(GetNewWave());
 
         // Wave 3
-        CreateNewWave();
+        //CreateNewWave();
 
-        AddEnemy(0, 0, 2f, 6, 1.6f);
+        //AddEnemy(0, 0, 2f, 6, 1.6f);
         //AddEnemy(0, 1, 5f, 6, 1.6f);
 
         // Spawns a Fox at each spawn point, after initial delay of 5s, 2 times, with 2s intervals
@@ -120,10 +121,10 @@ public class WaveSystem : MonoBehaviour {
 
         //AddEnemy(0, 1, 5f, 8, 1.5f);
 
-        waves.Add(GetNewWave());
+        //waves.Add(GetNewWave());
 
         // Wave 4
-        CreateNewWave();
+        //CreateNewWave();
 
         //AddEnemyAtAllSpawnPoints(0, 2f, 3, 2.0f);
 
@@ -131,16 +132,16 @@ public class WaveSystem : MonoBehaviour {
         //AddEnemy(0, 0, 3f, 3, 1.5f);
         //AddEnemy(0, 1, 2f, 3, 1.5f);
 
-        AddEnemyAtAllSpawnPoints(0, 2f, 4, 1.8f);
+        //AddEnemyAtAllSpawnPoints(0, 2f, 4, 1.8f);
 
-        waves.Add(GetNewWave());
+        //waves.Add(GetNewWave());
 
         totalWaves = waves.Count;
     }
 
     public bool IsLastWave()
     {
-        return waves.Count == 1;
+        return waves.Count == 0;
     }
 
     public void SetNextWave()

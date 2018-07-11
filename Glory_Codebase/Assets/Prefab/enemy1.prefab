@@ -222,14 +222,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4447143543408404}
-  minAttackRange: 0.5
-  maxAttackRange: 0.7
+  minEngagementRange: 0.2
+  maxEngagementRange: 0.5
+  enemyWeapon: {fileID: 1645783105922504, guid: 851f64da8c6dc0a478f1a0676ba4f9c2,
+    type: 2}
   defaultStunDuration: 1.1
   moveForce: 12
   maxSpeed: 1.5
   throwbackForce: 3.5
-  enemyWeapon: {fileID: 1645783105922504, guid: 851f64da8c6dc0a478f1a0676ba4f9c2,
-    type: 2}
 --- !u!114 &114544597889018228
 MonoBehaviour:
   m_ObjectHideFlags: 1
