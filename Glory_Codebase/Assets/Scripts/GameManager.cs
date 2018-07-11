@@ -230,25 +230,20 @@ public class GameManager : MonoBehaviour {
         return player1.transform;
     }
 
-    public int GetWave()
-    {
-        return waveSystem.GetWaveNo();
-    }
-
-    public string GetEnemyDisplay()
+    public string GetInfo()
     {
         if (gameState == GameState.WaitingNextWave)
         {
-            return "Cleared";
+            return waveSystem.GetInfo();
         }
         else
         {
-            return "Killed: " + waveKilled + "/" + waveCount;
+            return "Defeated " + waveKilled + " of " + waveCount;
         }
     }
 
-    public string GetWaveDisplay()
+    public string GetNextWaveInfo()
     {
-        return "Wave: " + GetWave();
+        return waveSystem.GetNextWaveInfo();
     }
 }

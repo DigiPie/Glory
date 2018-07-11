@@ -32,6 +32,8 @@ public class WaveSystem : MonoBehaviour {
     private List<Spawn> currentWave;
     private List<Spawn> tempWave;
     private int waveNumber = 0;
+    private int nextWaveNumber = 1;
+    private int totalWaves;
 
     void CreateNewWave()
     {
@@ -132,6 +134,8 @@ public class WaveSystem : MonoBehaviour {
         AddEnemyAtAllSpawnPoints(0, 2f, 4, 1.8f);
 
         waves.Add(GetNewWave());
+
+        totalWaves = waves.Count;
     }
 
     public bool IsLastWave()
@@ -144,6 +148,7 @@ public class WaveSystem : MonoBehaviour {
         currentWave = waves[0];
         waves.RemoveAt(0);
         waveNumber++;
+        nextWaveNumber++;
     }
 
     public int GetDisplayWave()
@@ -156,9 +161,14 @@ public class WaveSystem : MonoBehaviour {
         return currentWave.Count;
     }
 
-    public int GetWaveNo()
+    public string GetInfo()
     {
-        return waveNumber;
+        return "Wave " + waveNumber + " of " + totalWaves;
+    }
+
+    public string GetNextWaveInfo()
+    {
+        return "Begin wave " + nextWaveNumber;
     }
 
     public bool IsWaveOver()

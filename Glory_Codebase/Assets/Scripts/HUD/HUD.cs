@@ -13,8 +13,8 @@ public class HUD : MonoBehaviour {
     public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
     public Image playerDamageImage;
 
-    public TextMeshProUGUI txtWaveNumber;
-    public TextMeshProUGUI txtEnemiesLeft;
+    public TextMeshProUGUI txtInfo;
+    public TextMeshProUGUI txtNextWave;
     public Slider objHealthSlider;                              // Reference to the UI's health bar.
     public Slider healthSlider;                              // Reference to the UI's health bar.
 
@@ -35,8 +35,7 @@ public class HUD : MonoBehaviour {
     void FixedUpdate() {
         objHealthSlider.value = objectiveHealth.getCurrentHealth();
         healthSlider.value = playerHealthSystem.getCurrentHealth();
-        txtEnemiesLeft.text = gameManager.GetEnemyDisplay();
-        txtWaveNumber.text = gameManager.GetWaveDisplay();
+        txtInfo.text = gameManager.GetInfo();
 
         if (objectiveHealth.damaged)
         {
@@ -69,6 +68,8 @@ public class HUD : MonoBehaviour {
     {
         allowInputNext = true;
         popUpHUD.SetActive(true);
+        txtNextWave.text = gameManager.GetNextWaveInfo();
+
     }
 
     public void OnClickNextWaveBtn()

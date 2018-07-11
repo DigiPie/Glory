@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour {
     public static bool GameIsPaused = false;
     public GameManager gameManager;
     public GameObject pauseMenuUI;
+    public GameObject HUD;
     public GameObject OptionsMenuUI;
     public GameObject hudUI;
     public Options OptionsMenu;
@@ -34,6 +35,7 @@ public class PauseMenu : MonoBehaviour {
 
     void Resume()
     {
+        HUD.SetActive(true);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -42,6 +44,7 @@ public class PauseMenu : MonoBehaviour {
 
     void Pause() 
     {
+        HUD.SetActive(false);
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;

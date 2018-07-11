@@ -11,11 +11,15 @@ TextureImporter:
     21300012: YellowHP
     21300014: RedHP
     21300016: Mana
-    21300018: HealthBars_1
+    21300018: YellowHP
     21300020: PlayerBar
     21300022: ObjectiveBar
     21300024: BossBar
     21300026: ManaHP
+    21300028: Bar
+    21300030: Bar2
+    21300032: Bar3
+    21300034: InfoBar
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -100,97 +104,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 15
-        y: 85
+        y: 110
         width: 73
         height: 7
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 830ca8fdc4375a148a4bb51b10fe45b3
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BlackHP
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 58
-        width: 73
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0045fc5c106b042499f869a24a4d6452
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerBar
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 37
-        width: 89
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 856050e679eeb1b49848d79802b03503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ObjectiveBar
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 23
-        width: 80
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c89867afbd9fb8645ade28bd7ff33d0c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BossBar
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 11
-        width: 80
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 638f67a229f14284a8e53c50c4d0b354
+      spriteID: dbae57c1a87f2f348b7519e3c14d7479
       vertices: []
       indices: 
       edges: []
@@ -200,7 +124,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 15
-        y: 76
+        y: 101
         width: 73
         height: 7
       alignment: 0
@@ -210,7 +134,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91ba5050e3cf846498b26a6a5c85548f
+      spriteID: 347fe024f5c4c50489a81b991247eead
       vertices: []
       indices: 
       edges: []
@@ -220,7 +144,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 15
-        y: 67
+        y: 92
         width: 73
         height: 7
       alignment: 0
@@ -230,19 +154,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f4da90cfad66e14c84308f5543bfa32
+      spriteID: 90a02929719c07b40a7141639ad5a268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ManaHP
+      name: BlackHP
       rect:
         serializedVersion: 2
-        x: 16
-        y: 54
-        width: 72
-        height: 2
+        x: 15
+        y: 83
+        width: 73
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,7 +174,87 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96404627840ada64c8574e19c186e8d7
+      spriteID: 1fcc709566d7e234d80619c599570707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 62
+        width: 89
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 381267b88afb4f2418173c29485635f5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 48
+        width: 80
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3b0df0bd492a874184fe69ec88958ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 36
+        width: 80
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d0fc96f36f1984438dc767f9a6109ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InfoBar
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 15
+        width: 80
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 040e2e84e34b82445a1761587d3f93cf
       vertices: []
       indices: 
       edges: []
