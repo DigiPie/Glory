@@ -8,6 +8,9 @@ public class PauseMenu : MonoBehaviour {
     public static bool GameIsPaused = false;
     public GameManager gameManager;
     public GameObject pauseMenuUI;
+    public GameObject OptionsMenuUI;
+    public GameObject hudUI;
+    public Options OptionsMenu;
 
     private void Awake()
     {
@@ -16,7 +19,7 @@ public class PauseMenu : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !OptionsMenu.getState()) 
         {
             if (GameIsPaused)
             {
@@ -43,6 +46,11 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0f;
         GameIsPaused = true;
         gameManager.RunGame(false);
+    }
+
+    public void LoadOptions()
+    {
+        OptionsMenu.enterOptions();
     }
 
     public void ResumeGame()
