@@ -69,7 +69,6 @@ public class HUD : MonoBehaviour {
         allowInputNext = true;
         popUpHUD.SetActive(true);
         txtNextWave.text = gameManager.GetNextWaveInfo();
-
     }
 
     public void OnClickNextWaveBtn()

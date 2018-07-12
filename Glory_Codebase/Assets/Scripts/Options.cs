@@ -19,14 +19,12 @@ public class Options : MonoBehaviour {
     public void enterOptions()
     {
         optionsUI.SetActive(true);
-        hudUI.SetActive(false);
         inOptionsMenu = true;
     }
 
     public void exitOptions()
     {
         optionsUI.SetActive(false);
-        hudUI.SetActive(true);
         inOptionsMenu = false;
     }
 

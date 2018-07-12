@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     // Game State
-    public enum GameState { GameDone, WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn };
+    public enum GameState {GameDone, WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn };
     public GameState gameState = GameState.WaitingNextWave;
 
     // References
