@@ -85,8 +85,8 @@ public class PlayerController : MonoBehaviour {
         slowdownRightV = Vector2.right * slowdownForce;
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
-        dashLeftV = moveLeftV * 0.25f;
-        dashRightV = moveRightV * 0.25f;
+        dashLeftV = moveLeftV * 0.3f;
+        dashRightV = moveRightV * 0.3f;
         moveLeftInAirV = Vector2.left * inAirMoveForce;
         moveRightInAirV = Vector2.right * inAirMoveForce;
         jumpV = new Vector2(0f, jumpForce);

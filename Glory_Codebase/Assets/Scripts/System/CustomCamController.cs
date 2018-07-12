@@ -9,6 +9,11 @@ public class CustomCamController : MonoBehaviour
     public float shakeAmount;
     public float maxShakeAmount = 0.4f;
 
+    private Vector3 targetPos;
+    private float chaseSpeed = 0.1f;
+    private float chaseDeadzone = 0.05f; // Only start chasing target is chaseDeadzone distance away
+    private bool startChase = false;
+
     void Update()
     {
         if (shakeDuration > 0)
@@ -30,7 +35,24 @@ public class CustomCamController : MonoBehaviour
         }
         else
         {
-            transform.localPosition = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+            targetPos = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+
+            // If player is chaseDeadzone distance away from camera, start chase
+            if (Vector3.Distance(transform.position, targetPos) > chaseDeadzone)
+            {
+                startChase = true;
+            }
+
+            if (startChase)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPos, chaseSpeed); // Chase
+
+                // If player is minimal distance from camera, stop chase
+                if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+                {
+                    startChase = false;
+                }
+            }
         }
     }
 
