@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour {
             {
                 if (enemy.GetComponent<EnemyHealthSystem>().IsDead())
                 {
-                    camController.Shake(0.01f);
+                    camController.Shake(0.15f, 0.1f);
                     Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
                     enemies.Remove(enemy);
                     Destroy(enemy);
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour {
     // Called by spawned enemies to damage the objective
     public void DamageObjective(int damage)
     {
-        camController.Shake(0.1f);
+        camController.Shake(0.05f, 0.15f);
         objHealth.TakeDamage(damage);
     }
 
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour {
     // Used by spawned enemies to damage the player
     public void DamagePlayer(int damage)
     {
-        camController.Shake(0.2f);
+        camController.Shake(0.1f, 0.2f);
         plyHealth.TakeDamage(damage);
     }
 

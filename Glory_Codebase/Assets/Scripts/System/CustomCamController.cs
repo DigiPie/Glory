@@ -4,44 +4,53 @@ using UnityEngine;
 
 public class CustomCamController : MonoBehaviour
 {
-    Vector3 originalPosition;
-    float shakeAmount = 0;
     public Transform camTarget;
-    private bool isShaking = false;
+    public float shakeDuration = 0f;
+    public float shakeAmount;
+    public float maxShakeAmount = 0.4f;
 
     void Update()
     {
-        transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
-    }
-
-    public void Shake(float shakeAmount)
-    {
-        if (isShaking)
+        if (shakeDuration > 0)
         {
-            return;
-        }
+            transform.localPosition = new Vector3(
+                camTarget.position.x + Random.insideUnitSphere.x * shakeAmount, 
+                camTarget.position.y + Random.insideUnitSphere.y * shakeAmount, 
+                -10);
 
-        this.shakeAmount = shakeAmount;
-        isShaking = true;
-        InvokeRepeating("StartShake", 0, .01f);
-        Invoke("EndShake", 0.3f);
+            shakeDuration -= Time.deltaTime;
+
+            // Shaking is reduced over time.
+            shakeAmount -= Time.deltaTime * 0.2f;
+
+            if (shakeAmount < 0)
+            {
+                shakeDuration = 0;
+            }
+        }
+        else
+        {
+            transform.localPosition = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+        }
     }
 
-    void StartShake()
+    // Shaking is stackable; if already shaking, and this function is called, shake even more.
+    public void Shake(float addShakeAmount, float shakeDuration)
     {
         if (shakeAmount > 0)
         {
-            float quakeAmt = Random.value * shakeAmount * 2 - shakeAmount;
-            Vector3 pp = transform.position;
-            pp.y += quakeAmt; // can also add to x and/or z
-            transform.position = pp;
+            shakeAmount += addShakeAmount * 0.5f;
         }
-    }
+        else
+        {
+            shakeAmount += addShakeAmount;
+        }
 
-    void EndShake()
-    {
-        CancelInvoke("StartShake");
-        transform.position = new Vector3(camTarget.position.x, camTarget.position.y, -10);
-        isShaking = false;
+        if (shakeAmount > maxShakeAmount)
+        {
+            shakeAmount = maxShakeAmount;
+        }
+
+        this.shakeDuration = shakeDuration;
     }
 }
