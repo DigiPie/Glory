@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour {
     private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
     private bool facingLeft = false;
-    private bool onGround = false;
 
     // Input
     private bool inputJump, inputAttack1, inputDash;
@@ -54,13 +53,18 @@ public class PlayerController : MonoBehaviour {
     // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
-    public float jumpForce = 500f;
     public float throwbackForce = 200f; // When hit by enemy
-
     private float inAirMoveForce; // Half of moveForce, slower horizontal speed in the air
     private float slowdownForce; // Quarter of moveForce, applied on character when no input
     private readonly float deadzoneFactor = 1.0f; // Do not apply certain forces if velocity < or > this
-    
+
+    // Jump
+    public float jumpForce = 500f;
+    private bool onGround = false;
+    private bool isJumpRestStarted = true;
+    private float jumpRestDuration = 0.05f; // Only allowed to jump again after being on ground for rest duration
+    private float jumpReadyTime = 0;
+
     // Use this for initialization
     void Start ()
     {
@@ -179,11 +183,8 @@ public class PlayerController : MonoBehaviour {
             return; // If both dash and jump input are pressed at the same time, dash only
         }
 
-        if (inputJump)
-        {
-            HandleJumping();
-        }
-
+        HandleJumping();
+        
         animator.SetBool("Jumping", !onGround);
     }
 
@@ -328,10 +329,20 @@ public class PlayerController : MonoBehaviour {
     // Apply vertical movement force if jump input is registered.
     void HandleJumping()
     {
-        // Apply force if on ground and y velocity is insignificant.
-        if (onGround && Mathf.Abs(rb2d.velocity.y) < deadzoneFactor)
+        if (onGround)
         {
-            rb2d.AddForce(jumpV);
+            if (!isJumpRestStarted)
+            {
+                isJumpRestStarted = true;
+                jumpReadyTime = Time.timeSinceLevelLoad + jumpRestDuration;
+            }
+
+            // If on ground for rest duration and y velocity is insignificant
+            if (inputJump && Time.timeSinceLevelLoad > jumpReadyTime && Mathf.Abs(rb2d.velocity.y) < deadzoneFactor)
+            {
+                rb2d.AddForce(jumpV); // Jump
+                isJumpRestStarted = false;
+            }
         }
     }
 
