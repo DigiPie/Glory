@@ -26,11 +26,6 @@ public class HUD : MonoBehaviour {
     private bool inputNext;
     private bool allowInputNext = true;
 
-    // Use this for initialization
-    void Start () {
-
-	}
-
     // Update is called in-step with the physics engine
     void FixedUpdate() {
         objHealthSlider.value = objectiveHealth.getCurrentHealth();
