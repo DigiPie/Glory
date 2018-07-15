@@ -75,4 +75,10 @@ public class CustomCamController : MonoBehaviour
 
         this.shakeDuration = shakeDuration;
     }
+
+    public void StopShake()
+    {
+        shakeAmount = 0;
+        shakeDuration = 0;
+    }
 }

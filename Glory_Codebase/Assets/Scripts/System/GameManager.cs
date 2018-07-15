@@ -4,17 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-    // Game State
-    public enum GameState {GameDone, WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn };
-    public GameState gameState = GameState.WaitingNextWave;
-
     // References
-    private WaveSystem waveSystem;
-
     public HUD hud;
+    public Overlay overlay;
     public CustomCamController camController;
     public ObjectiveHealth objHealth;
     public PlayerHealthSystem plyHealth;
+    public StateSystem stateSystem;
+    public WaveSystem waveSystem;
     public GameObject boomEffect, enemy1, enemy2, player1;
 
     // Spawning and pathing
@@ -33,9 +30,11 @@ public class GameManager : MonoBehaviour {
     private bool hasDeadEnemy;
     private bool spawnOnLeft = false;
 
+    // Set to true after win/lose and game over screen is displayed.
+    private bool isGameOver = false;
+
     void Awake()
     {
-        waveSystem = GetComponent<WaveSystem>();
         enemies = new List<GameObject>();
         hud.ShowNextWaveBtn();
     }
@@ -43,32 +42,68 @@ public class GameManager : MonoBehaviour {
     // Update is called every frame
     void Update()
     {
-        HandleWave();
-        HandleDead();
+        if (isGameOver)
+        {
+            return; // If game over screen already displayed, just return
+        }
+
+        if (HandleWinLose())
+        {
+            return; // If game won or lost, display game over screen and stop running the rest of the code
+        }
+
+        if (stateSystem.IsGameWave())
+        {
+            HandleWave();
+            HandleDead();
+        }
+        else if(stateSystem.IsGameTutorial())
+        {
+            // TODO Tutorial Logic
+        }
+    }
+
+    // Returns true if win/lose, false if haven't won or lost
+    bool HandleWinLose()
+    {
+        if (stateSystem.IsWaveDone())
+        {
+            stateSystem.SetGameState(StateSystem.GameState.Win);
+            overlay.ShowGameoverUI(true);
+            camController.StopShake();
+            isGameOver = true;
+            return true;
+        }
+        else if(plyHealth.isDead || objHealth.isDestroyed)
+        {
+            stateSystem.SetGameState(StateSystem.GameState.Lose);
+            overlay.ShowGameoverUI(false);
+            camController.StopShake();
+            isGameOver = true;
+            return true;
+        }
+
+        return false;
     }
 
     void HandleWave()
     {
-        if (gameState == GameState.GameDone)
-        {
-            // Call game over screen
-        }
-        else if (gameState == GameState.WaitingNextWave)
+        if (stateSystem.IsWaitingNextWave())
         {
             if (waveSystem.IsLastWave())
             {
-                gameState = GameState.GameDone;
+                stateSystem.SetWaveState(StateSystem.WaveState.Done);
             }
         }
-        else if (gameState == GameState.WaitingWaveClear)
+        else if (stateSystem.IsWaitingWaveClear())
         {
             if (enemies.Count == 0)
             {
-                gameState = GameState.WaitingNextWave;
+                stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
                 hud.ShowNextWaveBtn();
             }
         }
-        else if (gameState == GameState.WaitingWaveSpawn)
+        else if (stateSystem.IsWaitingWaveSpawn())
         {
             if (enemies.Count < 40)
             {
@@ -76,7 +111,7 @@ public class GameManager : MonoBehaviour {
                 {
                     if (waveSystem.IsWaveOver())
                     {
-                        gameState = GameState.WaitingWaveClear;
+                        stateSystem.SetWaveState(StateSystem.WaveState.WaitingWaveClear);
                         return;
                     }
 
@@ -149,13 +184,12 @@ public class GameManager : MonoBehaviour {
     // Called by the HUD script upon clicking of next wave button or Enter key press
     public void StartNextWave()
     {
-        if (gameState != GameState.GameDone)
+        if (stateSystem.IsGameWave())
         {
-            gameState = GameState.WaitingWaveSpawn;
+            stateSystem.SetWaveState(StateSystem.WaveState.WaitingWaveSpawn);
             waveSystem.SetNextWave();
             waveCount = waveSystem.GetWaveCount();
             waveKilled = 0;
-
             getNewSpawn = true;
         }
     }
@@ -194,7 +228,7 @@ public class GameManager : MonoBehaviour {
     // Used by the HUD script and displayed by txtInfo under the objective health
     public string GetInfo()
     {
-        if (gameState == GameState.WaitingNextWave)
+        if (stateSystem.IsWaitingNextWave())
         {
             return waveSystem.GetInfo();
         }

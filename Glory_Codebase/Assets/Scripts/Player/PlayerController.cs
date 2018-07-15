@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
     private bool facingLeft = false;
+    private bool onGround = false;
 
     // Input
     private bool inputJump, inputAttack1, inputDash;
@@ -60,7 +61,6 @@ public class PlayerController : MonoBehaviour {
 
     // Jump
     public float jumpForce = 500f;
-    private bool onGround = false;
     private bool isJumpRestStarted = true;
     private float jumpRestDuration = 0.05f; // Only allowed to jump again after being on ground for rest duration
     private float jumpReadyTime = 0;
