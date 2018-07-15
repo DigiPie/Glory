@@ -5,16 +5,16 @@ using UnityEngine;
 public class CustomCamController : MonoBehaviour
 {
     public Transform camTarget;
-    public float shakeDuration = 0f;
-    public float shakeAmount;
     public float maxShakeAmount = 0.4f;
+    private float shakeDuration = 0f;
+    private float shakeAmount;
 
     private Vector3 targetPos;
     private float chaseSpeed = 0.1f;
     private float chaseDeadzone = 0.05f; // Only start chasing target is chaseDeadzone distance away
     private bool startChase = false;
 
-    void Update()
+    void FixedUpdate()
     {
         if (shakeDuration > 0)
         {
