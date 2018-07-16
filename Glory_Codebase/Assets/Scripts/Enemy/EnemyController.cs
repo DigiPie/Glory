@@ -18,6 +18,7 @@ public abstract class EnemyController : MonoBehaviour {
     protected Vector2 moveLeftV, moveRightV;
 
     // States
+    public bool spriteFacingLeft = false;
     protected bool collisionOnRight = false;
     protected bool facingLeft = false;
     protected bool onGround = false;
@@ -48,7 +49,7 @@ public abstract class EnemyController : MonoBehaviour {
     protected float attackReadyTime = 0; // The time at which attack1Ready will be set to true again
 
     // Stunned
-    public float defaultStunDuration = 0.3f; // How long is the character stunned when damaged by any attacks
+    private float stunDuration; // How long is the character stunned when damaged by any attacks
     protected bool isStunned = false;
     protected float stunEndTime = 0; // The time at which stunned is set to false again
 
@@ -108,8 +109,17 @@ public abstract class EnemyController : MonoBehaviour {
         {
             HandleRunning();
             animator.SetBool("Running", true);
-            facingLeft = AImoveH < 0;
-            sprite.flipX = facingLeft;
+
+            if (spriteFacingLeft)
+            {
+                facingLeft = AImoveH > 0;
+                sprite.flipX = facingLeft;
+            }
+            else
+            {
+                facingLeft = AImoveH < 0;
+                sprite.flipX = facingLeft;
+            }
         }
     }
 
@@ -143,10 +153,12 @@ public abstract class EnemyController : MonoBehaviour {
         // If colliding with projectile
         if (collider.gameObject.layer == 11)
         {
+            stunDuration = collider.GetComponent<Weapon>().stunDuration;
+
             // Unable to move while stunned
             AImoveH = 0;
             isStunned = true;
-            stunEndTime = Time.timeSinceLevelLoad + defaultStunDuration;
+            stunEndTime = Time.timeSinceLevelLoad + stunDuration;
 
             // Throwback effect
             if (collisionOnRight)
@@ -162,7 +174,7 @@ public abstract class EnemyController : MonoBehaviour {
             animator.Play("Hurt");
 
             // Blink effect
-            blinkSystem.StartBlink(defaultStunDuration);
+            blinkSystem.StartBlink(collider.GetComponent<Weapon>().blinkDuration);
 
             // Health deduction
             healthSystem.DeductHealth(
