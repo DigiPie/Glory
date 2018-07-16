@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114309740578844794}
   - component: {fileID: 114496522365020728}
   - component: {fileID: 114062101358030524}
+  - component: {fileID: 114252462904257462}
   m_Layer: 10
   m_Name: enemy2
   m_TagString: Enemy
@@ -210,6 +211,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blinkDuration: 1
+--- !u!114 &114252462904257462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1527357480767754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8b27d6baa5f5b43b4813c83cc84319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteFacingLeft: 0
+  attackFrame: 0.4
 --- !u!114 &114309740578844794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,16 +249,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f6900ed757fef4c8f4e23fcf1c77b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   groundCheck: {fileID: 4824367302723000}
-  spriteFacingLeft: 0
   moveForce: 10
   maxSpeed: 1
   throwbackForce: 2
+  AImoveH: 0
   minEngagementRange: 0.7
   maxEngagementRange: 1
   enemyWeapon: {fileID: 1994195788201664, guid: 7d3b95764f3d97746af258b9343e8504,
     type: 2}
-  defaultStunDuration: 0
 --- !u!212 &212046936305450668
 SpriteRenderer:
   m_ObjectHideFlags: 1

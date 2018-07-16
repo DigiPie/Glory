@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(GameManager))]
+[RequireComponent(typeof(EnemyAnimator))]
+[RequireComponent(typeof(EnemyHealthSystem))]
+[RequireComponent(typeof(BlinkSystem))]
 public abstract class EnemyController : MonoBehaviour {
-    protected Animator animator; // Used to animate the sprite
-    protected GameManager gameManager; // Used to damage objective and get player position
-    protected Rigidbody2D rb2d; // Used for movement
-    protected SpriteRenderer sprite;
+    public enum EnemyState { Idle, Run, AttackPlayer, AttackObjective, Dead }
+    public EnemyState enemyState = EnemyState.Idle;
 
+    // Script references
+    protected Rigidbody2D rb2d; // Used for movement
+
+    protected GameManager gameManager; // Used to damage objective and get player position
+    protected EnemyAnimator enemyAnimator;
     protected EnemyHealthSystem healthSystem; // Handles health-related matters
     protected BlinkSystem blinkSystem; // Handles blinking effect
     
+    // References
     public Transform groundCheck; // Used to check if on the ground
 
     // Forces to be applied on character
@@ -18,16 +26,14 @@ public abstract class EnemyController : MonoBehaviour {
     protected Vector2 moveLeftV, moveRightV;
 
     // States
-    public bool spriteFacingLeft = false;
     protected bool collisionOnRight = false;
-    protected bool facingLeft = false;
     protected bool onGround = false;
 
     // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
     public float throwbackForce = 2f; // When hit by attack
-    protected float AImoveH = 0; // Used by the AI to move character
+    public float AImoveH = 0; // Used by the AI to move character
 
     // Pathing
     protected Transform[] path; // The AI path, it will move to path[0], path[1]...path[n]
@@ -56,10 +62,8 @@ public abstract class EnemyController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-
+        enemyAnimator = GetComponent<EnemyAnimator>();
         healthSystem = GetComponent<EnemyHealthSystem>();
         blinkSystem = GetComponent<BlinkSystem>();
 
@@ -103,23 +107,13 @@ public abstract class EnemyController : MonoBehaviour {
     {
         if (AImoveH == 0)
         {
-            animator.SetBool("Running", false);
+            enemyState = EnemyState.Idle;
         }
         else
         {
-            HandleRunning();
-            animator.SetBool("Running", true);
+            enemyState = EnemyState.Run;
 
-            if (spriteFacingLeft)
-            {
-                facingLeft = AImoveH > 0;
-                sprite.flipX = facingLeft;
-            }
-            else
-            {
-                facingLeft = AImoveH < 0;
-                sprite.flipX = facingLeft;
-            }
+            HandleRunning();
         }
     }
 
@@ -170,8 +164,7 @@ public abstract class EnemyController : MonoBehaviour {
                 rb2d.velocity = bounceHurtLeftV;
             }
 
-            // Hurt animation
-            animator.Play("Hurt");
+            enemyAnimator.PlayHurt();
 
             // Blink effect
             blinkSystem.StartBlink(collider.GetComponent<Weapon>().blinkDuration);

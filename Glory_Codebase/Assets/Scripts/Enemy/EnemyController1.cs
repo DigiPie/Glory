@@ -58,7 +58,7 @@ public class EnemyController1 : EnemyController
                 gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
                 attackReady = false;
                 attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
-                animator.Play("Attack");
+                enemyAnimator.PlayAttack();
             }
             else
             {

@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 114544597889018228}
   - component: {fileID: 114335003495568256}
   - component: {fileID: 114026440984356966}
+  - component: {fileID: 114969878401304544}
   m_Layer: 10
   m_Name: E1Rat
   m_TagString: Enemy
@@ -221,11 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfed97677dba9994c886a3e967045daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   groundCheck: {fileID: 4447143543408404}
-  spriteFacingLeft: 1
   moveForce: 12
   maxSpeed: 1.5
   throwbackForce: 3.5
+  AImoveH: 0
   minEngagementRange: 0.2
   maxEngagementRange: 0.5
   enemyWeapon: {fileID: 1645783105922504, guid: 851f64da8c6dc0a478f1a0676ba4f9c2,
@@ -244,6 +246,19 @@ MonoBehaviour:
   healthbarFront: {fileID: 4781300655907332}
   healthbarBack: {fileID: 4276764797860898}
   health: 100
+--- !u!114 &114969878401304544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1966347777649626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8b27d6baa5f5b43b4813c83cc84319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteFacingLeft: 0
+  attackFrame: 0
 --- !u!212 &212019840151141290
 SpriteRenderer:
   m_ObjectHideFlags: 1

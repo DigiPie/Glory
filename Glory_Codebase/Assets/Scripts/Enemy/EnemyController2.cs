@@ -62,8 +62,7 @@ public class EnemyController2 : EnemyController
     bool HandleAttackPlayer()
     {
         // If attack for player was started and is at weapon slam frame, spawn a melee projectile that damages player
-        if (isAttackingPlayer && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
-            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
+        if (isAttackingPlayer && enemyAnimator.IsAttackFrame())
         {
             SpawnAttackProjectile();
             isAttackingPlayer = false;
@@ -76,10 +75,9 @@ public class EnemyController2 : EnemyController
             AImoveH = 0;
 
             // Face Player
-            if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (enemyAnimator.IsIdleAnim())
             {
-                facingLeft = distToTargetX < 0;
-                sprite.flipX = facingLeft;
+                enemyAnimator.FaceTarget(distToTargetX);
             }
 
             // Attack
@@ -87,7 +85,7 @@ public class EnemyController2 : EnemyController
             {
                 attackReady = false;
                 attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
-                animator.Play("Attack");
+                enemyAnimator.PlayAttack();
                 isAttackingPlayer = true;
             }
             else
@@ -110,7 +108,7 @@ public class EnemyController2 : EnemyController
         GameObject projectile = Instantiate(enemyWeapon, this.transform);
 
         // Assign weapon direction
-        if (facingLeft)
+        if (enemyAnimator.IsFacingLeft())
         {
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(-1, 0));
         }
@@ -123,8 +121,7 @@ public class EnemyController2 : EnemyController
     bool HandleAttackObjective()
     {
         // If attack for objective was started and is at weapon slam frame, damage objective
-        if (isAttackingObjective && this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")
-            && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
+        if (isAttackingObjective && enemyAnimator.IsAttackFrame())
         {
             gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
             isAttackingObjective = false;
@@ -162,7 +159,7 @@ public class EnemyController2 : EnemyController
         {
             attackReady = false;
             attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
-            animator.Play("Attack");
+            enemyAnimator.PlayAttack();
             isAttackingObjective = true;
         }
         else
