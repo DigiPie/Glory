@@ -171,12 +171,11 @@ public class GameManager : MonoBehaviour {
         {
             foreach (GameObject enemy in enemies)
             {
-                if (enemy.GetComponent<EnemyHealthSystem>().IsDead())
+                if (enemy.GetComponent<EnemyController>().IsDead())
                 {
                     camController.Shake(0.15f, 0.1f);
-                    Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
+                    //Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
                     enemies.Remove(enemy);
-                    Destroy(enemy);
                     hasDeadEnemy = true;
                     waveKilled++;
                     return;

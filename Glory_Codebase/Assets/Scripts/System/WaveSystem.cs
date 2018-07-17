@@ -85,23 +85,23 @@ public class WaveSystem : MonoBehaviour {
         // Test Wave
         CreateNewWave();
 
-        //AddEnemy(0, 0, 1f);
-        //AddEnemy(1, 0, 1f);
-        AddEnemy(2, 0, 2f);
+        AddEnemy(0, 0, 0f);
+        AddEnemy(1, 0, 3f);
+        AddEnemy(2, 0, 3f);
 
         waves.Add(GetNewWave());
 
         // Wave 1
-        //CreateNewWave();
+        CreateNewWave();
 
         // Spawns Fox, at Spawn Point 0, after initial delay of 2s, 2 times, with 2s intervals
-        //AddEnemy(0, 0, 2f, 2, 2f);
-        //AddEnemy(0, 1, 4f, 2, 2f);
+        AddEnemy(0, 0, 2f, 2, 2f);
+        AddEnemy(0, 1, 4f, 2, 2f);
 
-        //AddEnemy(0, 0, 6f, 5, 1.8f);
-        //AddEnemy(0, 1, 6f, 5, 1.8f);
+        AddEnemy(0, 0, 6f, 5, 1.8f);
+        AddEnemy(0, 1, 6f, 5, 1.8f);
 
-        //waves.Add(GetNewWave());
+        waves.Add(GetNewWave());
 
         // Wave 2
         //CreateNewWave();

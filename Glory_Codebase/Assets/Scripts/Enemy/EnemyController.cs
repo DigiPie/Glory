@@ -79,9 +79,17 @@ public abstract class EnemyController : MonoBehaviour {
     // Update is called in-step with the physics engine
     void FixedUpdate()
     {
+        Debug.Log(enemyState);
+
         if (enemyState == EnemyState.Dead)
         {
-            // Do nothing
+            // If death animation over
+            if (enemyAnimator.IsAnimationOver())
+            {
+                // Destroy
+                Destroy(this.gameObject);
+            }
+
             return;
         }
 
@@ -113,6 +121,11 @@ public abstract class EnemyController : MonoBehaviour {
 
     protected void OnTriggerEnter2D(Collider2D collider)
     {
+        if (enemyState == EnemyState.Dead)
+        {
+            return;
+        }
+
         collisionOnRight = collider.transform.position.x > transform.position.x;
 
         // If colliding with projectile
@@ -143,6 +156,13 @@ public abstract class EnemyController : MonoBehaviour {
             // Health deduction
             healthSystem.DeductHealth(
                 collider.GetComponent<Weapon>().damage);
+
+            if (healthSystem.IsDead())
+            {
+                AImoveH = 0;
+                enemyAnimator.PlayDeath();
+                enemyState = EnemyState.Dead;
+            }
         }
     }
 
@@ -263,6 +283,11 @@ public abstract class EnemyController : MonoBehaviour {
     // Can be used by child classes in the AI class
     protected void MoveAlongPath()
     {
+        if (enemyState == EnemyState.Dead)
+        {
+            return;
+        }
+
         // If reached current target
         if (IsTargetWithinAttackRange())
         {
@@ -290,12 +315,22 @@ public abstract class EnemyController : MonoBehaviour {
     // IsPlayerWithinAttackRange, IsPlayerWithinChaseRange, IsTargetWithinAttackRange
     protected void HomeOnLastTarget()
     {
+        if (enemyState == EnemyState.Dead)
+        {
+            return;
+        }
+
         AImoveH = (distToTargetX > 0) ? 1 : -1;
         enemyState = EnemyState.Run;
     }
 
     protected void HomeOnLastTargetWithChaseRange()
     {
+        if (enemyState == EnemyState.Dead)
+        {
+            return;
+        }
+
         if (absDistToTargetX < chasePlayerRange)
         {
             return;

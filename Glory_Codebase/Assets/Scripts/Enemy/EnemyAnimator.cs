@@ -53,7 +53,7 @@ public class EnemyAnimator : MonoBehaviour {
 
     public void PlayDeath()
     {
-        animator.Play("Attack");
+        animator.Play("Death");
     }
 
     public bool IsAttackAnim()
@@ -68,7 +68,12 @@ public class EnemyAnimator : MonoBehaviour {
 
     public bool IsAttackFrame()
     {
-        return IsAttackAnim() && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > attackFrame;
+        return IsAttackAnim() && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > attackFrame;
+    }
+
+    public bool IsAnimationOver()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f;
     }
 
     public bool IsFacingLeft()
