@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour {
             enemy.GetComponent<EnemyController>().Setup(this, path2);
         }
 
-        enemy.GetComponent<SpriteRenderer>().sortingOrder = 20 + enemies.Count;
+        enemy.GetComponent<EnemyAnimator>().SetSortingOrder(20 + enemies.Count);
         enemies.Add(enemy);
     }
 

@@ -213,6 +213,7 @@ public abstract class EnemyController : MonoBehaviour {
             return;
         }
 
+        FacePlayer();
         attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
         enemyAnimator.PlayAttack();
         enemyState = (isAttackingPlayer) ? EnemyState.AttackingPlayer : EnemyState.AttackingObjective;
@@ -230,6 +231,12 @@ public abstract class EnemyController : MonoBehaviour {
         distToTargetX = path[currentTarget].position.x - this.transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
         return absDistToTargetX < attackRange;
+    }
+
+    // Should be called right after IsPlayerWithinRange
+    protected void FacePlayer()
+    {
+        enemyAnimator.FaceTarget(distToTargetX);
     }
 
     protected void SpawnAttackProjectile()

@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(EnemyController))]
 public class EnemyAnimator : MonoBehaviour {
-    protected Animator animator;
-    protected SpriteRenderer sprite;
+    public Animator animator;
+    public SpriteRenderer sprite;
 
     protected EnemyController enemyController;
 
@@ -18,8 +16,6 @@ public class EnemyAnimator : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        animator = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
         enemyController = GetComponent<EnemyController>();
 	}
 	
@@ -99,5 +95,10 @@ public class EnemyAnimator : MonoBehaviour {
             facingLeft = !facingLeft;
 
         sprite.flipX = facingLeft;
+    }
+
+    public void SetSortingOrder(int sortingOrder)
+    {
+        sprite.sortingOrder = sortingOrder;
     }
 }

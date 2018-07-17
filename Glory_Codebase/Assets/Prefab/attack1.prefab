@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4576344603580068}
   - component: {fileID: 61774098457487138}
-  - component: {fileID: 114788225922978716}
   - component: {fileID: 212186310538109348}
+  - component: {fileID: 114788225922978716}
   m_Layer: 11
   m_Name: attack1
   m_TagString: Untagged

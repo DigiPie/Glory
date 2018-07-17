@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlinkSystem : MonoBehaviour {
-    private readonly Color halfVisible = new Color(1, 1, 1, 0.5f);
+    public SpriteRenderer sprite;
+    public float blinkDuration = 1.0f;
 
+    private readonly Color halfVisible = new Color(1, 1, 1, 0.5f);
     private float miniBlinkEndTime;
     private float miniBlinkDuration = 0.15f;
     private float blinkEndTime;
-    public float blinkDuration = 1.0f;
     private bool isBlinking = false;
     private bool isLighter = true;
 
@@ -19,14 +20,14 @@ public class BlinkSystem : MonoBehaviour {
             if (Time.timeSinceLevelLoad > blinkEndTime)
             {
                 isBlinking = false;
-                this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                sprite.color = Color.white;
                 return;
             }
             
             if (Time.timeSinceLevelLoad > miniBlinkEndTime)
             {
                 isLighter = !isLighter;
-                this.gameObject.GetComponent<SpriteRenderer>().color = (isLighter) ? halfVisible : Color.white;
+                sprite.color = (isLighter) ? halfVisible : Color.white;
                 miniBlinkEndTime = Time.timeSinceLevelLoad + miniBlinkDuration;
             }
         }
@@ -37,7 +38,7 @@ public class BlinkSystem : MonoBehaviour {
         blinkEndTime = Time.timeSinceLevelLoad + blinkDuration;
 
         isLighter = false;
-        this.gameObject.GetComponent<SpriteRenderer>().color = (isLighter) ? halfVisible : Color.white;
+        sprite.color = (isLighter) ? halfVisible : Color.white;
         miniBlinkEndTime = Time.timeSinceLevelLoad + miniBlinkDuration;
     }
 
@@ -49,7 +50,7 @@ public class BlinkSystem : MonoBehaviour {
         blinkEndTime = Time.timeSinceLevelLoad + blinkDuration;
 
         isLighter = false;
-        this.gameObject.GetComponent<SpriteRenderer>().color = (isLighter) ? halfVisible : Color.white;
+        sprite.color = (isLighter) ? halfVisible : Color.white;
         miniBlinkEndTime = Time.timeSinceLevelLoad + miniBlinkDuration;
     }
 }
