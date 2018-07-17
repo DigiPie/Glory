@@ -8718,7 +8718,7 @@ MonoBehaviour:
   dashInvulDuration: 0.25
   moveForce: 50
   maxSpeed: 5
-  throwbackForce: 100
+  throwbackForce: 150
   jumpForce: 500
 --- !u!1 &1701422118
 GameObject:

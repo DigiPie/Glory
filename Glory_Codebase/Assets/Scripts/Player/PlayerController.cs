@@ -148,6 +148,7 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
 
+            Destroy(collider.gameObject, 0.1f);
             gameManager.DamagePlayer(collider.GetComponent<EnemyWeapon>().damage);
             againstEnemyAttack = true;
         }

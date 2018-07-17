@@ -13,7 +13,7 @@ public class EnemyWeapon : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        Object.Destroy(this.gameObject, lifespan);
+        Destroy(this.gameObject, lifespan);
     }
 
     public void Setup(Vector2 dir)
