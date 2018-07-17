@@ -2003,6 +2003,8 @@ MonoBehaviour:
   boomEffect: {fileID: 1580309508211972, guid: 63bac3298792c154c88fd6c61b80441c, type: 2}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
+  enemy3: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
+  enemy4: {fileID: 0}
   player1: {fileID: 1701403904}
   isWaveCleared: 1
   path1:
@@ -4003,7 +4005,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1204222014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 1, z: 0}
+  m_LocalPosition: {x: -10, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 647856006}

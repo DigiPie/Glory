@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public PlayerHealthSystem plyHealth;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
-    public GameObject boomEffect, enemy1, enemy2, player1;
+    public GameObject boomEffect, enemy1, enemy2, enemy3, enemy4, player1;
 
     // Spawning and pathing
     public bool isWaveCleared = true;
@@ -140,6 +140,10 @@ public class GameManager : MonoBehaviour {
         if (spawn.enemyType == 1)
         {
             enemy = enemy2;
+        }
+        else if (spawn.enemyType == 2)
+        {
+            enemy = enemy3;
         }
 
         if (spawn.pathChoice == 0)
