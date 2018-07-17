@@ -247,6 +247,7 @@ public abstract class EnemyController : MonoBehaviour {
         // Assign weapon direction
         if (enemyAnimator.IsFacingLeft())
         {
+            Debug.Log("Facing left");
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(-1, 0));
         }
         else

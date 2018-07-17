@@ -82,9 +82,9 @@ public class EnemyAnimator : MonoBehaviour {
         facingLeft = enemyController.GetAImoveH();
 
         if (spriteFacingLeft)
-            facingLeft = !facingLeft;
-
-        sprite.flipX = facingLeft;
+            sprite.flipX = !facingLeft;
+        else
+            sprite.flipX = facingLeft;
     }
 
     public void FaceTarget(float distToTargetX)
@@ -92,9 +92,9 @@ public class EnemyAnimator : MonoBehaviour {
         facingLeft = distToTargetX < 0;
 
         if (spriteFacingLeft)
-            facingLeft = !facingLeft;
-
-        sprite.flipX = facingLeft;
+            sprite.flipX = !facingLeft;
+        else
+            sprite.flipX = facingLeft;
     }
 
     public void SetSortingOrder(int sortingOrder)

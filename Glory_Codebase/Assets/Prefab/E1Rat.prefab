@@ -258,8 +258,8 @@ MonoBehaviour:
   moveForce: 12
   maxSpeed: 1.5
   throwbackForce: 3.5
-  minEngagementRange: 0.5
-  maxEngagementRange: 0.7
+  minEngagementRange: 0.7
+  maxEngagementRange: 1
 --- !u!114 &114544597889018228
 MonoBehaviour:
   m_ObjectHideFlags: 1
