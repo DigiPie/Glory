@@ -6,19 +6,23 @@ public class EnemyController2 : EnemyController
 {
     protected override void AI()
     {
-        if (IsPlayerWithinRange())
+        if (IsPlayerWithinAttackRange())
         {
             Attack(true);
         }
+        else if (IsPlayerWithinChaseRange())
+        {
+            HomeOnLastTarget();
+        }
         else if (isPathDone)
         {
-            if (IsTargetWithinRange())
+            if (IsTargetWithinAttackRange())
             {
                 Attack(false);
             }
             else
             {
-                HomeOnFinalTarget();
+                HomeOnLastTarget();
             }
         }
         else

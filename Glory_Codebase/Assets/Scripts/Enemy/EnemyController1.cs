@@ -8,13 +8,13 @@ public class EnemyController1 : EnemyController
     {
         if (isPathDone)
         {
-            if (IsTargetWithinRange())
+            if (IsTargetWithinAttackRange())
             {
                 Attack(false);
             }
             else
             {
-                HomeOnFinalTarget();
+                HomeOnLastTarget();
             }
         }
         else

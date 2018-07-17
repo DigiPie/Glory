@@ -258,8 +258,9 @@ MonoBehaviour:
   moveForce: 14
   maxSpeed: 1.7
   throwbackForce: 3.5
-  minEngagementRange: 0.7
-  maxEngagementRange: 1
+  minAttackRange: 0.5
+  maxAttackRange: 0.7
+  chasePlayerRange: 0
 --- !u!114 &114544597889018228
 MonoBehaviour:
   m_ObjectHideFlags: 1

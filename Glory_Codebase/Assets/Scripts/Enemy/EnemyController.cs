@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GameManager))]
-[RequireComponent(typeof(EnemyAnimator))]
-[RequireComponent(typeof(EnemyHealthSystem))]
-[RequireComponent(typeof(BlinkSystem))]
 public abstract class EnemyController : MonoBehaviour {
     public enum EnemyState { Idle, Run, AttackingObjective, AttackingPlayer, Stunned, Dead }
 
@@ -41,9 +37,10 @@ public abstract class EnemyController : MonoBehaviour {
     protected int currentTarget = 0; // Current target, path[currentTarget]
     protected float distToTargetX = 0; // Distance from this to target
     protected float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
-    public float minEngagementRange = 0.5f; // Minimum engagement range
-    public float maxEngagementRange = 0.7f; // Maximum engagement range
+    public float minAttackRange = 0.5f; // Minimum engagement range
+    public float maxAttackRange = 0.7f; // Maximum engagement range
     protected float attackRange; // If within range from target, currentTarget++; if within range from player, attack
+    public float chasePlayerRange = 2.0f;
 
     // Attack
     protected float attackCooldown; // Minimum wait-time before next attack can be triggered
@@ -62,7 +59,7 @@ public abstract class EnemyController : MonoBehaviour {
         blinkSystem = GetComponent<BlinkSystem>();
 
         attackCooldown = enemyWeapon.GetComponent<EnemyWeapon>().cooldown;
-        attackRange = Random.Range(minEngagementRange, maxEngagementRange); // Get a unique engagement range
+        attackRange = Random.Range(minAttackRange, maxAttackRange); // Get a unique engagement range
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -219,14 +216,21 @@ public abstract class EnemyController : MonoBehaviour {
         enemyState = (isAttackingPlayer) ? EnemyState.AttackingPlayer : EnemyState.AttackingObjective;
     }
 
-    protected bool IsPlayerWithinRange()
+    protected bool IsPlayerWithinAttackRange()
     {
         distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
         return absDistToTargetX < attackRange;
     }
 
-    protected bool IsTargetWithinRange()
+    protected bool IsPlayerWithinChaseRange()
+    {
+        distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
+        absDistToTargetX = Mathf.Abs(distToTargetX);
+        return absDistToTargetX < chasePlayerRange;
+    }
+
+    protected bool IsTargetWithinAttackRange()
     {
         distToTargetX = path[currentTarget].position.x - this.transform.position.x;
         absDistToTargetX = Mathf.Abs(distToTargetX);
@@ -260,7 +264,7 @@ public abstract class EnemyController : MonoBehaviour {
     protected void MoveAlongPath()
     {
         // If reached current target
-        if (IsTargetWithinRange())
+        if (IsTargetWithinAttackRange())
         {
             // If at final target
             if (currentTarget + 1 == path.Length)
@@ -282,15 +286,23 @@ public abstract class EnemyController : MonoBehaviour {
         }
     }
 
-    // Can be used by child classes in the AI class
-    protected void HomeOnFinalTarget()
+    // Home on the last target for which range calculation was done for
+    // IsPlayerWithinAttackRange, IsPlayerWithinChaseRange, IsTargetWithinAttackRange
+    protected void HomeOnLastTarget()
     {
-        if (!IsTargetWithinRange())
+        AImoveH = (distToTargetX > 0) ? 1 : -1;
+        enemyState = EnemyState.Run;
+    }
+
+    protected void HomeOnLastTargetWithChaseRange()
+    {
+        if (absDistToTargetX < chasePlayerRange)
         {
-            // Move to the final target
-            AImoveH = (distToTargetX > 0) ? 1 : -1;
-            enemyState = EnemyState.Run;
+            return;
         }
+
+        AImoveH = (distToTargetX > 0) ? 1 : -1;
+        enemyState = EnemyState.Run;
     }
 
     public bool GetAImoveH()

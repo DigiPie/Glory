@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 50447819047954624}
   - component: {fileID: 61310499804067820}
   - component: {fileID: 114026364741133698}
-  - component: {fileID: 114108425042674738}
+  - component: {fileID: 114487707666439500}
   - component: {fileID: 114536968078075136}
   - component: {fileID: 114758672018712480}
   m_Layer: 10
@@ -242,7 +242,7 @@ MonoBehaviour:
   healthbarFront: {fileID: 4569202257965752}
   healthbarBack: {fileID: 4210041938384146}
   health: 150
---- !u!114 &114108425042674738
+--- !u!114 &114487707666439500
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1627935103789886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f6900ed757fef4c8f4e23fcf1c77b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1985f130cedc7d34c902cad56c760426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4929515888499366}
@@ -259,8 +259,9 @@ MonoBehaviour:
   moveForce: 10
   maxSpeed: 1
   throwbackForce: 2
-  minEngagementRange: 3
-  maxEngagementRange: 4
+  minAttackRange: 4
+  maxAttackRange: 5
+  chasePlayerRange: 3
 --- !u!114 &114536968078075136
 MonoBehaviour:
   m_ObjectHideFlags: 1
