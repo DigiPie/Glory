@@ -25,31 +25,23 @@ public class EnemyAnimator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // Update facing
-        facingLeft = enemyController.AImoveH < 0;
-
-        if (spriteFacingLeft)
-            facingLeft = !facingLeft;
-
-        sprite.flipX = facingLeft;
-
         // Update animation
-        if (enemyController.enemyState == EnemyController.EnemyState.Idle)
+        if (enemyController.IsIdle())
         {
             animator.SetBool("Running", false);
         }
-        else if (enemyController.enemyState == EnemyController.EnemyState.Run)
+        else if (enemyController.IsRunning())
         {
+            FaceForward();
             animator.SetBool("Running", true);
         }
-        else if (enemyController.enemyState == EnemyController.EnemyState.AttackPlayer ||
-            enemyController.enemyState == EnemyController.EnemyState.AttackObjective)
+        else if (enemyController.IsAttacking())
         {
-
+            // Do nothing
         }
-        else if (enemyController.enemyState == EnemyController.EnemyState.Dead)
+        else if (enemyController.IsDead())
         {
-
+            // Do nothing
         }
     }
 
@@ -86,6 +78,17 @@ public class EnemyAnimator : MonoBehaviour {
     public bool IsFacingLeft()
     {
         return facingLeft;
+    }
+
+    public void FaceForward()
+    {
+        // Update facing
+        facingLeft = enemyController.GetAImoveH();
+
+        if (spriteFacingLeft)
+            facingLeft = !facingLeft;
+
+        sprite.flipX = facingLeft;
     }
 
     public void FaceTarget(float distToTargetX)

@@ -7,12 +7,10 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyHealthSystem))]
 [RequireComponent(typeof(BlinkSystem))]
 public abstract class EnemyController : MonoBehaviour {
-    public enum EnemyState { Idle, Run, AttackPlayer, AttackObjective, Dead }
-    public EnemyState enemyState = EnemyState.Idle;
+    public enum EnemyState { Idle, Run, AttackingObjective, AttackingPlayer, Stunned, Dead }
 
     // Script references
     protected Rigidbody2D rb2d; // Used for movement
-
     protected GameManager gameManager; // Used to damage objective and get player position
     protected EnemyAnimator enemyAnimator;
     protected EnemyHealthSystem healthSystem; // Handles health-related matters
@@ -20,12 +18,14 @@ public abstract class EnemyController : MonoBehaviour {
     
     // References
     public Transform groundCheck; // Used to check if on the ground
+    public GameObject enemyWeapon;
 
     // Forces to be applied on character
     protected Vector2 bounceHurtLeftV, bounceHurtRightV;
     protected Vector2 moveLeftV, moveRightV;
 
     // States
+    protected EnemyState enemyState = EnemyState.Idle;
     protected bool collisionOnRight = false;
     protected bool onGround = false;
 
@@ -33,30 +33,24 @@ public abstract class EnemyController : MonoBehaviour {
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
     public float throwbackForce = 2f; // When hit by attack
-    public float AImoveH = 0; // Used by the AI to move character
+    protected float AImoveH = 0; // Used by the AI to move character
 
     // Pathing
     protected Transform[] path; // The AI path, it will move to path[0], path[1]...path[n]
     protected bool isPathDone = false; // True if reached the end of the designated path
     protected int currentTarget = 0; // Current target, path[currentTarget]
-
     protected float distToTargetX = 0; // Distance from this to target
     protected float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
-
     public float minEngagementRange = 0.5f; // Minimum engagement range
     public float maxEngagementRange = 0.7f; // Maximum engagement range
-    protected float range; // If within range from target, currentTarget++; if within range from player, attack
+    protected float attackRange; // If within range from target, currentTarget++; if within range from player, attack
 
     // Attack
-    public GameObject enemyWeapon;
-    
     protected float attackCooldown; // Minimum wait-time before next attack can be triggered
-    protected bool attackReady = true; // Reliant on attack1Cooldown
     protected float attackReadyTime = 0; // The time at which attack1Ready will be set to true again
 
     // Stunned
     private float stunDuration; // How long is the character stunned when damaged by any attacks
-    protected bool isStunned = false;
     protected float stunEndTime = 0; // The time at which stunned is set to false again
 
     // Use this for initialization
@@ -68,7 +62,7 @@ public abstract class EnemyController : MonoBehaviour {
         blinkSystem = GetComponent<BlinkSystem>();
 
         attackCooldown = enemyWeapon.GetComponent<EnemyWeapon>().cooldown;
-        range = Random.Range(minEngagementRange, maxEngagementRange); // Get a unique engagement range
+        attackRange = Random.Range(minEngagementRange, maxEngagementRange); // Get a unique engagement range
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -78,15 +72,6 @@ public abstract class EnemyController : MonoBehaviour {
         bounceHurtRightV = new Vector2(-0.5f, 0.6f) * throwbackForce;
     }
 
-    // Update is called in-step with the physics engine
-    void FixedUpdate()
-    {
-        GroundCheck();
-        AI();
-        Move();
-    }
-
-
     // Used by the gameManager to set up this enemy.
     public void Setup(GameManager gameManager, Transform[] path)
     {
@@ -94,49 +79,38 @@ public abstract class EnemyController : MonoBehaviour {
         this.path = path;
     }
 
-    protected void GroundCheck()
+    // Update is called in-step with the physics engine
+    void FixedUpdate()
     {
-        onGround = Physics2D.Linecast(transform.position, groundCheck.position,
-            1 << LayerMask.NameToLayer("Ground"));
-    }
-
-    // Different enemies have unique AI behaviours
-    protected abstract void AI();
-
-    protected void Move()
-    {
-        if (AImoveH == 0)
+        if (enemyState == EnemyState.Dead)
         {
-            enemyState = EnemyState.Idle;
+            // Do nothing
+            return;
         }
-        else
-        {
-            enemyState = EnemyState.Run;
 
+        if (enemyState == EnemyState.Stunned)
+        {
+            HandleStun();
+            return;
+        }
+
+        AI();
+
+        if (enemyState == EnemyState.Run)
+        {
             HandleRunning();
         }
-    }
-
-    // Apply horizontal movement forces if horizontal input is registered.
-    protected void HandleRunning()
-    {
-        // Apply forces if max speed is not yet reached
-        if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
+        else if (enemyState == EnemyState.AttackingObjective)
         {
-            if (AImoveH < 0)
-            {
-                if (onGround)
-                {
-                    rb2d.AddForce(moveLeftV);
-                }
-            }
-            else
-            {
-                if (onGround)
-                {
-                    rb2d.AddForce(moveRightV);
-                }
-            }
+            HandleAttacking(false);
+        }
+        else if (enemyState == EnemyState.AttackingPlayer)
+        {
+            HandleAttacking(true);
+        }
+        else if (enemyState == EnemyState.Idle)
+        {
+            // Do nothing
         }
     }
 
@@ -151,7 +125,7 @@ public abstract class EnemyController : MonoBehaviour {
 
             // Unable to move while stunned
             AImoveH = 0;
-            isStunned = true;
+            enemyState = EnemyState.Stunned;
             stunEndTime = Time.timeSinceLevelLoad + stunDuration;
 
             // Throwback effect
@@ -175,11 +149,110 @@ public abstract class EnemyController : MonoBehaviour {
         }
     }
 
+    // Different enemies have unique AI behaviours
+    protected abstract void AI();
+
+    void HandleStun()
+    {
+        // If stun duration over, transition to idle state
+        if (Time.timeSinceLevelLoad > stunEndTime)
+        {
+            enemyState = EnemyState.Idle;
+        }
+    }
+
+    // Apply horizontal movement forces if horizontal input is registered.
+    protected void HandleRunning()
+    {
+        // Check if on ground
+        onGround = Physics2D.Linecast(transform.position, groundCheck.position,
+            1 << LayerMask.NameToLayer("Ground"));
+
+        // Apply forces if max speed is not yet reached
+        if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
+        {
+            if (AImoveH < 0)
+            {
+                if (onGround)
+                {
+                    rb2d.AddForce(moveLeftV);
+                }
+            }
+            else
+            {
+                if (onGround)
+                {
+                    rb2d.AddForce(moveRightV);
+                }
+            }
+        }
+    }
+
+    void HandleAttacking(bool isAttackingPlayer)
+    {
+        if (enemyAnimator.IsAttackFrame())
+        {
+            if (isAttackingPlayer)
+            {
+                SpawnAttackProjectile();
+            }
+            else
+            {
+                gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
+            }
+            
+            enemyState = EnemyState.Idle;
+        }
+    }
+
+    protected void Attack(bool isAttackingPlayer)
+    {
+        if (enemyState == EnemyState.AttackingObjective || enemyState == EnemyState.AttackingPlayer ||
+            Time.timeSinceLevelLoad < attackReadyTime)
+        {
+            return;
+        }
+
+        attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
+        enemyAnimator.PlayAttack();
+        enemyState = (isAttackingPlayer) ? EnemyState.AttackingPlayer : EnemyState.AttackingObjective;
+    }
+
+    protected bool IsPlayerWithinRange()
+    {
+        distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
+        absDistToTargetX = Mathf.Abs(distToTargetX);
+        return absDistToTargetX < attackRange;
+    }
+
+    protected bool IsTargetWithinRange()
+    {
+        distToTargetX = path[currentTarget].position.x - this.transform.position.x;
+        absDistToTargetX = Mathf.Abs(distToTargetX);
+        return absDistToTargetX < attackRange;
+    }
+
+    protected void SpawnAttackProjectile()
+    {
+        // Create a melee projectile
+        GameObject projectile = Instantiate(enemyWeapon, this.transform);
+
+        // Assign weapon direction
+        if (enemyAnimator.IsFacingLeft())
+        {
+            projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(-1, 0));
+        }
+        else
+        {
+            projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(1, 0));
+        }
+    }
+
     // Can be used by child classes in the AI class
     protected void MoveAlongPath()
     {
         // If reached current target
-        if (absDistToTargetX < range)
+        if (IsTargetWithinRange())
         {
             // If at final target
             if (currentTarget + 1 == path.Length)
@@ -196,14 +269,49 @@ public abstract class EnemyController : MonoBehaviour {
         else
         {
             // Move to the current target
-            if (distToTargetX > 0)
-            {
-                AImoveH = 1;
-            }
-            else
-            {
-                AImoveH = -1;
-            }
+            AImoveH = (distToTargetX > 0) ? 1 : -1;
+            enemyState = EnemyState.Run;
         }
+    }
+
+    // Can be used by child classes in the AI class
+    protected void HomeOnFinalTarget()
+    {
+        if (!IsTargetWithinRange())
+        {
+            // Move to the final target
+            AImoveH = (distToTargetX > 0) ? 1 : -1;
+            enemyState = EnemyState.Run;
+        }
+    }
+
+    public bool GetAImoveH()
+    {
+        return AImoveH < 0;
+    }
+
+    public EnemyState GetEnemyState()
+    {
+        return enemyState;
+    }
+
+    public bool IsIdle()
+    {
+        return enemyState == EnemyState.Idle;
+    }
+
+    public bool IsRunning()
+    {
+        return enemyState == EnemyState.Run;
+    }
+
+    public bool IsAttacking()
+    {
+        return enemyState == EnemyState.AttackingObjective || enemyState == EnemyState.AttackingPlayer;
+    }
+
+    public bool IsDead()
+    {
+        return enemyState == EnemyState.Dead;
     }
 }
