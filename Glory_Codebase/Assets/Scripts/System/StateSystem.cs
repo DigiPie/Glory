@@ -18,7 +18,7 @@ public class StateSystem : MonoBehaviour {
      * Options: Options sub-menu shown, pause menu hidden
      */
     public enum WaveState { WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn, Done };
-    public enum TutorialState { Walk, Jump, Dash, Attack, Done }
+    public enum TutorialState { Intro, Walk, Jump, Dash, Attack, Done }
 
     public bool skipTutorial = false;
 
@@ -37,7 +37,7 @@ public class StateSystem : MonoBehaviour {
 
         menuState = MenuState.Hidden;
         waveState = WaveState.WaitingNextWave;
-        tutorialState = TutorialState.Attack;
+        tutorialState = TutorialState.Intro;
 
         if (skipTutorial)
         {
@@ -187,5 +187,46 @@ public class StateSystem : MonoBehaviour {
     public bool IsWaveDone()
     {
         return waveState == WaveState.Done;
+    }
+    // Tutorial State
+    public TutorialState GetTutorialState()
+    {
+        return tutorialState;
+    }
+
+    public void SetTutorialState(TutorialState newTutorialState)
+    {
+        Debug.Log(newTutorialState);
+        this.tutorialState = newTutorialState;
+    }
+
+    public bool IsIntro()
+    {
+        return tutorialState == TutorialState.Intro;
+    }
+
+    public bool IsWalk()
+    {
+        return tutorialState == TutorialState.Walk;
+    }
+
+    public bool IsJump()
+    {
+        return tutorialState == TutorialState.Jump;
+    }
+
+    public bool IsAttack()
+    {
+        return tutorialState == TutorialState.Attack;
+    }
+
+    public bool IsDash()
+    {
+        return tutorialState == TutorialState.Dash;
+    }
+
+    public bool IsDone()
+    {
+        return tutorialState == TutorialState.Done;
     }
 }

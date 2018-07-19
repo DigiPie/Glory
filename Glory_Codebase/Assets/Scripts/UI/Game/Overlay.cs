@@ -11,6 +11,7 @@ public class Overlay : MonoBehaviour {
 
     public GameObject pauseMenuUI;
     public GameObject optionsUI;
+    public GameObject tutorialUI;
 
     // Update is called once per frame
     void Update () {
@@ -74,6 +75,12 @@ public class Overlay : MonoBehaviour {
         pauseMenuUI.SetActive(false);
 
         optionsUI.SetActive(true);
+    }
+
+    public void ShowTutorialUI()
+    {
+        stateSystem.SetGameState(StateSystem.GameState.Tutorial);
+        tutorialUI.SetActive(true);
     }
     
     // Hide HUD, pause menu and sub-menu items, show only game over screen
