@@ -95,11 +95,6 @@ public class PlayerController : MonoBehaviour {
         attack1Cooldown = weapon1.GetComponent<Weapon>().cooldown;
     }
 
-    // Update is called once per frame, independent of the physics engine
-    void Update()
-    {
-    }
-
     // Update is called in-step with the physics engine
     void FixedUpdate ()
     {
@@ -238,6 +233,7 @@ public class PlayerController : MonoBehaviour {
                     rb2d.velocity = dashRightV;
                 }
 
+                animator.SetBool("Jumping", false);
                 animator.Play("Slide");
 
                 dashReady = false;

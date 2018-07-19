@@ -79,8 +79,6 @@ public abstract class EnemyController : MonoBehaviour {
     // Update is called in-step with the physics engine
     void FixedUpdate()
     {
-        Debug.Log(enemyState);
-
         if (enemyState == EnemyState.Dead)
         {
             // If death animation over
