@@ -26,21 +26,21 @@ public abstract class EnemyController : MonoBehaviour {
     protected bool onGround = false;
 
     // Movement
-    public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
-    public float maxSpeed = 5f; // Maximum horziontal velocity
+    public float moveForce = 10f; // Since F = ma and m = 1, therefore a = F
+    public float maxSpeed = 1f; // Maximum horziontal velocity
     public float throwbackForce = 2f; // When hit by attack
     protected float AImoveH = 0; // Used by the AI to move character
 
     // Pathing
-    protected Transform[] path; // The AI path, it will move to path[0], path[1]...path[n]
-    protected bool isPathDone = false; // True if reached the end of the designated path
     protected int currentTarget = 0; // Current target, path[currentTarget]
+    protected float distToPlayerX = 0; // Distance from this to player
+    protected float absDistToPlayerX = 0; // Absolute value used to compare against attackRange/chaseRange
+    public bool targetsPlayer = false; // If true, distToPlayerX and absDistToPlayerX will be updated for sub classes to use
     protected float distToTargetX = 0; // Distance from this to target
-    protected float absDistToTargetX = 0; // Absolute value used to compare against deadzone value
+    protected float absDistToTargetX = 0; // Absolute value used to compare against attackRange
     public float minAttackRange = 0.5f; // Minimum engagement range
     public float maxAttackRange = 0.7f; // Maximum engagement range
     protected float attackRange; // If within range from target, currentTarget++; if within range from player, attack
-    public float chasePlayerRange = 2.0f;
 
     // Attack
     protected float attackCooldown; // Minimum wait-time before next attack can be triggered
@@ -70,10 +70,9 @@ public abstract class EnemyController : MonoBehaviour {
     }
 
     // Used by the gameManager to set up this enemy.
-    public void Setup(GameManager gameManager, Transform[] path)
+    public void Setup(GameManager gameManager)
     {
         this.gameManager = gameManager;
-        this.path = path;
     }
 
     // Update is called in-step with the physics engine
@@ -85,7 +84,7 @@ public abstract class EnemyController : MonoBehaviour {
             if (enemyAnimator.IsAnimationOver())
             {
                 // Destroy
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
 
             return;
@@ -96,6 +95,9 @@ public abstract class EnemyController : MonoBehaviour {
             HandleStun();
             return;
         }
+
+        distToTargetX = gameManager.GetObjectivePositionX() - transform.position.x;
+        absDistToTargetX = Mathf.Abs(distToTargetX);
 
         AI();
 
@@ -215,48 +217,31 @@ public abstract class EnemyController : MonoBehaviour {
             {
                 gameManager.DamageObjective(enemyWeapon.GetComponent<EnemyWeapon>().damage);
             }
-            
+
             enemyState = EnemyState.Idle;
         }
     }
 
-    protected void Attack(bool isAttackingPlayer)
+    protected void AttackPlayer()
     {
-        if (enemyState == EnemyState.AttackingObjective || enemyState == EnemyState.AttackingPlayer ||
-            Time.timeSinceLevelLoad < attackReadyTime)
-        {
-            return;
-        }
-
         FacePlayer();
         attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
         enemyAnimator.PlayAttack();
-        enemyState = (isAttackingPlayer) ? EnemyState.AttackingPlayer : EnemyState.AttackingObjective;
     }
 
-    protected bool IsPlayerWithinAttackRange()
+    protected void AttackObjective()
     {
-        distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
-        absDistToTargetX = Mathf.Abs(distToTargetX);
-        return absDistToTargetX < attackRange;
+        FaceObjective();
+        attackReadyTime = Time.timeSinceLevelLoad + attackCooldown;
+        enemyAnimator.PlayAttack();
     }
 
-    protected bool IsPlayerWithinChaseRange()
-    {
-        distToTargetX = gameManager.GetPlayerPosition().transform.position.x - this.transform.position.x;
-        absDistToTargetX = Mathf.Abs(distToTargetX);
-        return absDistToTargetX < chasePlayerRange;
-    }
-
-    protected bool IsTargetWithinAttackRange()
-    {
-        distToTargetX = path[currentTarget].position.x - this.transform.position.x;
-        absDistToTargetX = Mathf.Abs(distToTargetX);
-        return absDistToTargetX < attackRange;
-    }
-
-    // Should be called right after IsPlayerWithinRange
     protected void FacePlayer()
+    {
+        enemyAnimator.FaceTarget(distToPlayerX);
+    }
+
+    protected void FaceObjective()
     {
         enemyAnimator.FaceTarget(distToTargetX);
     }
@@ -269,73 +254,12 @@ public abstract class EnemyController : MonoBehaviour {
         // Assign weapon direction
         if (enemyAnimator.IsFacingLeft())
         {
-            Debug.Log("Facing left");
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(-1, 0));
         }
         else
         {
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(1, 0));
         }
-    }
-
-    // Can be used by child classes in the AI class
-    protected void MoveAlongPath()
-    {
-        if (enemyState == EnemyState.Dead)
-        {
-            return;
-        }
-
-        // If reached current target
-        if (IsTargetWithinAttackRange())
-        {
-            // If at final target
-            if (currentTarget + 1 == path.Length)
-            {
-                // Indicate that character is at final target
-                isPathDone = true;
-            }
-            else
-            {
-                // Move on to next target
-                currentTarget++;
-            }
-        }
-        else
-        {
-            // Move to the current target
-            AImoveH = (distToTargetX > 0) ? 1 : -1;
-            enemyState = EnemyState.Run;
-        }
-    }
-
-    // Home on the last target for which range calculation was done for
-    // IsPlayerWithinAttackRange, IsPlayerWithinChaseRange, IsTargetWithinAttackRange
-    protected void HomeOnLastTarget()
-    {
-        if (enemyState == EnemyState.Dead)
-        {
-            return;
-        }
-
-        AImoveH = (distToTargetX > 0) ? 1 : -1;
-        enemyState = EnemyState.Run;
-    }
-
-    protected void HomeOnLastTargetWithChaseRange()
-    {
-        if (enemyState == EnemyState.Dead)
-        {
-            return;
-        }
-
-        if (absDistToTargetX < chasePlayerRange)
-        {
-            return;
-        }
-
-        AImoveH = (distToTargetX > 0) ? 1 : -1;
-        enemyState = EnemyState.Run;
     }
 
     public bool GetAImoveH()

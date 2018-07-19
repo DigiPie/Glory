@@ -2,32 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+ * Moves to objective and attacks it.
+ * If player appears within chase range of this enemy, chase player.
+ * If player is within attack range of this enemy, attack player.
+ * If player exits chase range of this enemy, resume movement to objective.
+ */
 public class EnemyController2 : EnemyController
 {
+    public float chasePlayerRange = 2.0f;
+
     protected override void AI()
     {
-        if (IsPlayerWithinAttackRange())
+        // Get distance to player
+        distToPlayerX = gameManager.GetPlayerPositionX() - transform.position.x;
+        absDistToPlayerX = Mathf.Abs(distToPlayerX);
+
+        // If attacking player or objective
+        if (enemyState == EnemyState.AttackingPlayer || enemyState == EnemyState.AttackingObjective)
         {
-            Attack(true);
+            // Do nothing
         }
-        else if (IsPlayerWithinChaseRange())
+        // If within attack range of player
+        else if (absDistToPlayerX < attackRange)
         {
-            HomeOnLastTarget();
-        }
-        else if (isPathDone)
-        {
-            if (IsTargetWithinAttackRange())
+            // Attack player
+            // If ready
+            if (Time.timeSinceLevelLoad > attackReadyTime)
             {
-                Attack(false);
-            }
-            else
-            {
-                HomeOnLastTarget();
+                enemyState = EnemyState.AttackingPlayer;
+                AttackPlayer();
             }
         }
+        // If not, if within chase range of player
+        else if (absDistToPlayerX < chasePlayerRange)
+        {
+            // Chase player
+            enemyState = EnemyState.Run;
+            AImoveH = (distToPlayerX < 0) ? -1 : 1;
+        }
+        // If not, if within attack range of objective
+        else if (absDistToTargetX < attackRange)
+        {
+            // Attack objective
+            // If ready
+            if (Time.timeSinceLevelLoad > attackReadyTime)
+            {
+                enemyState = EnemyState.AttackingObjective;
+                AttackObjective();
+            }
+        }
+        // If not, move to objective
         else
         {
-            MoveAlongPath();
+            // Move to objective
+            enemyState = EnemyState.Run;
+            AImoveH = (distToTargetX < 0) ? -1 : 1;
         }
     }
 }

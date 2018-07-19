@@ -257,11 +257,11 @@ MonoBehaviour:
   enemyWeapon: {fileID: 1896182198626310, guid: 7cc9dfaaeb822b84b82116454238e3db,
     type: 2}
   moveForce: 10
-  maxSpeed: 1
+  maxSpeed: 1.2
   throwbackForce: 2
-  minAttackRange: 4
-  maxAttackRange: 5
-  chasePlayerRange: 3
+  targetsPlayer: 0
+  minAttackRange: 3
+  maxAttackRange: 4
 --- !u!114 &114536968078075136
 MonoBehaviour:
   m_ObjectHideFlags: 1

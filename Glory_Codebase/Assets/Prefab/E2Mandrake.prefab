@@ -287,8 +287,9 @@ MonoBehaviour:
   moveForce: 12
   maxSpeed: 1.3
   throwbackForce: 2
-  minAttackRange: 0.5
-  maxAttackRange: 0.7
+  targetsPlayer: 1
+  minAttackRange: 0.8
+  maxAttackRange: 1
   chasePlayerRange: 3
 --- !u!212 &212046936305450668
 SpriteRenderer:

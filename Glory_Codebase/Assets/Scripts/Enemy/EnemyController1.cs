@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+ * Moves to objective and attacks it.
+ * Ignores player.
+ */
 public class EnemyController1 : EnemyController
 {
     protected override void AI()
     {
-        if (isPathDone)
+        // If within attack range of objective
+        if (absDistToTargetX < attackRange)
         {
-            if (IsTargetWithinAttackRange())
+            // Attack objective
+            // If ready
+            if (Time.timeSinceLevelLoad > attackReadyTime)
             {
-                Attack(false);
-            }
-            else
-            {
-                HomeOnLastTarget();
+                enemyState = EnemyState.AttackingObjective;
+                AttackObjective();
             }
         }
+        // If not, move to objective
         else
         {
-            MoveAlongPath();
+            // Move to objective
+            enemyState = EnemyState.Run;
+            AImoveH = (distToTargetX < 0) ? -1 : 1;
         }
     }
 }

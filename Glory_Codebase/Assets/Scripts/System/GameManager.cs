@@ -12,12 +12,12 @@ public class GameManager : MonoBehaviour {
     public PlayerHealthSystem plyHealth;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
-    public GameObject boomEffect, enemy1, enemy2, enemy3, enemy4, player1;
+    public GameObject boomEffect, enemy1, enemy2, enemy3, enemy4, player1, objective;
 
     // Spawning and pathing
     public bool isWaveCleared = true;
 
-    public Transform[] path1, path2;
+    public Transform spawn1, spawn2;
     private WaveSystem.Spawn spawn;
     private bool isWaveFullySpawned = true;
     private bool startNextWave = false;
@@ -145,18 +145,21 @@ public class GameManager : MonoBehaviour {
         {
             enemy = enemy3;
         }
+        else if (spawn.enemyType == 3)
+        {
+            enemy = enemy4;
+        }
 
         if (spawn.pathChoice == 0)
         {
-            enemy = Instantiate(enemy, path1[0]);
-            enemy.GetComponent<EnemyController>().Setup(this, path1);
+            enemy = Instantiate(enemy, spawn1);
         }
         else
         {
-            enemy = Instantiate(enemy, path2[0]);
-            enemy.GetComponent<EnemyController>().Setup(this, path2);
+            enemy = Instantiate(enemy, spawn2);
         }
 
+        enemy.GetComponent<EnemyController>().Setup(this);
         enemy.GetComponent<EnemyAnimator>().SetSortingOrder(20 + enemies.Count);
         enemies.Add(enemy);
     }
@@ -171,7 +174,7 @@ public class GameManager : MonoBehaviour {
         {
             foreach (GameObject enemy in enemies)
             {
-                if (enemy.GetComponent<EnemyController>().IsDead())
+                if (enemy == null || enemy.GetComponent<EnemyController>().IsDead())
                 {
                     camController.Shake(0.15f, 0.1f);
                     //Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
@@ -200,7 +203,7 @@ public class GameManager : MonoBehaviour {
     // Called by spawned enemies to damage the objective
     public void DamageObjective(int damage)
     {
-        camController.Shake(0.05f, 0.15f);
+        //camController.Shake(0.05f, 0.15f);
         objHealth.TakeDamage(damage);
     }
 
@@ -221,11 +224,14 @@ public class GameManager : MonoBehaviour {
         DamagePlayer((int) damage);
     }
 
-
-    // Used by enemies
-    public Transform GetPlayerPosition()
+    public float GetPlayerPositionX()
     {
-        return player1.transform;
+        return player1.transform.position.x;
+    }
+
+    public float GetObjectivePositionX()
+    {
+        return objective.transform.position.x;
     }
 
     // Used by the HUD script and displayed by txtInfo under the objective health
