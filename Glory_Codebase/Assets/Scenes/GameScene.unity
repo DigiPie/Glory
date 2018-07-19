@@ -2064,7 +2064,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f0d144feaafb342b79f2b2a2ff5599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skipTutorial: 1
+  skipTutorial: 0
+  hud: {fileID: 1303328454}
 --- !u!1 &652482220
 GameObject:
   m_ObjectHideFlags: 0
@@ -7511,6 +7512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 647856007}
+  stateSystem: {fileID: 647856011}
   playerHealthSystem: {fileID: 647856009}
   objectiveHealth: {fileID: 647856010}
   popUpHUD: {fileID: 2039385221}

@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         enemies = new List<GameObject>();
-        hud.ShowNextWaveBtn();
     }
 
     // Update is called every frame

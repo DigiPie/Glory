@@ -7,6 +7,7 @@ using TMPro;
 public class HUD : MonoBehaviour {
 
     public GameManager gameManager;
+    public StateSystem stateSystem;
     public PlayerHealthSystem playerHealthSystem;
     public ObjectiveHealth objectiveHealth;
     public GameObject popUpHUD;
@@ -50,11 +51,14 @@ public class HUD : MonoBehaviour {
             playerDamageImage.color = Color.Lerp(playerDamageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
 
-        inputNext = Input.GetButton("Submit");
-
-        if (inputNext)
+        if (stateSystem.IsGameWave())
         {
-            OnClickNextWaveBtn();
+            inputNext = Input.GetButton("Submit");
+
+            if (inputNext)
+            {
+                OnClickNextWaveBtn();
+            }
         }
     }
 

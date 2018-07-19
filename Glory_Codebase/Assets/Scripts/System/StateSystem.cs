@@ -29,6 +29,8 @@ public class StateSystem : MonoBehaviour {
 
     private GameState beforePauseGameState;
 
+    public HUD hud;
+
     // Use this for initialization
     void Start () {
         Unpause();
@@ -39,7 +41,7 @@ public class StateSystem : MonoBehaviour {
 
         if (skipTutorial)
         {
-            gameState = GameState.Wave;
+            StartGameWave(); // Call this at end of tutorial
         }
         else
         {
@@ -121,6 +123,13 @@ public class StateSystem : MonoBehaviour {
     public bool IsGameLose()
     {
         return gameState == GameState.Lose;
+    }
+
+    public void StartGameWave()
+    {
+        hud.ShowNextWaveBtn();
+        gameState = GameState.Wave;
+        waveState = WaveState.WaitingNextWave;
     }
 
     // Menu State
