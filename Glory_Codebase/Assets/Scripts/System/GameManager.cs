@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour {
         }
         else if(stateSystem.IsGameTutorial())
         {
-            // TODO Tutorial Logic
+            overlay.ShowTutorialUI();
         }
     }
 

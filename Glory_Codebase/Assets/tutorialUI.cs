@@ -15,12 +15,13 @@ public class tutorialUI : MonoBehaviour
     public GameObject AttackScene;
     public GameObject DashScene;
     public GameObject DoneScene;
+    public GameObject NextWaveScene;
 
     void Awake()
     {
-        TutorialCanvas.SetActive(true);
+        // TutorialCanvas.SetActive(true);
         IntroScene.SetActive(true);
-        stateSystem.SetTutorialState(StateSystem.TutorialState.Dash);
+        stateSystem.SetTutorialState(StateSystem.TutorialState.Intro);
     }
 
     // Update is called once per frame
@@ -76,7 +77,9 @@ public class tutorialUI : MonoBehaviour
         else if (stateSystem.IsDone())
         {
             DoneScene.SetActive(false);
-
+            TutorialCanvas.SetActive(false);
+            stateSystem.SetGameState(StateSystem.GameState.Wave);
+            NextWaveScene.SetActive(true);
         }
     }
 

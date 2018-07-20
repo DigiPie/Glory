@@ -1277,7 +1277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &268144717
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1355,6 +1355,7 @@ MonoBehaviour:
   AttackScene: {fileID: 1734382201}
   DashScene: {fileID: 1883739966}
   DoneScene: {fileID: 2107486947}
+  NextWaveScene: {fileID: 2039385221}
 --- !u!1 &271918842
 GameObject:
   m_ObjectHideFlags: 0
@@ -11035,7 +11036,7 @@ MonoBehaviour:
   txtGameOver: {fileID: 1478046050}
   pauseMenuUI: {fileID: 2126059064}
   optionsUI: {fileID: 1663310068}
-  tutorialUI: {fileID: 0}
+  tutorialUI: {fileID: 268144716}
 --- !u!114 &1596415191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12532,7 +12533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

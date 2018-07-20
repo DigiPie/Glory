@@ -34,10 +34,8 @@ public class StateSystem : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Unpause();
-
         menuState = MenuState.Hidden;
         waveState = WaveState.WaitingNextWave;
-        tutorialState = TutorialState.Intro;
 
         if (skipTutorial)
         {
@@ -188,7 +186,9 @@ public class StateSystem : MonoBehaviour {
     {
         return waveState == WaveState.Done;
     }
+
     // Tutorial State
+
     public TutorialState GetTutorialState()
     {
         return tutorialState;
@@ -196,7 +196,6 @@ public class StateSystem : MonoBehaviour {
 
     public void SetTutorialState(TutorialState newTutorialState)
     {
-        Debug.Log(newTutorialState);
         this.tutorialState = newTutorialState;
     }
 
