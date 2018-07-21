@@ -27,32 +27,37 @@ public class HUD : MonoBehaviour {
     private bool inputNext;
     private bool allowInputNext = true;
 
+    private void Awake()
+    {
+        txtInfo.text = "";
+    }
     // Update is called in-step with the physics engine
     void FixedUpdate() {
-        objHealthSlider.value = objectiveHealth.getCurrentHealth();
-        healthSlider.value = playerHealthSystem.getCurrentHealth();
-        txtInfo.text = gameManager.GetInfo();
-
-        if (objectiveHealth.damaged)
-        {
-            damageImage.color = flashColour;
-        }
-        else
-        {
-            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-        }
-
-        if (playerHealthSystem.damaged)
-        {
-            playerDamageImage.color = flashColour2;
-        }
-        else
-        {
-            playerDamageImage.color = Color.Lerp(playerDamageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-        }
-
         if (stateSystem.IsGameWave())
         {
+            objHealthSlider.value = objectiveHealth.getCurrentHealth();
+            healthSlider.value = playerHealthSystem.getCurrentHealth();
+            txtInfo.text = gameManager.GetInfo();
+
+            if (objectiveHealth.damaged)
+            {
+                damageImage.color = flashColour;
+            }
+            else
+            {
+                damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            }
+
+            if (playerHealthSystem.damaged)
+            {
+                playerDamageImage.color = flashColour2;
+            }
+            else
+            {
+                playerDamageImage.color = Color.Lerp(playerDamageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            }
+
+
             inputNext = Input.GetButton("Submit");
 
             if (inputNext)

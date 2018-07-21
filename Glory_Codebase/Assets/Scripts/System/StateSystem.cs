@@ -137,9 +137,9 @@ public class StateSystem : MonoBehaviour {
 
     public void StartGameWave()
     {
-        hud.ShowNextWaveBtn();
         gameState = GameState.Wave;
         waveState = WaveState.WaitingNextWave;
+        hud.ShowNextWaveBtn();
     }
 
     // Menu State
