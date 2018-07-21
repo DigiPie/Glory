@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StateSystem : MonoBehaviour {
-    public enum GameState { Paused, Tutorial, Wave, Lose, Win };
+    public enum GameState { Menu, Paused, Tutorial, Wave, Lose, Win };
     /*
+     * Menu: GameManager does not run, only main menu canvas is displayed
      * Paused:  GameManager does not run, Overlay displays Pause menu
      * Tutorial: GameManager runs tutorial code (Line 48)
      * Wave: GameManager runs wave code (Line 43)
@@ -30,21 +31,14 @@ public class StateSystem : MonoBehaviour {
     private GameState beforePauseGameState;
 
     public HUD hud;
+    public GameObject mainMenu;
 
     // Use this for initialization
-    void Start () {
+    public void Start () {
         Unpause();
+        gameState = GameState.Menu;
         menuState = MenuState.Hidden;
         waveState = WaveState.WaitingNextWave;
-
-        if (skipTutorial)
-        {
-            StartGameWave(); // Call this at end of tutorial
-        }
-        else
-        {
-            gameState = GameState.Tutorial;
-        }
 	}
 
     // Timescale
@@ -63,7 +57,8 @@ public class StateSystem : MonoBehaviour {
     // Scene transition
     public void LoadMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SetGameState(GameState.Menu);
+        
     }
 
     public void ExitGame()
@@ -97,6 +92,11 @@ public class StateSystem : MonoBehaviour {
     {
         gameState = beforePauseGameState;
     }
+    
+    public bool IsGameMenu()
+    {
+        return gameState == GameState.Menu;
+    }
 
     public bool IsGamePaused()
     {
@@ -121,6 +121,18 @@ public class StateSystem : MonoBehaviour {
     public bool IsGameLose()
     {
         return gameState == GameState.Lose;
+    }
+    
+    public void EnterGame()
+    {
+        if (skipTutorial)
+        {
+            StartGameWave(); // Call this at end of tutorial
+        }
+        else
+        {
+            gameState = GameState.Tutorial;
+        }
     }
 
     public void StartGameWave()

@@ -1,13 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
+    public StateSystem stateSystem;
+    public GameObject mainMenu;
+    public Overlay overlay;
+
     public void PlayGame()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-        SceneManager.LoadScene("GameScene");
+        mainMenu.SetActive(false);
+        stateSystem.EnterGame();
+        if (stateSystem.IsGameTutorial())
+        {
+            overlay.ShowTutorialUI();
+        }
     }
     public void QuitGame()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Overlay : MonoBehaviour {
@@ -9,9 +10,11 @@ public class Overlay : MonoBehaviour {
     public GameObject gameOverUI;
     public TextMeshProUGUI txtGameOver;
 
+    public GameObject OverlayCanvas;
     public GameObject pauseMenuUI;
     public GameObject optionsUI;
     public GameObject tutorialUI;
+    public GameObject mainMenuUI;
 
     // Update is called once per frame
     void Update () {
@@ -53,16 +56,22 @@ public class Overlay : MonoBehaviour {
     // Hide HUD and sub-menu items, show main pause menu
     public void ShowPauseUI()
     {
-        // Pause game
-        stateSystem.Pause();
+        if (!stateSystem.IsGameMenu())
+        {
+            // Pause game
+            stateSystem.Pause();
 
-        // Update state
-        stateSystem.SetMenuState(StateSystem.MenuState.Main);
+            // Update state
+            stateSystem.SetMenuState(StateSystem.MenuState.Main);
 
-        hudUI.SetActive(false);
-        optionsUI.SetActive(false);
-
-        pauseMenuUI.SetActive(true);
+            hudUI.SetActive(false);
+            optionsUI.SetActive(false);
+            pauseMenuUI.SetActive(true);
+        }
+        else
+        {
+            optionsUI.SetActive(false);
+        }
     }
 
     // Hide HUD, pause menu and sub-menu items, show only options menu
@@ -73,13 +82,14 @@ public class Overlay : MonoBehaviour {
 
         hudUI.SetActive(false);
         pauseMenuUI.SetActive(false);
-
+        OverlayCanvas.SetActive(true);
         optionsUI.SetActive(true);
     }
 
     public void ShowTutorialUI()
     {
         stateSystem.SetGameState(StateSystem.GameState.Tutorial);
+        OverlayCanvas.SetActive(true);
         tutorialUI.SetActive(true);
     }
     
@@ -100,7 +110,7 @@ public class Overlay : MonoBehaviour {
     // Trigger exit to menu
     public void LoadMenu()
     {
-        stateSystem.LoadMenu();
+        SceneManager.LoadScene("GameScene");
     }
 
     // Trigger exit game

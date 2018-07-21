@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tutorialUI : MonoBehaviour
+public class TutorialUI : MonoBehaviour
 {
 
     // References
     public StateSystem stateSystem;
 
+    public GameObject InfoDisplay;
     public GameObject TutorialCanvas;
     public GameObject IntroScene;
     public GameObject WalkScene;
@@ -19,7 +20,7 @@ public class tutorialUI : MonoBehaviour
 
     void Awake()
     {
-        // TutorialCanvas.SetActive(true);
+        InfoDisplay.SetActive(false);
         IntroScene.SetActive(true);
         stateSystem.SetTutorialState(StateSystem.TutorialState.Intro);
     }
@@ -29,15 +30,15 @@ public class tutorialUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            prevState();
+            PrevState();
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            nextState();
+            NextState();
         }
     }
 
-    public void nextState()
+    public void NextState()
     {
         if (stateSystem.IsIntro())
         {
@@ -73,17 +74,18 @@ public class tutorialUI : MonoBehaviour
             DoneScene.SetActive(true);
             stateSystem.SetTutorialState(StateSystem.TutorialState.Done);
         }
-
+        // When entire tutorial is completed
         else if (stateSystem.IsDone())
         {
             DoneScene.SetActive(false);
             TutorialCanvas.SetActive(false);
             stateSystem.SetGameState(StateSystem.GameState.Wave);
             NextWaveScene.SetActive(true);
+            InfoDisplay.SetActive(true);
         }
     }
 
-    public void prevState()
+    public void PrevState()
     {
         if (!stateSystem.IsIntro())
         {
