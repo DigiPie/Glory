@@ -7,8 +7,6 @@ public class TutorialUI : MonoBehaviour
 
     // References
     public StateSystem stateSystem;
-
-    public GameObject InfoDisplay;
     public GameObject TutorialCanvas;
     public GameObject IntroScene;
     public GameObject WalkScene;
@@ -20,7 +18,6 @@ public class TutorialUI : MonoBehaviour
 
     void Awake()
     {
-        InfoDisplay.SetActive(false);
         IntroScene.SetActive(true);
         stateSystem.SetTutorialState(StateSystem.TutorialState.Intro);
     }
@@ -79,9 +76,7 @@ public class TutorialUI : MonoBehaviour
         {
             DoneScene.SetActive(false);
             TutorialCanvas.SetActive(false);
-            stateSystem.SetGameState(StateSystem.GameState.Wave);
-            NextWaveScene.SetActive(true);
-            InfoDisplay.SetActive(true);
+            stateSystem.StartGameWave();
         }
     }
 

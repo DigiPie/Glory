@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour {
 
                     spawn = waveSystem.GetSpawn();
                     spawnReadyTime = Time.timeSinceLevelLoad + spawn.spawnDelay;
-                    //Debug.Log(spawn);
                     getNewSpawn = false;
                 }
 
