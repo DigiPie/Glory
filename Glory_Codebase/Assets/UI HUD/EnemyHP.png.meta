@@ -2,12 +2,15 @@ fileFormatVersion: 2
 guid: dbf223b59308d62489d57d7e59998c31
 TextureImporter:
   fileIDToRecycleName:
-    21300000: EnemyHP_0
+    21300000: EnemyHP_Red
     21300002: EnemyHP_4
     21300004: EnemyHP_9
     21300006: EnemyHP_12
+    21300008: EnemyHP_Bar
+    21300010: EnemyHP_Outline
+    21300012: EnemyHP_Gray
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 6
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -25,6 +28,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -35,7 +40,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -47,7 +52,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -86,53 +91,53 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnemyHP_0
+      name: EnemyHP_Outline
       rect:
         serializedVersion: 2
-        x: 40
-        y: 66
-        width: 60
-        height: 7
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        x: 16
+        y: 61
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec8ab867bc5057f4fa212bc2fb3c434e
+      spriteID: bb12ad53f34d9c7468698ba6fa8f589b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyHP_4
+      name: EnemyHP_Gray
       rect:
         serializedVersion: 2
-        x: 40
-        y: 54
-        width: 60
-        height: 7
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        x: 16
+        y: 40
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6930427b225ac1d4dae45249cf4a5079
+      spriteID: 58125d5de2830844f81c1b25e6888937
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyHP_9
+      name: EnemyHP_Red
       rect:
         serializedVersion: 2
-        x: 40
-        y: 46
-        width: 66
-        height: 7
+        x: 16
+        y: 19
+        width: 64
+        height: 16
       alignment: 4
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,27 +145,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a719d7dc6c56eb43aad9dd4cea15d92
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyHP_12
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 38
-        width: 66
-        height: 7
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63ed14620989e3845a865f516aae6b20
+      spriteID: b78a6729ee9cceb47b7d4c56a9a5755b
       vertices: []
       indices: 
       edges: []

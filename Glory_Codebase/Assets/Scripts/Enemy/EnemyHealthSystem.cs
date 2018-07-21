@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealthSystem : MonoBehaviour {
-    public Transform healthbarFront;
-    public Transform healthbarBack;
-    private SpriteRenderer frontRend, backRend;
+    public SpriteRenderer outlineRend, frontRend, backRend;
 
     public float health = 100;
     private float currentHealth = 1;
@@ -14,10 +12,8 @@ public class EnemyHealthSystem : MonoBehaviour {
     void Start () {
         currentHealth = health;
 
-        frontRend = healthbarFront.GetComponent<SpriteRenderer>();
-        backRend = healthbarBack.GetComponent<SpriteRenderer>();
-
         // Hide it at first, only show when not at full health
+        outlineRend.enabled = false;
         frontRend.enabled = false;
         backRend.enabled = false;
     }
@@ -28,6 +24,7 @@ public class EnemyHealthSystem : MonoBehaviour {
 
         if (currentHealth <= 0)
         {
+            outlineRend.enabled = false;
             frontRend.enabled = false;
             backRend.enabled = false;
         }
@@ -36,6 +33,7 @@ public class EnemyHealthSystem : MonoBehaviour {
             SetHealthBarScale(currentHealth / health);
 
             // If invisible, show
+            outlineRend.enabled = true;
             frontRend.enabled = true;
             backRend.enabled = true;
         }
