@@ -79,11 +79,18 @@ public class Overlay : MonoBehaviour {
     {
         // Update state
         stateSystem.SetMenuState(StateSystem.MenuState.Options);
-
-        hudUI.SetActive(false);
-        pauseMenuUI.SetActive(false);
-        OverlayCanvas.SetActive(true);
-        optionsUI.SetActive(true);
+        if (stateSystem.IsGameMenu())
+        {
+            pauseMenuUI.SetActive(false);
+            OverlayCanvas.SetActive(true);
+            optionsUI.SetActive(true);
+        }
+        else {
+            hudUI.SetActive(false);
+            pauseMenuUI.SetActive(false);
+            OverlayCanvas.SetActive(true);
+            optionsUI.SetActive(true);
+        }
     }
 
     public void ShowTutorialUI()
@@ -99,11 +106,8 @@ public class Overlay : MonoBehaviour {
         hudUI.SetActive(false);
         pauseMenuUI.SetActive(false);
         optionsUI.SetActive(false);
-
         gameOverUI.SetActive(true);
-
         stateSystem.Pause();
-
         txtGameOver.text = (isWin) ? "VICTORY!" : "DEFEAT!";
     }
 

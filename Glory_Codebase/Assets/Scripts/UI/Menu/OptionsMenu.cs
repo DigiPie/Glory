@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour {
 
+    public StateSystem stateSystem;
     public AudioMixer audioMixer;
 
+    // Setting Resolution
     public void SetResolution(int resolutionIndex)
     {
         switch (resolutionIndex)
@@ -30,16 +32,21 @@ public class OptionsMenu : MonoBehaviour {
         }
     }
 
-    public void SetVolume(float volume)
+    // Tutorial Checkbox
+    public void skipTutorial(bool tutorialCheck)
+    {
+        stateSystem.DisableTutorial(tutorialCheck);
+        Debug.Log(tutorialCheck);
+    }
+
+    public void SetBGMVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
     }
 
-
-    // Low = 0, Medium = 1, High = 2
-    public void SetQuality(int qualityIndex)
+    public void SetSFXVolume(float volume)
     {
-        QualitySettings.SetQualityLevel(qualityIndex);
+       
     }
 
     public void SetFullscreen(bool isFullscreen)

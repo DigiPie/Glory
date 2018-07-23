@@ -21,8 +21,6 @@ public class StateSystem : MonoBehaviour {
     public enum WaveState { WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn, Done };
     public enum TutorialState { Intro, Walk, Jump, Dash, Attack, Done }
 
-    public bool skipTutorial = false;
-
     private GameState gameState;
     private MenuState menuState;
     private WaveState waveState;
@@ -31,7 +29,10 @@ public class StateSystem : MonoBehaviour {
     private GameState beforePauseGameState;
 
     public HUD hud;
+    public GameObject HudUI;
     public GameObject mainMenu;
+
+    public volatile bool skipTutorial = false;
 
     // Use this for initialization
     public void Start () {
@@ -132,6 +133,7 @@ public class StateSystem : MonoBehaviour {
         else
         {
             gameState = GameState.Tutorial;
+            HudUI.SetActive(true);
         }
     }
 
@@ -204,6 +206,11 @@ public class StateSystem : MonoBehaviour {
     public TutorialState GetTutorialState()
     {
         return tutorialState;
+    }
+
+    public void DisableTutorial(bool check)
+    {
+        skipTutorial = check;
     }
 
     public void SetTutorialState(TutorialState newTutorialState)

@@ -11,11 +11,8 @@ public class MainMenu : MonoBehaviour {
     {
         mainMenu.SetActive(false);
         stateSystem.EnterGame();
-        if (stateSystem.IsGameTutorial())
-        {
-            overlay.ShowTutorialUI();
-        }
     }
+
     public void QuitGame()
     {
         Debug.Log("QUIT!");
