@@ -21,11 +21,17 @@ public class PlayerAttackSystem : MonoBehaviour {
     public float newAttkCooldown = 0.8f; // The cooldown between the last combo (completed or not) and the new
     private float attkReadyTime;
 
+    // Special attack //
+    private float specialDmg;
+    public float specialAttkCooldown = 8f;
+    private float specialAttkReadyTime;
+
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
 
         criticalDmg = attackDmg * 1.5f;
+        specialDmg = attackDmg * 2f;
 	}
 
     public void NormalAttack(bool isAttackLeft)
@@ -99,6 +105,23 @@ public class PlayerAttackSystem : MonoBehaviour {
         }
     }
 
+    public void SpecialAttack(bool isAttackLeft)
+    {
+        // If cooldown, then don't attack
+        if (Time.timeSinceLevelLoad < specialAttkReadyTime)
+        {
+            return;
+        }
+
+        // If new combo
+        SpawnSpecialAttack(isAttackLeft);
+
+        // Animate with special attack
+        animator.Play("SpecialAttack");
+
+        specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
+    }
+
     void SpawnAttack(bool isAttackLeft)
     {
         GameObject projectile = Instantiate(normalAttack, transform);
@@ -115,10 +138,19 @@ public class PlayerAttackSystem : MonoBehaviour {
             criticalDmg);
     }
 
+    void SpawnSpecialAttack(bool isAttackLeft)
+    {
+        GameObject projectile = Instantiate(normalAttack, transform);
+        projectile.GetComponent<PlayerWeapon>().Setup(
+            (isAttackLeft) ? leftDir : rightDir,
+            specialDmg);
+    }
+
     public bool IsAttacking()
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3");
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack");
     }
 }

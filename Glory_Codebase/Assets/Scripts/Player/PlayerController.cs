@@ -336,10 +336,13 @@ public class PlayerController : MonoBehaviour {
 
     void Attack()
     {
-        // If have attack input, is not sliding or jumping
-        if (inputAttack && !isInvul && onGround)
+        // If is not sliding or jumping
+        if (!isInvul && onGround)
         {
-            attackSystem.NormalAttack(facingLeft);
+            if (inputAttack)
+                attackSystem.NormalAttack(facingLeft);
+            else if (inputSpecialAttk)
+                attackSystem.SpecialAttack(facingLeft);
         }
     }
 }

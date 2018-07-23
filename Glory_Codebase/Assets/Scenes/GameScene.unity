@@ -12381,8 +12381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 647856007}
   groundCheck: {fileID: 2066096959}
-  dashCooldown: 2
-  dashInvulDuration: 0.25
+  slideCooldown: 0
+  slideInvulDuration: 0
   moveForce: 50
   maxSpeed: 5
   throwbackForce: 150
@@ -12398,13 +12398,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64dd9bfda5540341964af7368369fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalAttack: {fileID: 1645783105922504, guid: 851f64da8c6dc0a478f1a0676ba4f9c2,
+  normalAttack: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258,
     type: 2}
   specialAttack: {fileID: 0}
   specialAbility: {fileID: 0}
   attackDmg: 10
   consecAttkCooldown: 0.4
   newAttkCooldown: 0.8
+  specialAttkCooldown: 1
 --- !u!1 &1701422118
 GameObject:
   m_ObjectHideFlags: 0
