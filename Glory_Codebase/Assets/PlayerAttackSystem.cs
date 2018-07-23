@@ -114,4 +114,11 @@ public class PlayerAttackSystem : MonoBehaviour {
             (isAttackLeft) ? leftDir : rightDir, 
             criticalDmg);
     }
+
+    public bool IsAttacking()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3");
+    }
 }

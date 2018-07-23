@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour {
     private Vector2 bounceWallLeftV, bounceWallRightV;
     private Vector2 bounceEnemyLeftV, bounceEnemyRightV;
     private Vector2 slowdownLeft, slowdownRightV;
-    private Vector2 moveLeftV, moveRightV, moveLeftInAirV, moveRightInAirV;
-    private Vector2 dashLeftV, dashRightV; // 25% of moveLeftV and moveRightV
+    private Vector2 moveLeftV, moveRightV;
+    private Vector2 slideLeftV, slideRightV; // 25% of moveLeftV and moveRightV
     private Vector2 jumpV;
 
     // States
@@ -30,11 +30,11 @@ public class PlayerController : MonoBehaviour {
     private bool inputJump, inputSlide, inputAttack, inputSpecialAttk, inputSpecialAbility;
     private float inputH;
 
-    // Dash
-    public float dashCooldown; // Minimum wait-time before next dash can be triggered
-    public float dashInvulDuration; // How long is the character invulnerable for when dashing
-    private bool dashReady = true; // Reliant on dashCooldown
-    private float dashReadyTime = 0; // The time at which dashReady will be set to true again
+    // Slide
+    public float slideCooldown; // Minimum wait-time before next slide can be triggered
+    public float slideInvulDuration; // How long is the character invulnerable for when slideing
+    private bool slideReady = true; // Reliant on slideCooldown
+    private float slideReadyTime = 0; // The time at which slideReady will be set to true again
 
     // Invulnerability
     private bool isInvul = false;
@@ -43,7 +43,10 @@ public class PlayerController : MonoBehaviour {
     // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
+    private float maxSpeedInAir;
+    private float maxSpeedWhileAttk;
     public float throwbackForce = 200f; // When hit by enemy
+    private float whileAttkMoveForce; // Half of moveForce, slower horizontal speed in the air
     private float inAirMoveForce; // Half of moveForce, slower horizontal speed in the air
     private float slowdownForce; // Quarter of moveForce, applied on character when no input
     private readonly float deadzoneFactor = 1.0f; // Do not apply certain forces if velocity < or > this
@@ -64,7 +67,11 @@ public class PlayerController : MonoBehaviour {
         attackSystem = GetComponent<PlayerAttackSystem>();
 
         inAirMoveForce = moveForce * 0.5f;
-        slowdownForce = moveForce * 0.35f;
+        whileAttkMoveForce = moveForce * 0.4f;
+        slowdownForce = moveForce;
+
+        maxSpeedInAir = maxSpeed * 0.7f;
+        maxSpeedWhileAttk = maxSpeed * 0.5f;
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -76,10 +83,8 @@ public class PlayerController : MonoBehaviour {
         slowdownRightV = Vector2.right * slowdownForce;
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
-        dashLeftV = moveLeftV * 0.3f;
-        dashRightV = moveRightV * 0.3f;
-        moveLeftInAirV = Vector2.left * inAirMoveForce;
-        moveRightInAirV = Vector2.right * inAirMoveForce;
+        slideLeftV = moveLeftV * 0.3f;
+        slideRightV = moveRightV * 0.3f;
         jumpV = new Vector2(0f, jumpForce);
     }
 
@@ -168,8 +173,8 @@ public class PlayerController : MonoBehaviour {
 
         if (inputSlide)
         {
-            HandleDash();
-            return; // If both dash and jump input are pressed at the same time, dash only
+            HandleSlide();
+            return; // If both slide and jump input are pressed at the same time, slide only
         }
 
         HandleJumping();
@@ -209,42 +214,42 @@ public class PlayerController : MonoBehaviour {
         return againstWall || againstEnemyAttack;
     }
 
-    void HandleDash()
+    void HandleSlide()
     {
-        if (dashReady)
+        if (slideReady)
         {
             if (inputSlide)
             {
                 if (facingLeft)
                 {
-                    rb2d.velocity = dashLeftV;
+                    rb2d.velocity = slideLeftV;
                 }
                 else
                 {
-                    rb2d.velocity = dashRightV;
+                    rb2d.velocity = slideRightV;
                 }
 
                 animator.SetBool("Jumping", false);
                 animator.Play("Slide");
 
-                dashReady = false;
-                dashReadyTime = Time.timeSinceLevelLoad + dashCooldown;
+                slideReady = false;
+                slideReadyTime = Time.timeSinceLevelLoad + slideCooldown;
                 isInvul = true;
-                invulEndTime = Time.timeSinceLevelLoad + dashInvulDuration;
+                invulEndTime = Time.timeSinceLevelLoad + slideInvulDuration;
             }
         }
         else
         {
-            if (Time.timeSinceLevelLoad > dashReadyTime)
+            if (Time.timeSinceLevelLoad > slideReadyTime)
             {
-                dashReady = true;
+                slideReady = true;
             }
         }
     }
 
     void UpdateInvulnerability()
     {
-        // Invulnerability can be triggered by dashing and ...
+        // Invulnerability can be triggered by sliding and ...
         if (isInvul)
         {
             if (Time.timeSinceLevelLoad > invulEndTime)
@@ -274,8 +279,17 @@ public class PlayerController : MonoBehaviour {
     // Apply horizontal movement forces if horizontal input is registered.
     void HandleRunning()
     {
+        float tempMaxSpd;
+
+        if (attackSystem.IsAttacking())
+            tempMaxSpd = maxSpeedWhileAttk;
+        else if (!onGround)
+            tempMaxSpd = maxSpeedInAir;
+        else
+            tempMaxSpd = maxSpeed;
+
         // Slows down character if maxSpeed reached
-        if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
+        if (Mathf.Abs(rb2d.velocity.x) > tempMaxSpd)
         {
             if (rb2d.velocity.x > 0)
             {
@@ -291,25 +305,11 @@ public class PlayerController : MonoBehaviour {
         {
             if (inputH < 0)
             {
-                if (onGround)
-                {
-                    rb2d.AddForce(moveLeftV);
-                }
-                else
-                {
-                    rb2d.AddForce(moveLeftInAirV);
-                }
+                rb2d.AddForce(moveLeftV);
             }
             else
             {
-                if (onGround)
-                {
-                    rb2d.AddForce(moveRightV);
-                }
-                else
-                {
-                    rb2d.AddForce(moveRightInAirV);
-                }
+                rb2d.AddForce(moveRightV);
             }
         }
     }
@@ -336,7 +336,8 @@ public class PlayerController : MonoBehaviour {
 
     void Attack()
     {
-        if (inputAttack)
+        // If have attack input, is not sliding or jumping
+        if (inputAttack && !isInvul && onGround)
         {
             attackSystem.NormalAttack(facingLeft);
         }

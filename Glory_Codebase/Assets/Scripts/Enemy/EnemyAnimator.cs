@@ -58,12 +58,12 @@ public class EnemyAnimator : MonoBehaviour {
 
     public bool IsAttackAnim()
     {
-        return this.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
     }
 
     public bool IsIdleAnim()
     {
-        return this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
     }
 
     public bool IsAttackFrame()
