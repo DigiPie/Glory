@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour {
         jumpV = new Vector2(0f, jumpForce);
 
         // Attack
-        attack1Cooldown = weapon1.GetComponent<Weapon>().cooldown;
+        attack1Cooldown = weapon1.GetComponent<PlayerWeapon>().miniCooldown;
     }
 
     // Update is called in-step with the physics engine
@@ -176,6 +176,8 @@ public class PlayerController : MonoBehaviour {
             sprite.flipX = facingLeft;
         }
 
+        animator.SetBool("Jumping", !onGround);
+
         if (inputSlide)
         {
             HandleDash();
@@ -183,8 +185,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         HandleJumping();
-        
-        animator.SetBool("Jumping", !onGround);
     }
 
     // Apply bounce-off forces when colliding with wall and enemies.
@@ -402,11 +402,11 @@ public class PlayerController : MonoBehaviour {
                 // Assign weapon direction
                 if (facingLeft)
                 {
-                    projectile.GetComponent<Weapon>().Setup(isCriticalStrike, new Vector2(-1, 0));
+                    projectile.GetComponent<PlayerWeapon>().Setup(isCriticalStrike, new Vector2(-1, 0));
                 }
                 else
                 {
-                    projectile.GetComponent<Weapon>().Setup(isCriticalStrike, new Vector2(1, 0));
+                    projectile.GetComponent<PlayerWeapon>().Setup(isCriticalStrike, new Vector2(1, 0));
                 }
 
                 // Cooldown

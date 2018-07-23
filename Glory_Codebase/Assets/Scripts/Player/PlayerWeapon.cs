@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour {
+public class PlayerWeapon : MonoBehaviour {
     private Vector2 dirV; // Direction of melee projectile
 
-    public float cooldown = 1f; // Attack cooldown
+    public float miniCooldown = 1f; // Cooldown between 1st, 2nd and 3rd strike
+    public float comboCooldown = 1f; // Cooldown between 1 combo of 3 strikes from the next, between 3rd consecutive strike and 1st new strike
     public float damage = 10;
     public float criticalDamage = 15; // Every 3rd strike in a combo is a critical strike
     public float lifespan = 0.5f; // Lifespan of melee projectile
