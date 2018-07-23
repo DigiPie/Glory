@@ -33,9 +33,9 @@ public class OptionsMenu : MonoBehaviour {
     }
 
     // Tutorial Checkbox
-    public void skipTutorial(bool tutorialCheck)
+    public void PlayTutorial(bool tutorialCheck)
     {
-        stateSystem.DisableTutorial(tutorialCheck);
+        stateSystem.EnableTutorial(tutorialCheck);
         Debug.Log(tutorialCheck);
     }
 

@@ -32,7 +32,7 @@ public class StateSystem : MonoBehaviour {
     public GameObject HudUI;
     public GameObject mainMenu;
 
-    public volatile bool skipTutorial = false;
+    public volatile bool tutorialEnabled = true;
 
     // Use this for initialization
     public void Start () {
@@ -126,14 +126,14 @@ public class StateSystem : MonoBehaviour {
     
     public void EnterGame()
     {
-        if (skipTutorial)
-        {
-            StartGameWave(); // Call this at end of tutorial
-        }
-        else
+        if (tutorialEnabled)
         {
             gameState = GameState.Tutorial;
             HudUI.SetActive(true);
+        }
+        else
+        {
+            StartGameWave(); // Call this at end of tutorial
         }
     }
 
@@ -208,9 +208,9 @@ public class StateSystem : MonoBehaviour {
         return tutorialState;
     }
 
-    public void DisableTutorial(bool check)
+    public void EnableTutorial(bool check)
     {
-        skipTutorial = check;
+        tutorialEnabled = check;
     }
 
     public void SetTutorialState(TutorialState newTutorialState)

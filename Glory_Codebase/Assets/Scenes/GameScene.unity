@@ -839,7 +839,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SKIP TUTORIAL
+  m_Text: PLAY TUTORIAL
 --- !u!222 &184058826
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2529,7 +2529,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1663310072}
-        m_MethodName: skipTutorial
+        m_MethodName: PlayTutorial
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2541,7 +2541,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &463260244
 GameObject:
   m_ObjectHideFlags: 0
@@ -3537,7 +3537,7 @@ MonoBehaviour:
   hud: {fileID: 1303328454}
   HudUI: {fileID: 1303328448}
   mainMenu: {fileID: 1551670490}
-  skipTutorial: 0
+  tutorialEnabled: 1
 --- !u!1 &652482220
 GameObject:
   m_ObjectHideFlags: 0
@@ -10175,7 +10175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29153967, y: 0.16459341}
   m_AnchorMax: {x: 0.95476985, y: 0.8183252}
-  m_AnchoredPosition: {x: 5.14, y: 2.15}
+  m_AnchoredPosition: {x: 5.1400146, y: 2.1500015}
   m_SizeDelta: {x: -30.58, y: -30.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1332910816
@@ -11691,7 +11691,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MUTE SOUND
+  m_Text: SOUND
 --- !u!222 &1498123819
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11785,7 +11785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1551670491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12151,7 +12151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1663310069
 RectTransform:
   m_ObjectHideFlags: 0
