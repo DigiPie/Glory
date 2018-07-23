@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     private bool onGround = false;
 
     // Input
-    private bool inputJump, inputAttack1, inputDash;
+    private bool inputJump, inputSlide, inputAttack, inputSpecialAttk, inputSpecialAbility;
     private float inputH;
 
     // Attack System
@@ -105,8 +105,11 @@ public class PlayerController : MonoBehaviour {
         // Update input information
         inputH = Input.GetAxisRaw("Horizontal");
         inputJump = Input.GetButton("Jump");
-        inputDash = Input.GetButton("Dash");
-        inputAttack1 = Input.GetButton("Attack1");
+        inputSlide = Input.GetButton("Slide");
+        inputAttack = Input.GetButton("Attack");
+        inputSpecialAttk = Input.GetButton("SpecialAttack");
+        inputSpecialAbility = Input.GetButton("SpecialAbility");
+
         Move();
         Attack();
         UpdateInvulnerability();
@@ -173,7 +176,7 @@ public class PlayerController : MonoBehaviour {
             sprite.flipX = facingLeft;
         }
 
-        if (inputDash)
+        if (inputSlide)
         {
             HandleDash();
             return; // If both dash and jump input are pressed at the same time, dash only
@@ -222,7 +225,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (dashReady)
         {
-            if (inputDash)
+            if (inputSlide)
             {
                 if (facingLeft)
                 {
@@ -347,7 +350,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (attack1Ready)
         {
-            if (inputAttack1)
+            if (inputAttack)
             {
                 if (Time.timeSinceLevelLoad < comboEndTime)
                 {

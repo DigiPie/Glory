@@ -22,14 +22,13 @@ public class TutorialUI : MonoBehaviour
         stateSystem.SetTutorialState(StateSystem.TutorialState.Intro);
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetButton("Exit"))
         {
             PrevState();
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetButton("Submit"))
         {
             NextState();
         }
