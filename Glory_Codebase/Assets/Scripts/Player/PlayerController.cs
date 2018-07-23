@@ -7,9 +7,9 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
     private Rigidbody2D rb2d;
     private SpriteRenderer sprite;
+    private PlayerAttackSystem attackSystem;
 
     public Transform groundCheck;
-    public GameObject weapon1;
 
     // Forces to be applied on character
     private Vector2 bounceWallLeftV, bounceWallRightV;
@@ -29,17 +29,6 @@ public class PlayerController : MonoBehaviour {
     // Input
     private bool inputJump, inputSlide, inputAttack, inputSpecialAttk, inputSpecialAbility;
     private float inputH;
-
-    // Attack System
-    private readonly float comboDuration = 1.0f; // If no next attack within comboDuration of last attack, combo ends
-    private bool isCriticalStrike = false; // Every 3rd strike in a combo is a critical strike
-    private int combo = 0; // Number of attacks within comboDuration intervals
-    private float comboEndTime;
-
-    // Attack 1
-    private float attack1Cooldown; // Minimum wait-time before next attack can be triggered
-    private bool attack1Ready = true; // Reliant on attack1Cooldown
-    private float attack1ReadyTime = 0; // The time at which attack1Ready will be set to true again
 
     // Dash
     public float dashCooldown; // Minimum wait-time before next dash can be triggered
@@ -72,6 +61,8 @@ public class PlayerController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
 
+        attackSystem = GetComponent<PlayerAttackSystem>();
+
         inAirMoveForce = moveForce * 0.5f;
         slowdownForce = moveForce * 0.35f;
 
@@ -90,9 +81,6 @@ public class PlayerController : MonoBehaviour {
         moveLeftInAirV = Vector2.left * inAirMoveForce;
         moveRightInAirV = Vector2.right * inAirMoveForce;
         jumpV = new Vector2(0f, jumpForce);
-
-        // Attack
-        attack1Cooldown = weapon1.GetComponent<PlayerWeapon>().miniCooldown;
     }
 
     // Update is called in-step with the physics engine
@@ -348,78 +336,9 @@ public class PlayerController : MonoBehaviour {
 
     void Attack()
     {
-        if (attack1Ready)
+        if (inputAttack)
         {
-            if (inputAttack)
-            {
-                if (Time.timeSinceLevelLoad < comboEndTime)
-                {
-                    // If existing combo
-                    combo++;
-                    comboEndTime = Time.timeSinceLevelLoad + comboDuration;
-                    isCriticalStrike = combo % 3 == 0;
-
-                    // For every 3rd hit, play attack 3 (360 backhand strike)
-                    if (isCriticalStrike)
-                    {
-                        // TODO: Critical strike every 3rd hit, increased damage
-                        animator.Play("Attack3");
-                    }
-                    else
-                    {
-                        // Else randomly select between attack 1 and attack 2 animation
-                        if (Random.Range(0, 2) == 0)
-                        {
-                            animator.Play("Attack");
-                        }
-                        else
-                        {
-                            animator.Play("Attack2");
-                        }
-                    }
-                }
-                else
-                {
-                    // If new combo
-                    combo = 1;
-                    comboEndTime = Time.timeSinceLevelLoad + comboDuration;
-                    isCriticalStrike = false;
-
-                    // Randomly select between attack 1 and attack 2 animation
-                    if (Random.Range(0, 2) == 0)
-                    {
-                        animator.Play("Attack");
-                    }
-                    else
-                    {
-                        animator.Play("Attack2");
-                    }
-                }
-
-                // Create a melee projectile
-                GameObject projectile = Instantiate(weapon1, this.transform);
-
-                // Assign weapon direction
-                if (facingLeft)
-                {
-                    projectile.GetComponent<PlayerWeapon>().Setup(isCriticalStrike, new Vector2(-1, 0));
-                }
-                else
-                {
-                    projectile.GetComponent<PlayerWeapon>().Setup(isCriticalStrike, new Vector2(1, 0));
-                }
-
-                // Cooldown
-                attack1Ready = false;
-                attack1ReadyTime = Time.timeSinceLevelLoad + attack1Cooldown;
-            }
-        }
-        else
-        {
-            if (Time.timeSinceLevelLoad > attack1ReadyTime)
-            {
-                attack1Ready = true;
-            }
+            attackSystem.NormalAttack(facingLeft);
         }
     }
 }

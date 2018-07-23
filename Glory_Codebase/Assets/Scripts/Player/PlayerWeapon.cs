@@ -4,33 +4,59 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour {
     private Vector2 dirV; // Direction of melee projectile
+    private float damage = 10;
+    private float stunDuration = 0.0f; // Stun duration on enemy
+    private float blinkDuration = 1.0f; // Blink duration on enemy
+    public float lifespan = 0.2f; // Lifespan of melee projectile
+    public float speed = 0.05f; // Speed of melee projectile
 
-    public float miniCooldown = 1f; // Cooldown between 1st, 2nd and 3rd strike
-    public float comboCooldown = 1f; // Cooldown between 1 combo of 3 strikes from the next, between 3rd consecutive strike and 1st new strike
-    public float damage = 10;
-    public float criticalDamage = 15; // Every 3rd strike in a combo is a critical strike
-    public float lifespan = 0.5f; // Lifespan of melee projectile
-    public float speed = 0.1f; // Speed of melee projectile
-    public float stunDuration = 0.0f; // Stun duration on enemy
-    public float blinkDuration = 0.0f; // Blink duration on enemy
-
-    // Use this for initialization
-    void Start () {
-        Object.Destroy(this.gameObject, lifespan);
+    public void Setup(Vector2 dir)
+    {
+        dirV = speed * dir;
+        Destroy(gameObject, lifespan);
     }
 
-    public void Setup(bool isCriticalStrike, Vector2 dir)
+    public void Setup(Vector2 dir, float damage)
     {
-        if (isCriticalStrike)
-        {
-            damage = criticalDamage;
-        }
-
         dirV = speed * dir;
+        Destroy(gameObject, lifespan);
+        this.damage = damage;
+    }
+
+    public void Setup(Vector2 dir, float damage, float stunDuration)
+    {
+        dirV = speed * dir;
+        Destroy(gameObject, lifespan);
+        this.damage = damage;
+        this.stunDuration = stunDuration;
+    }
+
+    public void Setup(Vector2 dir, float damage, float stunDuration, float blinkDuration)
+    {
+        dirV = speed * dir;
+        Destroy(gameObject, lifespan);
+        this.damage = damage;
+        this.stunDuration = stunDuration;
+        this.blinkDuration = blinkDuration;
     }
 
     void FixedUpdate()
     {
         transform.Translate(dirV.x, dirV.y, 0);
+    }
+
+    public float getDamage()
+    {
+        return damage;
+    }
+
+    public float getStunDuration()
+    {
+        return stunDuration;
+    }
+
+    public float getBlinkDuration()
+    {
+        return blinkDuration;
     }
 }

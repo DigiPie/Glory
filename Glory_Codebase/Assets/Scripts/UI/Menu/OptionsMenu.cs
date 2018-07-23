@@ -36,7 +36,6 @@ public class OptionsMenu : MonoBehaviour {
     public void PlayTutorial(bool tutorialCheck)
     {
         stateSystem.EnableTutorial(tutorialCheck);
-        Debug.Log(tutorialCheck);
     }
 
     public void SetBGMVolume(float volume)

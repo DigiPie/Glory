@@ -3379,7 +3379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.599976, y: -0.000011444092}
+  m_AnchoredPosition: {x: -15.599976, y: -0.000015258789}
   m_SizeDelta: {x: 128.9, y: 12.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &636760383
@@ -10175,7 +10175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29153967, y: 0.16459341}
   m_AnchorMax: {x: 0.95476985, y: 0.8183252}
-  m_AnchoredPosition: {x: 5.1400146, y: 2.1500015}
+  m_AnchoredPosition: {x: 5.1400146, y: 2.149994}
   m_SizeDelta: {x: -30.58, y: -30.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1332910816
@@ -11376,7 +11376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.599976, y: -0.000011444092}
+  m_AnchoredPosition: {x: -15.599976, y: -0.000015258789}
   m_SizeDelta: {x: 128.9, y: 12.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1479568177
@@ -12237,6 +12237,7 @@ GameObject:
   - component: {fileID: 1701403909}
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
+  - component: {fileID: 1701403911}
   m_Layer: 12
   m_Name: player1
   m_TagString: Untagged
@@ -12380,13 +12381,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 647856007}
   groundCheck: {fileID: 2066096959}
-  weapon1: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258, type: 2}
   dashCooldown: 2
   dashInvulDuration: 0.25
   moveForce: 50
   maxSpeed: 5
   throwbackForce: 150
   jumpForce: 500
+--- !u!114 &1701403911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1701403904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64dd9bfda5540341964af7368369fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalAttack: {fileID: 1645783105922504, guid: 851f64da8c6dc0a478f1a0676ba4f9c2,
+    type: 2}
+  specialAttack: {fileID: 0}
+  specialAbility: {fileID: 0}
+  attackDmg: 10
+  consecAttkCooldown: 0.4
+  newAttkCooldown: 0.8
 --- !u!1 &1701422118
 GameObject:
   m_ObjectHideFlags: 0
@@ -12895,7 +12913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.29153967, y: 0.16459341}
   m_AnchorMax: {x: 0.95476985, y: 0.8183252}
-  m_AnchoredPosition: {x: 4.700012, y: 3.02}
+  m_AnchoredPosition: {x: 4.700012, y: 3.0200043}
   m_SizeDelta: {x: -29.7, y: -28.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1804868378

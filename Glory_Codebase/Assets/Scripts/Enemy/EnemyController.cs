@@ -131,7 +131,7 @@ public abstract class EnemyController : MonoBehaviour {
         // If colliding with projectile
         if (collider.gameObject.layer == 11)
         {
-            stunDuration = collider.GetComponent<PlayerWeapon>().stunDuration;
+            stunDuration = collider.GetComponent<PlayerWeapon>().getStunDuration();
 
             // Unable to move while stunned
             AImoveH = 0;
@@ -151,11 +151,11 @@ public abstract class EnemyController : MonoBehaviour {
             enemyAnimator.PlayHurt();
 
             // Blink effect
-            blinkSystem.StartBlink(collider.GetComponent<PlayerWeapon>().blinkDuration);
+            blinkSystem.StartBlink(collider.GetComponent<PlayerWeapon>().getBlinkDuration());
 
             // Health deduction
             healthSystem.DeductHealth(
-                collider.GetComponent<PlayerWeapon>().damage);
+                collider.GetComponent<PlayerWeapon>().getDamage());
 
             if (healthSystem.IsDead())
             {
