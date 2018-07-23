@@ -31,10 +31,10 @@ public class PlayerController : MonoBehaviour {
     private float inputH;
 
     // Slide
-    public float slideCooldown; // Minimum wait-time before next slide can be triggered
-    public float slideInvulDuration; // How long is the character invulnerable for when slideing
+    public float slideCooldown = 2f; // Minimum wait-time before next slide can be triggered
+    public float slideInvulDuration = 1f; // How long is the character invulnerable for when slideing
     private bool slideReady = true; // Reliant on slideCooldown
-    private float slideReadyTime = 0; // The time at which slideReady will be set to true again
+    private float slideReadyTime; // The time at which slideReady will be set to true again
 
     // Invulnerability
     private bool isInvul = false;
@@ -83,8 +83,8 @@ public class PlayerController : MonoBehaviour {
         slowdownRightV = Vector2.right * slowdownForce;
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
-        slideLeftV = moveLeftV * 0.3f;
-        slideRightV = moveRightV * 0.3f;
+        slideLeftV = moveLeftV * 0.4f;
+        slideRightV = moveRightV * 0.4f;
         jumpV = new Vector2(0f, jumpForce);
     }
 

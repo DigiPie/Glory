@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackSystem : MonoBehaviour {
+public class PlayerAttackSystem : MonoBehaviour
+{
     private readonly Vector2 leftDir = new Vector2(-1, 0);
     private readonly Vector2 rightDir = new Vector2(1, 0);
 
     private Animator animator;
-    public GameObject normalAttack, specialAttack, specialAbility;
+    public GameObject normalAttack, criticalAttack, specialAttack, specialAbility;
 
     // Normal attack //
     public float attackDmg = 10;
@@ -27,12 +28,13 @@ public class PlayerAttackSystem : MonoBehaviour {
     private float specialAttkReadyTime;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         animator = GetComponent<Animator>();
 
         criticalDmg = attackDmg * 1.5f;
         specialDmg = attackDmg * 2f;
-	}
+    }
 
     public void NormalAttack(bool isAttackLeft)
     {
@@ -126,21 +128,21 @@ public class PlayerAttackSystem : MonoBehaviour {
     {
         GameObject projectile = Instantiate(normalAttack, transform);
         projectile.GetComponent<PlayerWeapon>().Setup(
-            (isAttackLeft) ? leftDir : rightDir, 
+            (isAttackLeft) ? leftDir : rightDir,
             attackDmg);
     }
 
     void SpawnCriticalStrike(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(normalAttack, transform);
+        GameObject projectile = Instantiate(criticalAttack, transform);
         projectile.GetComponent<PlayerWeapon>().Setup(
-            (isAttackLeft) ? leftDir : rightDir, 
+            (isAttackLeft) ? leftDir : rightDir,
             criticalDmg);
     }
 
     void SpawnSpecialAttack(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(normalAttack, transform);
+        GameObject projectile = Instantiate(specialAttack, transform);
         projectile.GetComponent<PlayerWeapon>().Setup(
             (isAttackLeft) ? leftDir : rightDir,
             specialDmg);
