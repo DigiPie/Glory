@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
             HandleWave();
             HandleDead();
         }
-        else if(stateSystem.IsGameTutorial())
+        else if (stateSystem.IsGameTutorial())
         {
             overlay.ShowTutorialUI();
         }
@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour {
         {
             if (enemies.Count == 0)
             {
+                player1.GetComponent<PlayerController>().AllowAttack(false);
                 stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
                 hud.ShowNextWaveBtn();
             }
@@ -195,6 +196,7 @@ public class GameManager : MonoBehaviour {
             waveCount = waveSystem.GetWaveCount();
             waveKilled = 0;
             getNewSpawn = true;
+            player1.GetComponent<PlayerController>().AllowAttack(true);
         }
     }
 

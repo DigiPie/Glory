@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 jumpV;
 
     // States
+    private bool canAttack = false;
     private bool againstWall = false;
     private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
@@ -97,7 +98,11 @@ public class PlayerController : MonoBehaviour {
         inputSpecialAbility = Input.GetButton("SpecialAbility");
 
         Move();
-        Attack();
+
+        if (canAttack)
+        {
+            Attack();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -299,5 +304,10 @@ public class PlayerController : MonoBehaviour {
             else if (inputSpecialAttk)
                 attackSystem.SpecialAttack(facingLeft);
         }
+    }
+
+    public void AllowAttack(bool canAttack)
+    {
+        this.canAttack = canAttack;
     }
 }

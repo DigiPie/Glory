@@ -121,7 +121,7 @@ public class PlayerAttackSystem : MonoBehaviour
 
         // Animate with special attack
         animator.Play("SpecialAttack");
-        camController.Shake(0.15f, 0.15f);
+        camController.Shake(0.05f, 0.3f);
 
         specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
     }
