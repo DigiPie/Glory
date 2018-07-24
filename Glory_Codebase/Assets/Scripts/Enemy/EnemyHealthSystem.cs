@@ -30,7 +30,7 @@ public class EnemyHealthSystem : MonoBehaviour {
         }
         else
         {
-            SetHealthBarScale((currentHealth + 10) / health);
+            SetHealthBarScale((currentHealth + 1) / health);
 
             // If invisible, show
             outlineRend.enabled = true;

@@ -305,7 +305,7 @@ MonoBehaviour:
   outlineRend: {fileID: 212945035334462858}
   frontRend: {fileID: 212650282654000034}
   backRend: {fileID: 212642641949238862}
-  health: 100
+  health: 40
 --- !u!114 &114969878401304544
 MonoBehaviour:
   m_ObjectHideFlags: 1

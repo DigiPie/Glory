@@ -36,7 +36,7 @@ public class PlayerActionSystem : MonoBehaviour
     public float attackDmg = 10;
     private float criticalDmg;
     private float comboEndTime;
-    private float comboDuration = 1f;
+    private float comboDuration = 0.6f;
     private int comboCount = 0;
     public float consecAttkCooldown = 0.4f;
     // Consecutive attack cooldown used as long as attacks are within combo duration intervals.
@@ -58,8 +58,8 @@ public class PlayerActionSystem : MonoBehaviour
         playerAnimator = GetComponent<PlayerAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        criticalDmg = attackDmg * 1.5f;
-        specialDmg = attackDmg * 2f;
+        criticalDmg = attackDmg * 2f;
+        specialDmg = attackDmg * 3f;
     }
 
     public void Setup(Vector2 moveLeftV, Vector2 moveRightV)
@@ -112,6 +112,7 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 SpawnSpecialAttack(playerAnimator.IsFacingLeft());
                 isSpecialAttk = false;
+                camController.Shake(0.015f, 0.15f);
             }
         }
     }
@@ -173,6 +174,9 @@ public class PlayerActionSystem : MonoBehaviour
         // If combo is ongoing
         if (Time.timeSinceLevelLoad < comboEndTime)
         {
+            if (playerAnimator.IsAttacking())
+                return;
+
             comboCount++; // Update combo count
             comboEndTime = Time.timeSinceLevelLoad + comboDuration; // Update combo length
 
@@ -203,6 +207,9 @@ public class PlayerActionSystem : MonoBehaviour
         }
         else
         {
+            if (playerAnimator.IsAttacking())
+                return;
+
             // If new combo
             comboCount = 1;
             comboEndTime = Time.timeSinceLevelLoad + comboDuration;
@@ -234,7 +241,6 @@ public class PlayerActionSystem : MonoBehaviour
 
         // Animate with special attack
         playerAnimator.PlayCast();
-        camController.Shake(0.01f, 0.3f);
 
         specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
     }

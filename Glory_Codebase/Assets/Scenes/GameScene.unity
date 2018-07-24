@@ -12458,7 +12458,7 @@ MonoBehaviour:
   specialAbility: {fileID: 0}
   slideCooldown: 1.5
   slideInvulDuration: 1
-  attackDmg: 10
+  attackDmg: 12
   consecAttkCooldown: 0.3
   newAttkCooldown: 0.6
   specialAttkCooldown: 1
