@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb2d;
     private SpriteRenderer sprite;
     private PlayerAttackSystem attackSystem;
+    private PlayerAbilitySystem abilitySystem;
 
     public Transform groundCheck;
 
@@ -16,7 +17,6 @@ public class PlayerController : MonoBehaviour {
     private Vector2 bounceEnemyLeftV, bounceEnemyRightV;
     private Vector2 slowdownLeft, slowdownRightV;
     private Vector2 moveLeftV, moveRightV;
-    private Vector2 slideLeftV, slideRightV; // 25% of moveLeftV and moveRightV
     private Vector2 jumpV;
 
     // States
@@ -29,16 +29,6 @@ public class PlayerController : MonoBehaviour {
     // Input
     private bool inputJump, inputSlide, inputAttack, inputSpecialAttk, inputSpecialAbility;
     private float inputH;
-
-    // Slide
-    public float slideCooldown = 2f; // Minimum wait-time before next slide can be triggered
-    public float slideInvulDuration = 1f; // How long is the character invulnerable for when slideing
-    private bool slideReady = true; // Reliant on slideCooldown
-    private float slideReadyTime; // The time at which slideReady will be set to true again
-
-    // Invulnerability
-    private bool isInvul = false;
-    private float invulEndTime; // The time at which the character is no longer invulnerable
 
     // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
@@ -63,9 +53,11 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-
         attackSystem = GetComponent<PlayerAttackSystem>();
+        abilitySystem = GetComponent<PlayerAbilitySystem>();
 
+        // Calculate static values of forces here instead of FixedUpdate() so we
+        // only calculate them once, as they never change. For optimsation.
         inAirMoveForce = moveForce * 0.5f;
         whileAttkMoveForce = moveForce * 0.4f;
         slowdownForce = moveForce;
@@ -73,7 +65,7 @@ public class PlayerController : MonoBehaviour {
         maxSpeedInAir = maxSpeed * 0.7f;
         maxSpeedWhileAttk = maxSpeed * 0.5f;
 
-        // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
+        // Calculate the static vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
         bounceWallLeftV = Vector2.right * moveForce;
         bounceWallRightV = Vector2.left * moveForce;
@@ -83,9 +75,10 @@ public class PlayerController : MonoBehaviour {
         slowdownRightV = Vector2.right * slowdownForce;
         moveLeftV = Vector2.left * moveForce;
         moveRightV = Vector2.right * moveForce;
-        slideLeftV = moveLeftV * 0.4f;
-        slideRightV = moveRightV * 0.4f;
         jumpV = new Vector2(0f, jumpForce);
+
+        // Abilities
+        abilitySystem.Setup(moveLeftV, moveRightV);
     }
 
     // Update is called in-step with the physics engine
@@ -105,7 +98,6 @@ public class PlayerController : MonoBehaviour {
 
         Move();
         Attack();
-        UpdateInvulnerability();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -134,7 +126,7 @@ public class PlayerController : MonoBehaviour {
 
         if (collider.gameObject.layer == 13)
         {
-            if (isInvul)
+            if (abilitySystem.IsInvul())
             {
                 return;
             }
@@ -216,46 +208,9 @@ public class PlayerController : MonoBehaviour {
 
     void HandleSlide()
     {
-        if (slideReady)
+        if (inputSlide)
         {
-            if (inputSlide)
-            {
-                if (facingLeft)
-                {
-                    rb2d.velocity = slideLeftV;
-                }
-                else
-                {
-                    rb2d.velocity = slideRightV;
-                }
-
-                animator.SetBool("Jumping", false);
-                animator.Play("Slide");
-
-                slideReady = false;
-                slideReadyTime = Time.timeSinceLevelLoad + slideCooldown;
-                isInvul = true;
-                invulEndTime = Time.timeSinceLevelLoad + slideInvulDuration;
-            }
-        }
-        else
-        {
-            if (Time.timeSinceLevelLoad > slideReadyTime)
-            {
-                slideReady = true;
-            }
-        }
-    }
-
-    void UpdateInvulnerability()
-    {
-        // Invulnerability can be triggered by sliding and ...
-        if (isInvul)
-        {
-            if (Time.timeSinceLevelLoad > invulEndTime)
-            {
-                isInvul = false;
-            }
+            abilitySystem.Slide(facingLeft);
         }
     }
 
@@ -337,7 +292,7 @@ public class PlayerController : MonoBehaviour {
     void Attack()
     {
         // If is not sliding or jumping
-        if (!isInvul && onGround)
+        if (!abilitySystem.IsSliding() && onGround)
         {
             if (inputAttack)
                 attackSystem.NormalAttack(facingLeft);
