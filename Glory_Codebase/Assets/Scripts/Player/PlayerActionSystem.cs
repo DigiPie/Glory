@@ -43,11 +43,14 @@ public class PlayerActionSystem : MonoBehaviour
     // Up to 3 consecutive attacks, final consecutive attack is critical strike;
     public float newAttkCooldown = 0.8f; // The cooldown between the last combo (completed or not) and the new
     private float attkReadyTime;
+    private bool isAttack = false;
+    private bool isCriticalAttk = false;
 
     // Special attack //
     private float specialDmg;
     public float specialAttkCooldown = 8f;
     private float specialAttkReadyTime;
+    private bool isSpecialAttk = false;
 
     // Use this for initialization
     void Start()
@@ -65,9 +68,10 @@ public class PlayerActionSystem : MonoBehaviour
         slideRightV = moveRightV * slideMultiplier;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         HandleInvul();
+        HandleProjectiles();
     }
 
     void HandleInvul()
@@ -78,6 +82,36 @@ public class PlayerActionSystem : MonoBehaviour
             if (Time.timeSinceLevelLoad > invulEndTime)
             {
                 isInvul = false;
+            }
+        }
+    }
+
+    void HandleProjectiles()
+    {
+        if (isAttack && (playerAnimator.IsAttackAnim() || playerAnimator.IsAttack2Anim()))
+        {
+            if (playerAnimator.IsAttackFrame())
+            {
+                // Attack projectile
+                SpawnAttack(playerAnimator.IsFacingLeft());
+                isAttack = false;
+            }
+        }
+        else if (isCriticalAttk && playerAnimator.IsAttack3Anim())
+        {
+            if (playerAnimator.IsCriticalAttackFrame())
+            {
+                // Critical attack projectile
+                SpawnCriticalStrike(playerAnimator.IsFacingLeft());
+                isCriticalAttk = false;
+            }
+        }
+        else if (isSpecialAttk && playerAnimator.IsCastAnim())
+        {
+            if (playerAnimator.IsCastFrame())
+            {
+                SpawnSpecialAttack(playerAnimator.IsFacingLeft());
+                isSpecialAttk = false;
             }
         }
     }
@@ -145,8 +179,7 @@ public class PlayerActionSystem : MonoBehaviour
             // For every 3rd hit, play attack 3 (360 backhand strike)
             if (comboCount % 3 == 0)
             {
-                // Critical Strike projectile
-                SpawnCriticalStrike(playerAnimator.IsFacingLeft());
+                isCriticalAttk = true;
 
                 // Animate
                 playerAnimator.PlayAttackCriticalStrike();
@@ -159,8 +192,7 @@ public class PlayerActionSystem : MonoBehaviour
             }
             else
             {
-                // Attack projectile
-                SpawnAttack(playerAnimator.IsFacingLeft());
+                isAttack = true;
 
                 // Animate either attack 1 or 2 randomly
                 playerAnimator.PlayAttack();
@@ -175,7 +207,7 @@ public class PlayerActionSystem : MonoBehaviour
             comboCount = 1;
             comboEndTime = Time.timeSinceLevelLoad + comboDuration;
 
-            SpawnAttack(playerAnimator.IsFacingLeft());
+            isAttack = true;
 
             // Randomly select between attack 1 and attack 2 animation
             playerAnimator.PlayAttack();
@@ -198,8 +230,7 @@ public class PlayerActionSystem : MonoBehaviour
             return;
         }
 
-        // If new combo
-        SpawnSpecialAttack(playerAnimator.IsFacingLeft());
+        isSpecialAttk = true;
 
         // Animate with special attack
         playerAnimator.PlayCast();

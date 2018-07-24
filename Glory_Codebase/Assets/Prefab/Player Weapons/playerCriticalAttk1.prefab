@@ -82,13 +82,14 @@ MonoBehaviour:
   speed: 0.05
   damageCounterColour: {r: 1, g: 0.49019608, b: 0, a: 0}
   damageCounterSize: 4
+  initialOffset: {x: 0, y: 0}
 --- !u!212 &212324530331926204
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1244592901111154}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

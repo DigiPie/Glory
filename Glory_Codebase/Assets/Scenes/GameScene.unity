@@ -12476,6 +12476,10 @@ MonoBehaviour:
   animator: {fileID: 1701403905}
   sprite: {fileID: 1701403906}
   spriteFacingLeft: 0
+  attackFrame: 0.4
+  attack2Frame: 0.4
+  attack3Frame: 0.4
+  castFrame: 0.4
 --- !u!1 &1701422118
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,13 +11,18 @@ public class PlayerAnimator : MonoBehaviour {
     public bool spriteFacingLeft = false; // Initial facing of sprite, affects facingLeft boolean
     private bool facingLeft = false;
 
+    public float attackFrame = 0f; // The attack animation frame at which a melee projectile is spawned
+    public float attack2Frame = 0f; // The attack animation frame at which a melee projectile is spawned
+    public float attack3Frame = 0f; // The attack animation frame at which a melee projectile is spawned
+    public float castFrame = 0f; // The attack animation frame at which a magic projectile is spawned
+
     // Use this for initialization
-    void Start () {
+    void Start() {
         playerController = GetComponent<PlayerController>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         animator.SetBool("Jumping", !playerController.GetOnGround());
     }
 
@@ -86,5 +91,41 @@ public class PlayerAnimator : MonoBehaviour {
     public bool IsCasting()
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName("Cast");
+    }
+
+    public bool IsAttackAnim()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
+    }
+
+    public bool IsAttack2Anim()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2");
+    }
+
+    public bool IsAttack3Anim()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3");
+    }
+
+    public bool IsCastAnim()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Cast");
+
+    }
+    public bool IsAttackFrame()
+    {
+        return (IsAttackAnim() && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > attackFrame)
+            || (IsAttack2Anim() && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > attack2Frame);
+    }
+
+    public bool IsCriticalAttackFrame()
+    {
+        return (IsAttack3Anim() && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > attack3Frame);
+    }
+
+    public bool IsCastFrame()
+    {
+        return (IsCastAnim() && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > castFrame);
     }
 }
