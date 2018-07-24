@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 jumpV;
 
     // States
-    private bool canAttack = false;
+    private bool canAttack = true;
     private bool againstWall = false;
     private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
