@@ -19,7 +19,7 @@ public class DamageCounter : MonoBehaviour {
         transparency -= Time.deltaTime;
         textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, transparency);
 
-        if (transparency < 0)
+        if (transparency < 0.1)
             Destroy(gameObject);
     }
 }

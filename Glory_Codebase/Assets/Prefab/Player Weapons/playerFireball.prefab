@@ -9,45 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1437004639110608}
+  m_RootGameObject: {fileID: 1899686611195332}
   m_IsPrefabAsset: 1
---- !u!1 &1437004639110608
+--- !u!1 &1899686611195332
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4910108323468706}
-  - component: {fileID: 61699696968908734}
-  - component: {fileID: 212558213496838100}
-  - component: {fileID: 114646016354537206}
+  - component: {fileID: 4682211929845376}
+  - component: {fileID: 61553295140571096}
+  - component: {fileID: 212349417817121472}
+  - component: {fileID: 95056053883952152}
+  - component: {fileID: 114438689863268798}
   m_Layer: 11
-  m_Name: playerSpecialAttk
+  m_Name: playerFireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4910108323468706
+--- !u!4 &4682211929845376
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1437004639110608}
+  m_GameObject: {fileID: 1899686611195332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61699696968908734
+--- !u!61 &61553295140571096
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1437004639110608}
+  m_GameObject: {fileID: 1899686611195332}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -58,37 +59,56 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.2, y: 12}
+    oldSize: {x: 1.1285714, y: 0.6571429}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 2
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114646016354537206
+--- !u!95 &95056053883952152
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1899686611195332}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114438689863268798
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1437004639110608}
+  m_GameObject: {fileID: 1899686611195332}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5482a10d4df80704f82c206f5bf94b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifespan: 0.3
-  speed: 0.07
-  damageCounterColour: {r: 1, g: 0, b: 0, a: 0}
+  lifespan: 1
+  speed: 0.2
+  damageCounterColour: {r: 1, g: 0, b: 0.49019608, a: 0}
   damageCounterSize: 5
---- !u!212 &212558213496838100
+  initialOffset: {x: 0.7, y: 0}
+--- !u!212 &212349417817121472
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1437004639110608}
-  m_Enabled: 0
+  m_GameObject: {fileID: 1899686611195332}
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -116,12 +136,12 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8e160a2a620644cd6afef9119dad1093, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.048629045, a: 0.6862745}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: b7870595ce218a447a905178544e0631, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

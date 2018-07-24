@@ -230,26 +230,44 @@ public class PlayerActionSystem : MonoBehaviour
 
     void SpawnAttack(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(normalAttack, transform);
-        projectile.GetComponent<PlayerWeapon>().Setup(
-            (isAttackLeft) ? leftDir : rightDir,
-            attackDmg);
+        if (isAttackLeft)
+        {
+            GameObject projectile = Instantiate(normalAttack, transform);
+            projectile.GetComponent<PlayerWeapon>().Setup(leftDir, attackDmg);
+        }
+        else
+        {
+            GameObject projectile = Instantiate(normalAttack, transform);
+            projectile.GetComponent<PlayerWeapon>().Setup(rightDir, attackDmg);
+        }
     }
 
     void SpawnCriticalStrike(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(criticalAttack, transform);
-        projectile.GetComponent<PlayerWeapon>().Setup(
-            (isAttackLeft) ? leftDir : rightDir,
-            criticalDmg);
+        if (isAttackLeft)
+        {
+            GameObject projectile = Instantiate(criticalAttack, transform);
+            projectile.GetComponent<PlayerWeapon>().Setup(leftDir, criticalDmg);
+        }
+        else
+        {
+            GameObject projectile = Instantiate(criticalAttack, transform);
+            projectile.GetComponent<PlayerWeapon>().Setup(rightDir, criticalDmg);
+        }
     }
 
     void SpawnSpecialAttack(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(specialAttack, transform);
-        projectile.GetComponent<PlayerWeapon>().Setup(
-            (isAttackLeft) ? leftDir : rightDir,
-            specialDmg);
+        if (isAttackLeft)
+        {
+            GameObject projectile = Instantiate(specialAttack, transform);
+            projectile.GetComponent<PlayerWeapon>().Setup(leftDir, specialDmg);
+        }
+        else
+        {
+            GameObject projectile = Instantiate(specialAttack, transform);
+            projectile.GetComponent<PlayerWeapon>().Setup(rightDir, specialDmg);
+        }
     }
 
     public bool IsAttacking()

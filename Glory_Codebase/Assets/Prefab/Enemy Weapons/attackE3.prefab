@@ -100,7 +100,7 @@ MonoBehaviour:
   cooldown: 3
   damage: 12
   lifespan: 0.8
-  speed: 0.08
+  speed: 0.12
 --- !u!212 &212113005484231352
 SpriteRenderer:
   m_ObjectHideFlags: 1
