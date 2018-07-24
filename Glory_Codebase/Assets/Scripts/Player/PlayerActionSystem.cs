@@ -59,7 +59,7 @@ public class PlayerActionSystem : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
 
         criticalDmg = attackDmg * 2f;
-        specialDmg = attackDmg * 3f;
+        specialDmg = attackDmg * 2f;
     }
 
     public void Setup(Vector2 moveLeftV, Vector2 moveRightV)

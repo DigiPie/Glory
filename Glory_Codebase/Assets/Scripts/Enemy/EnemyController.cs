@@ -90,6 +90,14 @@ public abstract class EnemyController : MonoBehaviour {
             return;
         }
 
+        if (healthSystem.IsDead())
+        {
+            AImoveH = 0;
+            enemyAnimator.PlayDeath();
+            enemyState = EnemyState.Dead;
+            return;
+        }
+
         if (enemyState == EnemyState.Stunned)
         {
             HandleStun();
@@ -160,11 +168,12 @@ public abstract class EnemyController : MonoBehaviour {
             // Damage counter
             wep.SpawnDamageCounter(transform.position);
 
-            if (healthSystem.IsDead())
+            // Weapon effect
+            PlayerWeaponWithEffect wepEffect = collider.GetComponent<PlayerWeaponWithEffect>();
+            
+            if (wepEffect != null)
             {
-                AImoveH = 0;
-                enemyAnimator.PlayDeath();
-                enemyState = EnemyState.Dead;
+                wepEffect.SpawnEffect(healthSystem, transform);
             }
         }
     }
