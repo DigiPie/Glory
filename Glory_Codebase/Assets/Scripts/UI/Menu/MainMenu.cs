@@ -7,6 +7,12 @@ public class MainMenu : MonoBehaviour {
     public GameObject mainMenu;
     public Overlay overlay;
 
+    private void Awake()
+    {
+        FindObjectOfType<AudioManager>().PlaySound("MenuBGM");
+        Debug.Log("PlayMenuBGM");
+    }
+
     public void PlayGame()
     {
         mainMenu.SetActive(false);

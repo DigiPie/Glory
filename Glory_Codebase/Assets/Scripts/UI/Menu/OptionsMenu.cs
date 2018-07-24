@@ -8,8 +8,8 @@ public class OptionsMenu : MonoBehaviour {
 
     public StateSystem stateSystem;
     public AudioMixer audioMixer;
-
     // Setting Resolution
+
     public void SetResolution(int resolutionIndex)
     {
         switch (resolutionIndex)
