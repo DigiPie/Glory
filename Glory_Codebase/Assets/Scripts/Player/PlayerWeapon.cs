@@ -5,6 +5,7 @@ using TMPro;
 using TMPro.Examples;
 
 public class PlayerWeapon : MonoBehaviour {
+    private SpriteRenderer spriteRenderer;
     private TextMeshProFloatingText floatingText_Script;
     private Vector2 dirV; // Direction of melee projectile
     private float damage = 10;
@@ -14,34 +15,42 @@ public class PlayerWeapon : MonoBehaviour {
     public float speed = 0.05f; // Speed of melee projectile
     public Color damageCounterColour; // Damage counter colour
     public float damageCounterSize = 3;
+    public Vector2 initialOffset;
 
     public void Setup(Vector2 dir)
     {
-        dirV = speed * dir;
         Destroy(gameObject, lifespan);
+        dirV = speed * dir;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (dir.x < 0)
+        {
+            transform.Translate(-initialOffset.x, initialOffset.y, 0);
+
+            if (spriteRenderer != null)
+                spriteRenderer.flipX = !spriteRenderer.flipX;
+        }
+        else
+        {
+            transform.Translate(initialOffset.x, initialOffset.y, 0);
+        }
     }
 
     public void Setup(Vector2 dir, float damage)
     {
-        dirV = speed * dir;
-        Destroy(gameObject, lifespan);
+        Setup(dir);
         this.damage = damage;
     }
 
     public void Setup(Vector2 dir, float damage, float stunDuration)
     {
-        dirV = speed * dir;
-        Destroy(gameObject, lifespan);
-        this.damage = damage;
+        Setup(dir, damage);
         this.stunDuration = stunDuration;
     }
 
     public void Setup(Vector2 dir, float damage, float stunDuration, float blinkDuration)
     {
-        dirV = speed * dir;
-        Destroy(gameObject, lifespan);
-        this.damage = damage;
-        this.stunDuration = stunDuration;
+        Setup(dir, damage, stunDuration);
         this.blinkDuration = blinkDuration;
     }
 

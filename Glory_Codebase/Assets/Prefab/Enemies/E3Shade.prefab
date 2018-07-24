@@ -290,7 +290,7 @@ MonoBehaviour:
   moveForce: 10
   maxSpeed: 1.2
   throwbackForce: 2
-  targetsPlayer: 0
+  targetsPlayer: 1
   minAttackRange: 3
   maxAttackRange: 4
 --- !u!114 &114536968078075136
