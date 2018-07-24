@@ -1394,6 +1394,7 @@ MonoBehaviour:
   DashScene: {fileID: 1883739966}
   DoneScene: {fileID: 2107486947}
   NextWaveScene: {fileID: 2039385221}
+  player1: {fileID: 1701403904}
 --- !u!1 &271918842
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,7 +3033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camTarget: {fileID: 1701403907}
-  maxShakeAmount: 1
+  maxShakeAmount: 1.2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -3537,7 +3538,7 @@ MonoBehaviour:
   hud: {fileID: 1303328454}
   HudUI: {fileID: 1303328448}
   mainMenu: {fileID: 1551670490}
-  tutorialEnabled: 0
+  tutorialEnabled: 1
 --- !u!1 &652482220
 GameObject:
   m_ObjectHideFlags: 0
@@ -5036,7 +5037,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 915591566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 956759875}
@@ -10766,7 +10767,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12238,6 +12239,7 @@ GameObject:
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
   - component: {fileID: 1701403911}
+  - component: {fileID: 1701403912}
   m_Layer: 12
   m_Name: player1
   m_TagString: Untagged
@@ -12381,8 +12383,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 647856007}
   groundCheck: {fileID: 2066096959}
-  slideCooldown: 2
-  slideInvulDuration: 2
   moveForce: 50
   maxSpeed: 5
   throwbackForce: 150
@@ -12398,6 +12398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64dd9bfda5540341964af7368369fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camController: {fileID: 519420030}
   normalAttack: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258,
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,
@@ -12409,6 +12410,19 @@ MonoBehaviour:
   consecAttkCooldown: 0.4
   newAttkCooldown: 0.8
   specialAttkCooldown: 1
+--- !u!114 &1701403912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1701403904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71257ee8f6eaf594bae7f5cb5047f707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slideCooldown: 2
+  slideInvulDuration: 1
 --- !u!1 &1701422118
 GameObject:
   m_ObjectHideFlags: 0
@@ -12480,14 +12494,14 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 915591567}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 200
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 200
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14339,7 +14353,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2066096958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1701403907}

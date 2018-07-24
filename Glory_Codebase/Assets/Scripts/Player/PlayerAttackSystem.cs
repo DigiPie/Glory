@@ -8,6 +8,7 @@ public class PlayerAttackSystem : MonoBehaviour
     private readonly Vector2 rightDir = new Vector2(1, 0);
 
     private Animator animator;
+    public CustomCamController camController;
     public GameObject normalAttack, criticalAttack, specialAttack, specialAbility;
 
     // Normal attack //
@@ -120,6 +121,7 @@ public class PlayerAttackSystem : MonoBehaviour
 
         // Animate with special attack
         animator.Play("SpecialAttack");
+        camController.Shake(0.05f, 0.3f);
 
         specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
     }

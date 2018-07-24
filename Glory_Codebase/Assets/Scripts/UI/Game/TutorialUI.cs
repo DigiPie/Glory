@@ -15,6 +15,7 @@ public class TutorialUI : MonoBehaviour
     public GameObject DashScene;
     public GameObject DoneScene;
     public GameObject NextWaveScene;
+    public GameObject player1;
 
     void Awake()
     {
@@ -55,6 +56,7 @@ public class TutorialUI : MonoBehaviour
             JumpScene.SetActive(false);
             AttackScene.SetActive(true);
             stateSystem.SetTutorialState(StateSystem.TutorialState.Attack);
+            player1.GetComponent<PlayerController>().AllowAttack(true);
         }
 
         else if (stateSystem.IsAttack())

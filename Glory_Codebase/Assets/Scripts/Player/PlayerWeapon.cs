@@ -13,6 +13,7 @@ public class PlayerWeapon : MonoBehaviour {
     public float lifespan = 0.2f; // Lifespan of melee projectile
     public float speed = 0.05f; // Speed of melee projectile
     public Color damageCounterColour; // Damage counter colour
+    public float damageCounterSize = 3;
 
     public void Setup(Vector2 dir)
     {
@@ -53,19 +54,21 @@ public class PlayerWeapon : MonoBehaviour {
     {
         // TextMesh Pro Implementation
         GameObject go = new GameObject();
-        go.transform.position = new Vector3(pos.x - 0.4f + Random.Range(0, 0.4f), 
-            pos.y - 0.2f + Random.Range(0, 0.2f), 100);
+        go.transform.position = new Vector3(
+            pos.x + Random.Range(-0.2f, 0.2f), 
+            pos.y + Random.Range(-0.2f, 0.2f), 
+            1);
         TextMeshPro textMeshPro = go.AddComponent<TextMeshPro>();
 
         textMeshPro.autoSizeTextContainer = true;
         textMeshPro.rectTransform.pivot = new Vector2(0.5f, 0);
 
         textMeshPro.alignment = TextAlignmentOptions.Bottom;
-        textMeshPro.fontSize = 0.3f * damage;
+        textMeshPro.fontSize = damageCounterSize;
         textMeshPro.enableKerning = false;
 
         textMeshPro.color = damageCounterColour;
-        textMeshPro.text = "" + damage;
+        textMeshPro.text = damage.ToString();
 
         // Spawn Floating Text
         floatingText_Script = go.AddComponent<TextMeshProFloatingText>();
