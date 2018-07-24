@@ -18,7 +18,7 @@ public class Overlay : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Exit"))
         {
             if (stateSystem.IsMenuHidden())
             {
@@ -68,6 +68,7 @@ public class Overlay : MonoBehaviour {
             optionsUI.SetActive(false);
             pauseMenuUI.SetActive(true);
         }
+
         else
         {
             optionsUI.SetActive(false);

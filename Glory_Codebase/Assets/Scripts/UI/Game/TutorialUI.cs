@@ -24,11 +24,11 @@ public class TutorialUI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetButton("Exit"))
+        if (Input.GetButtonDown("Previous"))
         {
             PrevState();
         }
-        else if (Input.GetButton("Submit"))
+        else if (Input.GetButtonDown("Submit"))
         {
             NextState();
         }

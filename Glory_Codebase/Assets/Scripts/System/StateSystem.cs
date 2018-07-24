@@ -32,11 +32,12 @@ public class StateSystem : MonoBehaviour {
     public GameObject HudUI;
     public GameObject mainMenu;
 
-    public volatile bool tutorialEnabled = true;
+    public volatile bool tutorialEnabled;
 
     // Use this for initialization
     public void Start () {
-        Unpause();
+        Time.timeScale = 1f;
+        tutorialEnabled = true;
         gameState = GameState.Menu;
         menuState = MenuState.Hidden;
         waveState = WaveState.WaitingNextWave;
@@ -46,6 +47,7 @@ public class StateSystem : MonoBehaviour {
     public void Pause()
     {
         Time.timeScale = 0f;
+        beforePauseGameState = GetGameState();
         gameState = GameState.Paused;
     }
 
@@ -76,17 +78,6 @@ public class StateSystem : MonoBehaviour {
     public void SetGameState(GameState gameState)
     {
         this.gameState = gameState;
-
-        // Remember game state prior to pause, to be used when game is unpaused.
-        if (gameState != GameState.Paused)
-        {
-            beforePauseGameState = gameState;
-        }
-    }
-
-    public GameState GetBeforePauseGameState()
-    {
-        return beforePauseGameState;
     }
 
     public void SetToBeforePauseGameState()
@@ -126,10 +117,10 @@ public class StateSystem : MonoBehaviour {
     
     public void EnterGame()
     {
+        HudUI.SetActive(true);
         if (tutorialEnabled)
         {
             gameState = GameState.Tutorial;
-            HudUI.SetActive(true);
         }
         else
         {

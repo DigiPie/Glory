@@ -51,14 +51,16 @@ public class GameManager : MonoBehaviour {
             return; // If game won or lost, display game over screen and stop running the rest of the code
         }
 
-        if (stateSystem.IsGameWave())
+
+        if(stateSystem.IsGameTutorial())
+        {
+            overlay.ShowTutorialUI();
+        }
+
+        else if (stateSystem.IsGameWave())
         {
             HandleWave();
             HandleDead();
-        }
-        else if(stateSystem.IsGameTutorial())
-        {
-            overlay.ShowTutorialUI();
         }
     }
 
