@@ -12398,6 +12398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64dd9bfda5540341964af7368369fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camController: {fileID: 519420030}
   normalAttack: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258,
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,

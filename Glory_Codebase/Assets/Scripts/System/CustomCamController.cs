@@ -5,7 +5,7 @@ using UnityEngine;
 public class CustomCamController : MonoBehaviour
 {
     public Transform camTarget;
-    public float maxShakeAmount = 0.4f;
+    public float maxShakeAmount = 1.2f;
     private float shakeDuration = 0f;
     private float shakeAmount;
 
