@@ -222,8 +222,8 @@ public class PlayerActionSystem : MonoBehaviour
         SpawnSpecialAttack(isAttackLeft);
 
         // Animate with special attack
-        animator.Play("SpecialAttack");
-        camController.Shake(0.05f, 0.3f);
+        animator.Play("Cast");
+        camController.Shake(0.01f, 0.3f);
 
         specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
     }
@@ -256,7 +256,12 @@ public class PlayerActionSystem : MonoBehaviour
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("SpecialAttack");
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3");
+            
+    }
+
+    public bool IsCasting()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Cast");
     }
 }

@@ -519,8 +519,8 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: SpecialAttack
-  m_Speed: 1
+  m_Name: Cast
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101168727404303580}
@@ -533,7 +533,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: decfe7646382640498669c0e91d11f86, type: 2}
+  m_Motion: {fileID: 7400000, guid: aeeb827c07490a64fb025e553121f84a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

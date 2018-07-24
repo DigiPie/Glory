@@ -239,7 +239,9 @@ public class PlayerController : MonoBehaviour {
     {
         float tempMaxSpd;
 
-        if (actionSystem.IsAttacking())
+        if (actionSystem.IsCasting())
+            return;
+        else if (actionSystem.IsAttacking())
             tempMaxSpd = maxSpeedWhileAttk;
         else if (!onGround)
             tempMaxSpd = maxSpeedInAir;
