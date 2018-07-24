@@ -31,14 +31,6 @@ public class EnemyAnimator : MonoBehaviour {
             FaceForward();
             animator.SetBool("Running", true);
         }
-        else if (enemyController.IsAttacking())
-        {
-            // Do nothing
-        }
-        else if (enemyController.IsDead())
-        {
-            // Do nothing
-        }
     }
 
     public void PlayAttack()

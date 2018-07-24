@@ -9,7 +9,7 @@ namespace TMPro.Examples
     {
         public Font TheFont;
 
-        private GameObject m_floatingText;
+        public GameObject m_floatingText;
         private TextMeshPro m_textMeshPro;
         private TextMesh m_textMesh;
 

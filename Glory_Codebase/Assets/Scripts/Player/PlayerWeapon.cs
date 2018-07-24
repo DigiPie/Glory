@@ -63,12 +63,12 @@ public class PlayerWeapon : MonoBehaviour {
     {
         // TextMesh Pro Implementation
         GameObject go = new GameObject();
+        go.name = "Damage Counter";
         go.transform.position = new Vector3(
             pos.x + Random.Range(-0.2f, 0.2f), 
             pos.y + Random.Range(-0.2f, 0.2f), 
             1);
         TextMeshPro textMeshPro = go.AddComponent<TextMeshPro>();
-
         textMeshPro.autoSizeTextContainer = true;
         textMeshPro.rectTransform.pivot = new Vector2(0.5f, 0);
 
@@ -83,6 +83,7 @@ public class PlayerWeapon : MonoBehaviour {
         floatingText_Script = go.AddComponent<TextMeshProFloatingText>();
         go.AddComponent<DamageCounter>();
         floatingText_Script.SpawnType = 0;
+        Destroy(floatingText_Script.m_floatingText, 2.0f);
     }
 
     public float GetDamage()

@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     public GameManager gameManager;
-    private Animator animator;
     private Rigidbody2D rb2d;
-    private SpriteRenderer sprite;
     private PlayerActionSystem actionSystem;
-
+    private PlayerAnimator playerAnimator;
     public Transform groundCheck;
 
     // Forces to be applied on character
@@ -23,7 +21,6 @@ public class PlayerController : MonoBehaviour {
     private bool againstWall = false;
     private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
-    private bool facingLeft = false;
     private bool onGround = false;
 
     // Input
@@ -44,16 +41,15 @@ public class PlayerController : MonoBehaviour {
     // Jump
     public float jumpForce = 500f;
     private bool isJumpRestStarted = true;
-    private float jumpRestDuration = 0.05f; // Only allowed to jump again after being on ground for rest duration
+    private float jumpRestDuration = 0.02f; // Only allowed to jump again after being on ground for rest duration
     private float jumpReadyTime = 0;
 
     // Use this for initialization
     void Start ()
     {
-        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
         actionSystem = GetComponent<PlayerActionSystem>();
+        playerAnimator = GetComponent<PlayerAnimator>();
 
         // Calculate static values of forces here instead of FixedUpdate() so we
         // only calculate them once, as they never change. For optimsation.
@@ -152,19 +148,16 @@ public class PlayerController : MonoBehaviour {
         if (inputH == 0)
         {
             // If there is no horizontal input
+            playerAnimator.PlayRun(false);
             HandleSlowdown(); // Slow down velocity on the x-axis
-            animator.SetBool("Running", false);
         }
         else
         {
             // If there is horizontal input
+            playerAnimator.PlayRun(true);
+            playerAnimator.FaceForward();
             HandleRunning();
-            animator.SetBool("Running", true);
-            facingLeft = inputH < 0;
-            sprite.flipX = facingLeft;
         }
-
-        animator.SetBool("Jumping", !onGround);
 
         if (inputSlide)
         {
@@ -213,7 +206,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (inputSlide)
         {
-            actionSystem.Slide(facingLeft);
+            actionSystem.Slide();
         }
     }
 
@@ -239,9 +232,9 @@ public class PlayerController : MonoBehaviour {
     {
         float tempMaxSpd;
 
-        if (actionSystem.IsCasting())
+        if (playerAnimator.IsCasting())
             return;
-        else if (actionSystem.IsAttacking())
+        else if (playerAnimator.IsAttacking())
             tempMaxSpd = maxSpeedWhileAttk;
         else if (!onGround)
             tempMaxSpd = maxSpeedInAir;
@@ -297,17 +290,31 @@ public class PlayerController : MonoBehaviour {
     void Attack()
     {
         // If is not sliding or jumping
-        if (!actionSystem.IsSliding() && onGround)
+        if (!playerAnimator.IsSliding() && onGround)
         {
             if (inputAttack)
-                actionSystem.NormalAttack(facingLeft);
+            {
+                actionSystem.NormalAttack();
+            }
             else if (inputSpecialAttk)
-                actionSystem.SpecialAttack(facingLeft);
+            {
+                actionSystem.SpecialAttack();
+            }
         }
     }
 
     public void AllowAttack(bool canAttack)
     {
         this.canAttack = canAttack;
+    }
+
+    public bool GetMoveH()
+    {
+        return inputH < 0;
+    }
+
+    public bool GetOnGround()
+    {
+        return onGround;
     }
 }

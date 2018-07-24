@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerActionSystem : MonoBehaviour
 {
     // References //
-    private Animator animator;
     private Rigidbody2D rb2d;
     public CustomCamController camController;
     public GameObject normalAttack, criticalAttack, specialAttack, specialAbility;
+    private PlayerAnimator playerAnimator;
 
     // Forces
     private readonly Vector2 leftDir = new Vector2(-1, 0);
@@ -52,7 +52,7 @@ public class PlayerActionSystem : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        animator = GetComponent<Animator>();
+        playerAnimator = GetComponent<PlayerAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
 
         criticalDmg = attackDmg * 1.5f;
@@ -83,11 +83,11 @@ public class PlayerActionSystem : MonoBehaviour
     }
 
     /*** Abilities ***/
-    public void Slide(bool isFacingLeft)
+    public void Slide()
     {
         if (isSlideEnabled && slideReady)
         {
-            if (isFacingLeft)
+            if (playerAnimator.IsFacingLeft())
             {
                 rb2d.velocity = slideLeftV;
             }
@@ -96,8 +96,7 @@ public class PlayerActionSystem : MonoBehaviour
                 rb2d.velocity = slideRightV;
             }
 
-            animator.SetBool("Jumping", false);
-            animator.Play("Slide");
+            playerAnimator.PlaySlide();
 
             slideReady = false;
             slideReadyTime = Time.timeSinceLevelLoad + slideCooldown;
@@ -118,11 +117,6 @@ public class PlayerActionSystem : MonoBehaviour
         return isInvul;
     }
 
-    public bool IsSliding()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Slide");
-    }
-
     public void EnableSlide()
     {
         isSlideEnabled = true;
@@ -134,7 +128,7 @@ public class PlayerActionSystem : MonoBehaviour
     }
 
     /*** Attacks ***/
-    public void NormalAttack(bool isAttackLeft)
+    public void NormalAttack()
     {
         // If cooldown, then don't attack
         if (Time.timeSinceLevelLoad < attkReadyTime)
@@ -152,10 +146,10 @@ public class PlayerActionSystem : MonoBehaviour
             if (comboCount % 3 == 0)
             {
                 // Critical Strike projectile
-                SpawnCriticalStrike(isAttackLeft);
+                SpawnCriticalStrike(playerAnimator.IsFacingLeft());
 
                 // Animate
-                animator.Play("Attack3");
+                playerAnimator.PlayAttackCriticalStrike();
 
                 // Combo count reset
                 comboCount = 0;
@@ -166,17 +160,10 @@ public class PlayerActionSystem : MonoBehaviour
             else
             {
                 // Attack projectile
-                SpawnAttack(isAttackLeft);
+                SpawnAttack(playerAnimator.IsFacingLeft());
 
                 // Animate either attack 1 or 2 randomly
-                if (Random.Range(0, 2) == 0)
-                {
-                    animator.Play("Attack");
-                }
-                else
-                {
-                    animator.Play("Attack2");
-                }
+                playerAnimator.PlayAttack();
 
                 // Short cooldown to next attack since combo is ongoing.
                 attkReadyTime = Time.timeSinceLevelLoad + consecAttkCooldown;
@@ -188,24 +175,17 @@ public class PlayerActionSystem : MonoBehaviour
             comboCount = 1;
             comboEndTime = Time.timeSinceLevelLoad + comboDuration;
 
-            SpawnAttack(isAttackLeft);
+            SpawnAttack(playerAnimator.IsFacingLeft());
 
             // Randomly select between attack 1 and attack 2 animation
-            if (Random.Range(0, 2) == 0)
-            {
-                animator.Play("Attack");
-            }
-            else
-            {
-                animator.Play("Attack2");
-            }
+            playerAnimator.PlayAttack();
 
             // Short cooldown to next attack since combo is ongoing.
             attkReadyTime = Time.timeSinceLevelLoad + consecAttkCooldown;
         }
     }
 
-    public void SpecialAttack(bool isAttackLeft)
+    public void SpecialAttack()
     {
         if (!isSpecialAttackEnabled)
         {
@@ -219,10 +199,10 @@ public class PlayerActionSystem : MonoBehaviour
         }
 
         // If new combo
-        SpawnSpecialAttack(isAttackLeft);
+        SpawnSpecialAttack(playerAnimator.IsFacingLeft());
 
         // Animate with special attack
-        animator.Play("Cast");
+        playerAnimator.PlayCast();
         camController.Shake(0.01f, 0.3f);
 
         specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
@@ -268,18 +248,5 @@ public class PlayerActionSystem : MonoBehaviour
             GameObject projectile = Instantiate(specialAttack, transform);
             projectile.GetComponent<PlayerWeapon>().Setup(rightDir, specialDmg);
         }
-    }
-
-    public bool IsAttacking()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3");
-            
-    }
-
-    public bool IsCasting()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Cast");
     }
 }

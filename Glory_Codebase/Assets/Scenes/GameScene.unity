@@ -12239,6 +12239,7 @@ GameObject:
   - component: {fileID: 1701403908}
   - component: {fileID: 1701403910}
   - component: {fileID: 1701403911}
+  - component: {fileID: 1701403912}
   m_Layer: 12
   m_Name: player1
   m_TagString: Untagged
@@ -12405,12 +12406,26 @@ MonoBehaviour:
   specialAttack: {fileID: 1899686611195332, guid: 2d73a700a8b380e4ca700f85b5d746fb,
     type: 2}
   specialAbility: {fileID: 0}
-  slideCooldown: 2
+  slideCooldown: 1.5
   slideInvulDuration: 1
   attackDmg: 10
-  consecAttkCooldown: 0.4
-  newAttkCooldown: 0.8
+  consecAttkCooldown: 0.3
+  newAttkCooldown: 0.6
   specialAttkCooldown: 1
+--- !u!114 &1701403912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1701403904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed08c22594d0a44e8aa23791bb4e69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1701403905}
+  sprite: {fileID: 1701403906}
+  spriteFacingLeft: 0
 --- !u!1 &1701422118
 GameObject:
   m_ObjectHideFlags: 0
