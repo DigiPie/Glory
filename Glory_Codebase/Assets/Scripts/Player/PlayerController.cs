@@ -7,8 +7,7 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
     private Rigidbody2D rb2d;
     private SpriteRenderer sprite;
-    private PlayerAttackSystem attackSystem;
-    private PlayerAbilitySystem abilitySystem;
+    private PlayerActionSystem actionSystem;
 
     public Transform groundCheck;
 
@@ -54,8 +53,7 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        attackSystem = GetComponent<PlayerAttackSystem>();
-        abilitySystem = GetComponent<PlayerAbilitySystem>();
+        actionSystem = GetComponent<PlayerActionSystem>();
 
         // Calculate static values of forces here instead of FixedUpdate() so we
         // only calculate them once, as they never change. For optimsation.
@@ -79,7 +77,7 @@ public class PlayerController : MonoBehaviour {
         jumpV = new Vector2(0f, jumpForce);
 
         // Abilities
-        abilitySystem.Setup(moveLeftV, moveRightV);
+        actionSystem.Setup(moveLeftV, moveRightV);
     }
 
     // Update is called in-step with the physics engine
@@ -131,7 +129,7 @@ public class PlayerController : MonoBehaviour {
 
         if (collider.gameObject.layer == 13)
         {
-            if (abilitySystem.IsInvul())
+            if (actionSystem.IsInvul())
             {
                 return;
             }
@@ -215,7 +213,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (inputSlide)
         {
-            abilitySystem.Slide(facingLeft);
+            actionSystem.Slide(facingLeft);
         }
     }
 
@@ -241,7 +239,7 @@ public class PlayerController : MonoBehaviour {
     {
         float tempMaxSpd;
 
-        if (attackSystem.IsAttacking())
+        if (actionSystem.IsAttacking())
             tempMaxSpd = maxSpeedWhileAttk;
         else if (!onGround)
             tempMaxSpd = maxSpeedInAir;
@@ -297,12 +295,12 @@ public class PlayerController : MonoBehaviour {
     void Attack()
     {
         // If is not sliding or jumping
-        if (!abilitySystem.IsSliding() && onGround)
+        if (!actionSystem.IsSliding() && onGround)
         {
             if (inputAttack)
-                attackSystem.NormalAttack(facingLeft);
+                actionSystem.NormalAttack(facingLeft);
             else if (inputSpecialAttk)
-                attackSystem.SpecialAttack(facingLeft);
+                actionSystem.SpecialAttack(facingLeft);
         }
     }
 

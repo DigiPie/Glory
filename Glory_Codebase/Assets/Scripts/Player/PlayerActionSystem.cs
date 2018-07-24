@@ -2,15 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackSystem : MonoBehaviour
+public class PlayerActionSystem : MonoBehaviour
 {
-    private readonly Vector2 leftDir = new Vector2(-1, 0);
-    private readonly Vector2 rightDir = new Vector2(1, 0);
-
+    // References //
     private Animator animator;
+    private Rigidbody2D rb2d;
     public CustomCamController camController;
     public GameObject normalAttack, criticalAttack, specialAttack, specialAbility;
 
+    // Forces
+    private readonly Vector2 leftDir = new Vector2(-1, 0);
+    private readonly Vector2 rightDir = new Vector2(1, 0);
+    private readonly float slideMultiplier = 0.4f;
+    private Vector2 slideLeftV, slideRightV; // 25% of moveLeftV and moveRightV
+
+    // Abilities and Attacks
+    private bool isSlideEnabled = true;
+    private bool isSpecialAttackEnabled = true;
+
+    /*** Abilities ***/
+    // Slide //
+    public float slideCooldown = 2f; // Minimum wait-time before next slide can be triggered
+    public float slideInvulDuration = 1f; // How long is the character invulnerable for when slideing
+    private bool slideReady = true; // Reliant on slideCooldown
+    private float slideReadyTime; // The time at which slideReady will be set to true again
+
+    // Invulnerability //
+    private bool isInvul = false; // Currently only slide triggers invulnerability
+    private float invulEndTime; // The time at which the character is no longer invulnerable
+
+    /*** Attacks ***/
     // Normal attack //
     public float attackDmg = 10;
     private float criticalDmg;
@@ -32,11 +53,87 @@ public class PlayerAttackSystem : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        rb2d = GetComponent<Rigidbody2D>();
 
         criticalDmg = attackDmg * 1.5f;
         specialDmg = attackDmg * 2f;
     }
 
+    public void Setup(Vector2 moveLeftV, Vector2 moveRightV)
+    {
+        slideLeftV = moveLeftV * slideMultiplier;
+        slideRightV = moveRightV * slideMultiplier;
+    }
+
+    private void Update()
+    {
+        HandleInvul();
+    }
+
+    void HandleInvul()
+    {
+        // Invulnerability can be triggered by sliding and ...
+        if (isInvul)
+        {
+            if (Time.timeSinceLevelLoad > invulEndTime)
+            {
+                isInvul = false;
+            }
+        }
+    }
+
+    /*** Abilities ***/
+    public void Slide(bool isFacingLeft)
+    {
+        if (isSlideEnabled && slideReady)
+        {
+            if (isFacingLeft)
+            {
+                rb2d.velocity = slideLeftV;
+            }
+            else
+            {
+                rb2d.velocity = slideRightV;
+            }
+
+            animator.SetBool("Jumping", false);
+            animator.Play("Slide");
+
+            slideReady = false;
+            slideReadyTime = Time.timeSinceLevelLoad + slideCooldown;
+            isInvul = true;
+            invulEndTime = Time.timeSinceLevelLoad + slideInvulDuration;
+        }
+        else
+        {
+            if (Time.timeSinceLevelLoad > slideReadyTime)
+            {
+                slideReady = true;
+            }
+        }
+    }
+
+    public bool IsInvul()
+    {
+        return isInvul;
+    }
+
+    public bool IsSliding()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Slide");
+    }
+
+    public void EnableSlide()
+    {
+        isSlideEnabled = true;
+    }
+
+    public void DisableSlide()
+    {
+        isSlideEnabled = true;
+    }
+
+    /*** Attacks ***/
     public void NormalAttack(bool isAttackLeft)
     {
         // If cooldown, then don't attack
@@ -110,6 +207,11 @@ public class PlayerAttackSystem : MonoBehaviour
 
     public void SpecialAttack(bool isAttackLeft)
     {
+        if (!isSpecialAttackEnabled)
+        {
+            return;
+        }
+
         // If cooldown, then don't attack
         if (Time.timeSinceLevelLoad < specialAttkReadyTime)
         {
