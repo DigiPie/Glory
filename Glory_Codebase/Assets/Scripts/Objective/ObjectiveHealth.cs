@@ -6,6 +6,12 @@ public class ObjectiveHealth : MonoBehaviour
 {
     public int startingHealth = 200;                            // The amount of health the objective starts the game with.
     public int currentHealth;                                   // The current health the player has.
+    private float displayHealth;
+    private float displayChangeSpeed = 20.0f;
+    private float diffDeadzone = 1.0f;
+    private float diffHealth;
+    private float absDiffHealth;
+    private bool isDiff = false;
     // The health that is displayed
     //public Slider objHealthSlider;                              // Reference to the UI's health bar.
     // public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
@@ -30,10 +36,11 @@ public class ObjectiveHealth : MonoBehaviour
         // Set the initial health of the objective.
 
         currentHealth = startingHealth;
+        displayHealth = currentHealth;
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         /*
         // If the player has just been damaged...
@@ -51,11 +58,35 @@ public class ObjectiveHealth : MonoBehaviour
         */
         // Reset the damaged flag.
         damaged = false;
+
+        if (isDiff)
+        {
+            diffHealth = currentHealth - displayHealth;
+            absDiffHealth = Mathf.Abs(diffHealth);
+
+            if (absDiffHealth < diffDeadzone)
+            {
+                displayHealth = currentHealth;
+                isDiff = false;
+                return;
+            }
+
+            if (diffHealth > 0)
+            {
+                displayHealth += Time.deltaTime * displayChangeSpeed;
+            }
+            else
+            {
+                displayHealth -= Time.deltaTime * displayChangeSpeed;
+            }
+        }
     }
 
     // Self implemented function for future use
     public void HealDamage(int amount)
     {
+        isDiff = true;
+
         if (currentHealth <= 0)
         {
             isDestroyed = true; // Prevents healing when already dead
@@ -74,6 +105,8 @@ public class ObjectiveHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        isDiff = true;
+
         // Set the damaged flag so the screen will flash.
         damaged = true;
 
@@ -94,9 +127,9 @@ public class ObjectiveHealth : MonoBehaviour
         }
     }
     
-    public int getCurrentHealth()
+    public float getCurrentHealth()
     {
-        return currentHealth;
+        return displayHealth;
     }
 
 

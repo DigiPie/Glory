@@ -12,6 +12,7 @@ public class PlayerHealthSystem : MonoBehaviour
     private float diffDeadzone = 1.0f;
     private float diffHealth;
     private float absDiffHealth;
+    private bool isDiff = false;
 
     // public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
 
@@ -51,28 +52,33 @@ public class PlayerHealthSystem : MonoBehaviour
         // Reset the damaged flag.
         damaged = false;
 
-        diffHealth = currentHealth - displayHealth;
-        absDiffHealth = Mathf.Abs(diffHealth);
+        if (isDiff)
+        {
+            diffHealth = currentHealth - displayHealth;
+            absDiffHealth = Mathf.Abs(diffHealth);
 
-        if (absDiffHealth < diffDeadzone)
-        {
-            displayHealth = currentHealth;
-            return;
-        }
+            if (absDiffHealth < diffDeadzone)
+            {
+                displayHealth = currentHealth;
+                isDiff = false;
+                return;
+            }
 
-        if (diffHealth > 0)
-        {
-            displayHealth += Time.deltaTime * displayChangeSpeed;
-        }
-        else
-        {
-            displayHealth -= Time.deltaTime * displayChangeSpeed;
+            if (diffHealth > 0)
+            {
+                displayHealth += Time.deltaTime * displayChangeSpeed;
+            }
+            else
+            {
+                displayHealth -= Time.deltaTime * displayChangeSpeed;
+            }
         }
     }
 
     // Important to be public as it is called by other functions.
     public void TakeDamage(int amount)
     {
+        isDiff = true;
         // Set the damaged flag so the screen will flash.
         damaged = true;
 
@@ -96,6 +102,8 @@ public class PlayerHealthSystem : MonoBehaviour
     // Self implemented function for future use
     public void HealDamage(int amount)
     {
+        isDiff = true;
+
         if ((currentHealth+amount) > startingHealth)
         {
             currentHealth = startingHealth;
@@ -110,6 +118,7 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public void resetFullHealth()
     {
+        isDiff = true;
         currentHealth = startingHealth;
     }
 
