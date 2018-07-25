@@ -7067,7 +7067,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: affc5d30df29f934b9f18ccf1e14a1c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12977,7 +12977,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1543446918
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12994,8 +12994,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20, y: 20}
-  m_SizeDelta: {x: -100, y: -50}
+  m_AnchoredPosition: {x: 30, y: 20}
+  m_SizeDelta: {x: -80, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1551670490
 GameObject:
@@ -13680,12 +13680,11 @@ MonoBehaviour:
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,
     type: 2}
-  specialAttack: {fileID: 1899686611195332, guid: 2d73a700a8b380e4ca700f85b5d746fb,
+  specialAttack: {fileID: 1185742128011796, guid: e764a1ab552b13a44ab5d824003c436f,
     type: 2}
   specialAbility: {fileID: 0}
   slideCooldown: 1.5
   slideInvulDuration: 1
-  attackDmg: 12
   consecAttkCooldown: 0.3
   newAttkCooldown: 0.6
   specialAttkCooldown: 1
@@ -14788,7 +14787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.88235295}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -15760,7 +15759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.88235295}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

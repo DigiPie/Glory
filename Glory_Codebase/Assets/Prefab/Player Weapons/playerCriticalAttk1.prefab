@@ -78,10 +78,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5482a10d4df80704f82c206f5bf94b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 24
   lifespan: 0.2
   speed: 0.05
   damageCounterColour: {r: 1, g: 0.49019608, b: 0, a: 0}
-  damageCounterSize: 4
+  damageCounterSize: 5
   initialOffset: {x: 0, y: 0}
 --- !u!212 &212324530331926204
 SpriteRenderer:

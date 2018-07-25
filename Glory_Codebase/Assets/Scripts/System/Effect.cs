@@ -13,6 +13,7 @@ public class Effect : MonoBehaviour {
     private float damageReadyTime;
     public Color damageCounterColour; // Damage counter colour
     public float damageCounterSize = 3;
+    private float blinkDuration = 0.5f; // Blink duration on enemy
 
     public void Setup(EnemyHealthSystem enemyHealthSystem, float damage, float damageInterval, float damageDuration)
     {
@@ -30,7 +31,7 @@ public class Effect : MonoBehaviour {
     {
         if (Time.timeSinceLevelLoad > damageReadyTime)
         {
-            enemyHealthSystem.DeductHealth(damage);
+            enemyHealthSystem.DeductHealth(damage, blinkDuration);
             damageReadyTime = Time.timeSinceLevelLoad + damageInterval;
             SpawnDamageCounter();
         }
