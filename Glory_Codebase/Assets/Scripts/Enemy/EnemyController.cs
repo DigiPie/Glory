@@ -51,7 +51,10 @@ public abstract class EnemyController : MonoBehaviour {
 
     // Effects
     private GameObject tempEffect;
-
+    private bool isSlowed = false;
+    private float maxSpeedWhenSlowed;
+    private float slowEndTime;
+    
     // Use this for initialization
     void Start()
     {
@@ -104,6 +107,11 @@ public abstract class EnemyController : MonoBehaviour {
         {
             HandleStun();
             return;
+        }
+
+        if (isSlowed &&Time.timeSinceLevelLoad > slowEndTime)
+        {
+            CancelSlowEffect();
         }
 
         distToTargetX = gameManager.GetObjectivePositionX() - transform.position.x;
@@ -173,6 +181,11 @@ public abstract class EnemyController : MonoBehaviour {
             if (wepEffect != null)
             {
                 SpawnEffect(wepEffect.effect, wepEffect.overtimeDamage, wepEffect.damageInterval, wepEffect.duration);
+
+                if (wepEffect.slowMultiplier != 0)
+                {
+                    StartSlowEffect(wepEffect.slowMultiplier, wepEffect.duration);
+                }
             }
         }
     }
@@ -197,7 +210,7 @@ public abstract class EnemyController : MonoBehaviour {
             1 << LayerMask.NameToLayer("Ground"));
 
         // Apply forces if max speed is not yet reached
-        if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
+        if (Mathf.Abs(rb2d.velocity.x) < ((isSlowed) ? maxSpeedWhenSlowed : maxSpeed))
         {
             if (AImoveH < 0)
             {
@@ -279,6 +292,18 @@ public abstract class EnemyController : MonoBehaviour {
         tempEffect = Instantiate(effect, transform);
         tempEffect.transform.parent = transform;
         tempEffect.GetComponent<Effect>().Setup(healthSystem, overtimeDamage, damageInterval, duration);
+    }
+
+    public void StartSlowEffect(float slowPercentage, float duration)
+    {
+        slowEndTime = Time.timeSinceLevelLoad + duration;
+        maxSpeedWhenSlowed = maxSpeed * slowPercentage;
+        isSlowed = true;
+    }
+
+    public void CancelSlowEffect()
+    {
+        isSlowed = false;
     }
 
     public bool GetAImoveH()

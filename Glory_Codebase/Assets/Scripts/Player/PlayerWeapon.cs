@@ -8,7 +8,7 @@ public class PlayerWeapon : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private TextMeshProFloatingText floatingText_Script;
     private Vector2 dirV; // Direction of melee projectile
-    private float damage = 10;
+    public float damage = 10;
     private float stunDuration = 0.0f; // Stun duration on enemy
     private float blinkDuration = 1.0f; // Blink duration on enemy
     public float lifespan = 0.2f; // Lifespan of melee projectile
@@ -36,21 +36,15 @@ public class PlayerWeapon : MonoBehaviour {
         }
     }
 
-    public void Setup(Vector2 dir, float damage)
+    public void Setup(Vector2 dir, float stunDuration)
     {
         Setup(dir);
-        this.damage = damage;
-    }
-
-    public void Setup(Vector2 dir, float damage, float stunDuration)
-    {
-        Setup(dir, damage);
         this.stunDuration = stunDuration;
     }
 
-    public void Setup(Vector2 dir, float damage, float stunDuration, float blinkDuration)
+    public void Setup(Vector2 dir, float stunDuration, float blinkDuration)
     {
-        Setup(dir, damage, stunDuration);
+        Setup(dir, stunDuration);
         this.blinkDuration = blinkDuration;
     }
 

@@ -97,15 +97,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b88f4e987185634fbae4c0b341b8a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 24
   lifespan: 1
   speed: 0.2
   damageCounterColour: {r: 1, g: 0, b: 0, a: 0}
-  damageCounterSize: 5
+  damageCounterSize: 6
   initialOffset: {x: 0.7, y: 0}
   effect: {fileID: 1086838553737868, guid: a68c9028bacbfab4dbf651e0a08ed173, type: 2}
   overtimeDamage: 6
   damageInterval: 1
-  duration: 4
+  duration: 4.1
+  slowMultiplier: 0
 --- !u!212 &212349417817121472
 SpriteRenderer:
   m_ObjectHideFlags: 1

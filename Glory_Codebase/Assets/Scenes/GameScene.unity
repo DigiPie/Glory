@@ -12453,7 +12453,7 @@ MonoBehaviour:
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,
     type: 2}
-  specialAttack: {fileID: 1899686611195332, guid: 2d73a700a8b380e4ca700f85b5d746fb,
+  specialAttack: {fileID: 1185742128011796, guid: e764a1ab552b13a44ab5d824003c436f,
     type: 2}
   specialAbility: {fileID: 0}
   slideCooldown: 1.5

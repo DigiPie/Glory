@@ -8,4 +8,5 @@ public class PlayerWeaponWithEffect : PlayerWeapon
     public float overtimeDamage;
     public float damageInterval;
     public float duration;
+    public float slowMultiplier = 0;
 }

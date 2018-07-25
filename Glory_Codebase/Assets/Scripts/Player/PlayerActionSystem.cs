@@ -33,8 +33,6 @@ public class PlayerActionSystem : MonoBehaviour
 
     /*** Attacks ***/
     // Normal attack //
-    public float attackDmg = 10;
-    private float criticalDmg;
     private float comboEndTime;
     private float comboDuration = 0.6f;
     private int comboCount = 0;
@@ -47,7 +45,6 @@ public class PlayerActionSystem : MonoBehaviour
     private bool isCriticalAttk = false;
 
     // Special attack //
-    private float specialDmg;
     public float specialAttkCooldown = 8f;
     private float specialAttkReadyTime;
     private bool isSpecialAttk = false;
@@ -57,9 +54,6 @@ public class PlayerActionSystem : MonoBehaviour
     {
         playerAnimator = GetComponent<PlayerAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
-
-        criticalDmg = attackDmg * 2f;
-        specialDmg = attackDmg * 2f;
     }
 
     public void Setup(Vector2 moveLeftV, Vector2 moveRightV)
@@ -250,12 +244,12 @@ public class PlayerActionSystem : MonoBehaviour
         if (isAttackLeft)
         {
             GameObject projectile = Instantiate(normalAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(leftDir, attackDmg);
+            projectile.GetComponent<PlayerWeapon>().Setup(leftDir);
         }
         else
         {
             GameObject projectile = Instantiate(normalAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(rightDir, attackDmg);
+            projectile.GetComponent<PlayerWeapon>().Setup(rightDir);
         }
     }
 
@@ -264,12 +258,12 @@ public class PlayerActionSystem : MonoBehaviour
         if (isAttackLeft)
         {
             GameObject projectile = Instantiate(criticalAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(leftDir, criticalDmg);
+            projectile.GetComponent<PlayerWeapon>().Setup(leftDir);
         }
         else
         {
             GameObject projectile = Instantiate(criticalAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(rightDir, criticalDmg);
+            projectile.GetComponent<PlayerWeapon>().Setup(rightDir);
         }
     }
 
@@ -278,12 +272,12 @@ public class PlayerActionSystem : MonoBehaviour
         if (isAttackLeft)
         {
             GameObject projectile = Instantiate(specialAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(leftDir, specialDmg);
+            projectile.GetComponent<PlayerWeapon>().Setup(leftDir);
         }
         else
         {
             GameObject projectile = Instantiate(specialAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(rightDir, specialDmg);
+            projectile.GetComponent<PlayerWeapon>().Setup(rightDir);
         }
     }
 }
