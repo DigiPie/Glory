@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealthSystem : MonoBehaviour {
+    protected BlinkSystem blinkSystem; // Handles blinking effect
     public SpriteRenderer outlineRend, frontRend, backRend;
 
     public float health = 100;
@@ -10,6 +11,7 @@ public class EnemyHealthSystem : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        blinkSystem = GetComponent<BlinkSystem>();
         currentHealth = health;
 
         // Hide it at first, only show when not at full health
@@ -37,6 +39,12 @@ public class EnemyHealthSystem : MonoBehaviour {
             frontRend.enabled = true;
             backRend.enabled = true;
         }
+    }
+
+    public void DeductHealth(float damage, float blinkDuration)
+    {
+        DeductHealth(damage);
+        blinkSystem.StartBlink();
     }
 
     private void SetHealthBarScale(float scale)

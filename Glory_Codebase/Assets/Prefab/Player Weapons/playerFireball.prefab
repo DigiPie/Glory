@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifespan: 1
   speed: 0.2
-  damageCounterColour: {r: 1, g: 0, b: 0.49019608, a: 0}
+  damageCounterColour: {r: 1, g: 0, b: 0, a: 0}
   damageCounterSize: 5
   initialOffset: {x: 0.7, y: 0}
   effect: {fileID: 1086838553737868, guid: a68c9028bacbfab4dbf651e0a08ed173, type: 2}

@@ -51,7 +51,7 @@ Animator:
   m_GameObject: {fileID: 1086838553737868}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b687d905624d68542adb3d9becca6722, type: 2}
+  m_Controller: {fileID: 9100000, guid: 887178fb0b00c26469ab7a5d4253dd8b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7aa81eae1286341bbdb34015c863a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageCounterColour: {r: 1, g: 0, b: 0.49019608, a: 0}
+  damageCounterColour: {r: 1, g: 1, b: 0, a: 0}
   damageCounterSize: 3
 --- !u!212 &212722084903459334
 SpriteRenderer:
@@ -107,13 +107,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ccf4c483b71b7104993d200b9d28396e, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 2299af24d7736634b88e2aef1a50c6a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 2.5, y: 2.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

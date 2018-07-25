@@ -80,7 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifespan: 0.2
   speed: 0.04
-  damageCounterColour: {r: 1, g: 0.88235295, b: 0, a: 0}
+  damageCounterColour: {r: 1, g: 0.6862745, b: 0, a: 0}
   damageCounterSize: 3
   initialOffset: {x: 0, y: 0}
 --- !u!212 &212186310538109348

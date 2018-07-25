@@ -10,12 +10,11 @@ public abstract class EnemyController : MonoBehaviour {
     protected GameManager gameManager; // Used to damage objective and get player position
     protected EnemyAnimator enemyAnimator;
     protected EnemyHealthSystem healthSystem; // Handles health-related matters
-    protected BlinkSystem blinkSystem; // Handles blinking effect
     
     // References
     public Transform groundCheck; // Used to check if on the ground
     public GameObject enemyWeapon;
-
+    
     // Forces to be applied on character
     protected Vector2 bounceHurtLeftV, bounceHurtRightV;
     protected Vector2 moveLeftV, moveRightV;
@@ -50,13 +49,15 @@ public abstract class EnemyController : MonoBehaviour {
     private float stunDuration; // How long is the character stunned when damaged by any attacks
     protected float stunEndTime = 0; // The time at which stunned is set to false again
 
+    // Effects
+    private GameObject tempEffect;
+
     // Use this for initialization
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         enemyAnimator = GetComponent<EnemyAnimator>();
         healthSystem = GetComponent<EnemyHealthSystem>();
-        blinkSystem = GetComponent<BlinkSystem>();
 
         attackCooldown = enemyWeapon.GetComponent<EnemyWeapon>().cooldown;
         attackRange = Random.Range(minAttackRange, maxAttackRange); // Get a unique engagement range
@@ -92,6 +93,7 @@ public abstract class EnemyController : MonoBehaviour {
 
         if (healthSystem.IsDead())
         {
+            Destroy(tempEffect);
             AImoveH = 0;
             enemyAnimator.PlayDeath();
             enemyState = EnemyState.Dead;
@@ -159,11 +161,8 @@ public abstract class EnemyController : MonoBehaviour {
 
             enemyAnimator.PlayHurt();
 
-            // Blink effect
-            blinkSystem.StartBlink(wep.GetBlinkDuration());
-
             // Health deduction
-            healthSystem.DeductHealth(wep.GetDamage());
+            healthSystem.DeductHealth(wep.GetDamage(), wep.GetBlinkDuration());
 
             // Damage counter
             wep.SpawnDamageCounter(transform.position);
@@ -173,7 +172,7 @@ public abstract class EnemyController : MonoBehaviour {
             
             if (wepEffect != null)
             {
-                wepEffect.SpawnEffect(healthSystem, transform);
+                SpawnEffect(wepEffect.effect, wepEffect.overtimeDamage, wepEffect.damageInterval, wepEffect.duration);
             }
         }
     }
@@ -272,6 +271,14 @@ public abstract class EnemyController : MonoBehaviour {
         {
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(1, 0));
         }
+    }
+
+    protected void SpawnEffect(GameObject effect, float overtimeDamage, float damageInterval, float duration)
+    {
+        Destroy(tempEffect);
+        tempEffect = Instantiate(effect, transform);
+        tempEffect.transform.parent = transform;
+        tempEffect.GetComponent<Effect>().Setup(healthSystem, overtimeDamage, damageInterval, duration);
     }
 
     public bool GetAImoveH()
