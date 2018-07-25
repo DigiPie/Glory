@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour
+{
     public StateSystem stateSystem;
     public GameObject mainMenu;
     public Overlay overlay;
 
-    private void Awake()
+    private void Start()
     {
         FindObjectOfType<AudioManager>().PlaySound("MenuBGM");
-        Debug.Log("PlayMenuBGM");
     }
 
     public void PlayGame()
@@ -23,5 +23,10 @@ public class MainMenu : MonoBehaviour {
     {
         Debug.Log("QUIT!");
         Application.Quit();
+    }
+
+    public void PlaySound(string name)
+    {
+        FindObjectOfType<AudioManager>().PlaySound(name);
     }
 }

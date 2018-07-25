@@ -1,12 +1,18 @@
 ﻿using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 using System;
 
 public class AudioManager : MonoBehaviour {
 
+    public Slider sliderBGM, sliderSFX;
+    public int volumeBGM, volumeSFX;
+
     public Sound[] sounds;
 
     public static AudioManager instance;
+
 
     // Use this for initialization
     void Awake () {
@@ -36,7 +42,8 @@ public class AudioManager : MonoBehaviour {
 
     private void Start()
     {
-        PlaySound("MenuBGM");
+        sliderBGM.value = volumeBGM;
+        sliderSFX.value = volumeSFX;
     }
 
     public void PlaySound(string name)
@@ -50,5 +57,4 @@ public class AudioManager : MonoBehaviour {
         }
         s.source.Play();
     }
-
 }

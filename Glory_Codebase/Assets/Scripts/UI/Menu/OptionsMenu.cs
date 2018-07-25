@@ -8,6 +8,7 @@ public class OptionsMenu : MonoBehaviour {
 
     public StateSystem stateSystem;
     public AudioMixer audioMixer;
+    
     // Setting Resolution
 
     public void SetResolution(int resolutionIndex)
@@ -40,12 +41,17 @@ public class OptionsMenu : MonoBehaviour {
 
     public void SetBGMVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        audioMixer.SetFloat("BGMVolume", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-       
+        audioMixer.SetFloat("SFXVolume", volume);
+    }
+
+    public void EnableSound(bool sound)
+    {
+        AudioListener.pause = !sound;
     }
 
     public void SetFullscreen(bool isFullscreen)
