@@ -7,6 +7,12 @@ public class PlayerHealthSystem : MonoBehaviour
 {
     public int startingHealth = 100;                            // The amount of health the player starts the game with.
     public int currentHealth;                                   // The current health the player has.
+    private float displayHealth;
+    private float displayChangeSpeed = 20.0f;
+    private float diffDeadzone = 1.0f;
+    private float diffHealth;
+    private float absDiffHealth;
+
     // public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
 
     //public Slider healthSlider;                                 // Reference to the UI's health bar.
@@ -36,13 +42,32 @@ public class PlayerHealthSystem : MonoBehaviour
 
         // Set the initial health of the player.
         currentHealth = startingHealth;
+        displayHealth = currentHealth;
     }
 
 
-    void Update()
+    void FixedUpdate()
     { 
         // Reset the damaged flag.
         damaged = false;
+
+        diffHealth = currentHealth - displayHealth;
+        absDiffHealth = Mathf.Abs(diffHealth);
+
+        if (absDiffHealth < diffDeadzone)
+        {
+            displayHealth = currentHealth;
+            return;
+        }
+
+        if (diffHealth > 0)
+        {
+            displayHealth += Time.deltaTime * displayChangeSpeed;
+        }
+        else
+        {
+            displayHealth -= Time.deltaTime * displayChangeSpeed;
+        }
     }
 
     // Important to be public as it is called by other functions.
@@ -83,9 +108,14 @@ public class PlayerHealthSystem : MonoBehaviour
         // healthSlider.value = currentHealth;
     }
 
-    public int getCurrentHealth()
+    public void resetFullHealth()
     {
-        return currentHealth;
+        currentHealth = startingHealth;
+    }
+
+    public float getCurrentHealth()
+    {
+        return displayHealth;
     }
 
 

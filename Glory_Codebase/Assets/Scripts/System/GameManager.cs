@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour {
         {
             if (enemies.Count == 0)
             {
+                plyHealth.resetFullHealth();
                 //player1.GetComponent<PlayerController>().AllowAttack(false);
                 stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
                 hud.ShowNextWaveBtn();
