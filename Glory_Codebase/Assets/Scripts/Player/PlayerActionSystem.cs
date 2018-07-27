@@ -7,7 +7,8 @@ public class PlayerActionSystem : MonoBehaviour
     // References //
     private Rigidbody2D rb2d;
     public CustomCamController camController;
-    public GameObject normalAttack, criticalAttack, specialAttack, specialAbility;
+    public GameObject normalAttack, criticalAttack, spell1, spell2;
+    private PlayerController playerController;
     private PlayerAnimator playerAnimator;
 
     // Forces
@@ -18,18 +19,24 @@ public class PlayerActionSystem : MonoBehaviour
 
     // Abilities and Attacks
     private bool isSlideEnabled = true;
-    private bool isSpecialAttackEnabled = true;
+    private bool isSpell1Enabled = true;
+    private bool isSpell2Enabled = true;
 
-    /*** Abilities ***/
+    // Invulnerability //
+    private bool isInvul = false; // Currently only slide triggers invulnerability
+    private float invulEndTime; // The time at which the character is no longer invulnerable
+
+    // Attack speed //
+    private bool isFaster = false;
+    private float fasterEndTime;
+    private float preBuffMaxSpeed;
+
+    /*** Actions ***/
     // Slide //
     public float slideCooldown = 2f; // Minimum wait-time before next slide can be triggered
     public float slideInvulDuration = 1f; // How long is the character invulnerable for when slideing
     private bool slideReady = true; // Reliant on slideCooldown
     private float slideReadyTime; // The time at which slideReady will be set to true again
-
-    // Invulnerability //
-    private bool isInvul = false; // Currently only slide triggers invulnerability
-    private float invulEndTime; // The time at which the character is no longer invulnerable
 
     /*** Attacks ***/
     // Normal attack //
@@ -37,6 +44,7 @@ public class PlayerActionSystem : MonoBehaviour
     private float comboDuration = 0.6f;
     private int comboCount = 0;
     public float consecAttkCooldown = 0.4f;
+
     // Consecutive attack cooldown used as long as attacks are within combo duration intervals.
     // Up to 3 consecutive attacks, final consecutive attack is critical strike;
     public float newAttkCooldown = 0.8f; // The cooldown between the last combo (completed or not) and the new
@@ -44,15 +52,20 @@ public class PlayerActionSystem : MonoBehaviour
     private bool isAttack = false;
     private bool isCriticalAttk = false;
 
-    // Special attack //
-    public float specialAttkCooldown = 8f;
-    private float specialAttkReadyTime;
-    private bool isSpecialAttk = false;
+    // Spells //
+    public float spell1Cooldown = 8f;
+    private float spell1ReadyTime;
+    private bool isSpell1 = false;
+
+    public float spell2Cooldown = 8f;
+    private float spell2ReadyTime;
+    private bool isSpell2 = false;
 
     // Use this for initialization
     void Start()
     {
         playerAnimator = GetComponent<PlayerAnimator>();
+        playerController = GetComponent<PlayerController>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
@@ -65,12 +78,13 @@ public class PlayerActionSystem : MonoBehaviour
     private void FixedUpdate()
     {
         HandleInvul();
+        HandleFaster();
         HandleProjectiles();
     }
 
     void HandleInvul()
     {
-        // Invulnerability can be triggered by sliding and ...
+        // Invulnerability can be triggered by sliding and air spell
         if (isInvul)
         {
             if (Time.timeSinceLevelLoad > invulEndTime)
@@ -80,6 +94,30 @@ public class PlayerActionSystem : MonoBehaviour
         }
     }
 
+    public bool IsInvul()
+    {
+        return isInvul;
+    }
+
+    void HandleFaster()
+    {
+        // Faster is triggered by air spell
+        if (isFaster)
+        {
+            if (Time.timeSinceLevelLoad > fasterEndTime)
+            {
+                playerController.maxSpeed = preBuffMaxSpeed;
+                isFaster = false;
+            }
+        }
+    }
+
+    public bool IsFaster()
+    {
+        return isFaster;
+    }
+
+
     void HandleProjectiles()
     {
         if (isAttack && (playerAnimator.IsAttackAnim() || playerAnimator.IsAttack2Anim()))
@@ -87,7 +125,7 @@ public class PlayerActionSystem : MonoBehaviour
             if (playerAnimator.IsAttackFrame())
             {
                 // Attack projectile
-                SpawnAttack(playerAnimator.IsFacingLeft());
+                StartNormalAttack(playerAnimator.IsFacingLeft());
                 isAttack = false;
             }
         }
@@ -96,22 +134,31 @@ public class PlayerActionSystem : MonoBehaviour
             if (playerAnimator.IsCriticalAttackFrame())
             {
                 // Critical attack projectile
-                SpawnCriticalStrike(playerAnimator.IsFacingLeft());
+                StartCriticalStrike(playerAnimator.IsFacingLeft());
                 isCriticalAttk = false;
             }
         }
-        else if (isSpecialAttk && playerAnimator.IsCastAnim())
+        else if (isSpell1 && playerAnimator.IsCastAnim())
         {
             if (playerAnimator.IsCastFrame())
             {
-                SpawnSpecialAttack(playerAnimator.IsFacingLeft());
-                isSpecialAttk = false;
+                StartSpell1(playerAnimator.IsFacingLeft());
+                isSpell1 = false;
+                camController.Shake(0.015f, 0.15f);
+            }
+        }
+        else if (isSpell2 && playerAnimator.IsCastAnim())
+        {
+            if (playerAnimator.IsCastFrame())
+            {
+                StartSpell2(playerAnimator.IsFacingLeft());
+                isSpell2 = false;
                 camController.Shake(0.015f, 0.15f);
             }
         }
     }
 
-    /*** Abilities ***/
+    /*** Actions ***/
     public void Slide()
     {
         if (isSlideEnabled && slideReady)
@@ -139,11 +186,6 @@ public class PlayerActionSystem : MonoBehaviour
                 slideReady = true;
             }
         }
-    }
-
-    public bool IsInvul()
-    {
-        return isInvul;
     }
 
     public void EnableSlide()
@@ -184,7 +226,7 @@ public class PlayerActionSystem : MonoBehaviour
 
                 // Combo count reset
                 comboCount = 0;
-
+                
                 // Long cooldown to next attack since combo is just completed.
                 attkReadyTime = Time.timeSinceLevelLoad + newAttkCooldown;
             }
@@ -218,66 +260,123 @@ public class PlayerActionSystem : MonoBehaviour
         }
     }
 
-    public void SpecialAttack()
+    public void Spell1()
     {
-        if (!isSpecialAttackEnabled)
+        if (!isSpell1Enabled)
         {
             return;
         }
 
         // If cooldown, then don't attack
-        if (Time.timeSinceLevelLoad < specialAttkReadyTime)
+        if (Time.timeSinceLevelLoad < spell1ReadyTime)
         {
             return;
         }
 
-        isSpecialAttk = true;
+        isSpell1 = true;
 
         // Animate with special attack
         playerAnimator.PlayCast();
 
-        specialAttkReadyTime = Time.timeSinceLevelLoad + specialAttkCooldown;
+        spell1ReadyTime = Time.timeSinceLevelLoad + spell1Cooldown;
     }
 
-    void SpawnAttack(bool isAttackLeft)
+    public void Spell2()
     {
+        if (!isSpell2Enabled)
+        {
+            return;
+        }
+
+        // If cooldown, then don't attack
+        if (Time.timeSinceLevelLoad < spell2ReadyTime)
+        {
+            return;
+        }
+
+        isSpell2 = true;
+
+        // Animate with special attack
+        playerAnimator.PlayCast();
+
+        spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
+    }
+
+    void StartNormalAttack(bool isAttackLeft)
+    {
+        GameObject projectile = Instantiate(normalAttack, transform);
+
         if (isAttackLeft)
         {
-            GameObject projectile = Instantiate(normalAttack, transform);
             projectile.GetComponent<PlayerWeapon>().Setup(leftDir);
         }
         else
         {
-            GameObject projectile = Instantiate(normalAttack, transform);
             projectile.GetComponent<PlayerWeapon>().Setup(rightDir);
         }
     }
 
-    void SpawnCriticalStrike(bool isAttackLeft)
+    void StartCriticalStrike(bool isAttackLeft)
     {
+        GameObject projectile = Instantiate(criticalAttack, transform);
+
         if (isAttackLeft)
         {
-            GameObject projectile = Instantiate(criticalAttack, transform);
             projectile.GetComponent<PlayerWeapon>().Setup(leftDir);
         }
         else
         {
-            GameObject projectile = Instantiate(criticalAttack, transform);
             projectile.GetComponent<PlayerWeapon>().Setup(rightDir);
         }
     }
 
-    void SpawnSpecialAttack(bool isAttackLeft)
+    void StartSpell(GameObject spell, bool isFacingLeft)
     {
-        if (isAttackLeft)
+        GameObject tempSpell = Instantiate(spell, transform);
+
+        if (tempSpell.GetComponent<PlayerWeapon>() != null)
         {
-            GameObject projectile = Instantiate(specialAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(leftDir);
+            if (isFacingLeft)
+            {
+                tempSpell.GetComponent<PlayerWeapon>().Setup(leftDir);
+            }
+            else
+            {
+                tempSpell.GetComponent<PlayerWeapon>().Setup(rightDir);
+            }
         }
-        else
+        else if (tempSpell.GetComponent<PlayerBuff>() != null)
         {
-            GameObject projectile = Instantiate(specialAttack, transform);
-            projectile.GetComponent<PlayerWeapon>().Setup(rightDir);
+            PlayerBuff tempBuff = tempSpell.GetComponent<PlayerBuff>();
+
+            tempBuff.Setup();
+            
+            if (tempBuff.invulDuration > 0)
+            {
+                isInvul = true;
+                invulEndTime = Time.timeSinceLevelLoad + tempBuff.invulDuration;
+            }
+
+            if (tempBuff.fasterSpeedDuration > 0)
+            {
+                isFaster = true;
+                fasterEndTime = Time.timeSinceLevelLoad + tempBuff.fasterSpeedDuration;
+                preBuffMaxSpeed = playerController.maxSpeed;
+                playerController.maxSpeed *= tempBuff.speedMultiplier;
+
+                // When the player animator animates slide, it will call the SetToSlideOffset() in PlayerBuffs cript
+                playerAnimator.AddPlayerBuff(tempBuff);
+            }
         }
+    }
+
+    void StartSpell1(bool isFacingLeft)
+    {
+        StartSpell(spell1, isFacingLeft);
+    }
+
+    void StartSpell2(bool isFacingLeft)
+    {
+        StartSpell(spell2, isFacingLeft);
     }
 }
