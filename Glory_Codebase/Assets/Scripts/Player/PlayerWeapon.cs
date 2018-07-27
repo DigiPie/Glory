@@ -9,7 +9,7 @@ public class PlayerWeapon : MonoBehaviour {
     private TextMeshProFloatingText floatingText_Script;
     private Vector2 dirV; // Direction of melee projectile
     public float damage = 10;
-    private float stunDuration = 0.0f; // Stun duration on enemy
+    public float stunDuration = 0.0f; // Stun duration on enemy
     private float blinkDuration = 1.0f; // Blink duration on enemy
     public float lifespan = 0.2f; // Lifespan of melee projectile
     public float speed = 0.05f; // Speed of melee projectile
