@@ -302,9 +302,16 @@ public class PlayerActionSystem : MonoBehaviour
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }
 
+    GameObject InstantiateGameObject(GameObject gameObject)
+    {
+        Vector3 pos = transform.position;
+        Quaternion rotation = transform.rotation;
+        return Instantiate(gameObject, pos, rotation);
+    }
+
     void StartNormalAttack(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(normalAttack, transform);
+        GameObject projectile = InstantiateGameObject(normalAttack);
 
         if (isAttackLeft)
         {
@@ -318,7 +325,7 @@ public class PlayerActionSystem : MonoBehaviour
 
     void StartCriticalStrike(bool isAttackLeft)
     {
-        GameObject projectile = Instantiate(criticalAttack, transform);
+        GameObject projectile = InstantiateGameObject(criticalAttack);
 
         if (isAttackLeft)
         {
@@ -332,7 +339,7 @@ public class PlayerActionSystem : MonoBehaviour
 
     void StartSpell(GameObject spell, bool isFacingLeft)
     {
-        GameObject tempSpell = Instantiate(spell, transform);
+        GameObject tempSpell = InstantiateGameObject(spell);
 
         if (tempSpell.GetComponent<PlayerWeapon>() != null)
         {
