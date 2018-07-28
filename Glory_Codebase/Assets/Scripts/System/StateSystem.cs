@@ -19,7 +19,8 @@ public class StateSystem : MonoBehaviour {
      * Options: Options sub-menu shown, pause menu hidden
      */
     public enum WaveState { WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn, Done };
-    public enum TutorialState { Intro1, Intro2, Walk, Jump, Attack, Done, Dash1, Dash2, Dash3,  }
+    public enum TutorialState { Intro1, Intro2, Walk, Jump, Attack, Done, Dash1, Dash2, Dash3,
+                                FirstSpell1, FirstSpell2, FirstSpell3, SecondSpell1, SecondSpell2, SecondSpell3}
 
     private GameState gameState;
     private MenuState menuState;
@@ -254,5 +255,35 @@ public class StateSystem : MonoBehaviour {
     public bool IsDash3()
     {
         return tutorialState == TutorialState.Dash3;
+    }
+
+    public bool IsFirstSpell1()
+    {
+        return tutorialState == TutorialState.FirstSpell1;
+    }
+
+    public bool IsFirstSpell2()
+    {
+        return tutorialState == TutorialState.FirstSpell2;
+    }
+
+    public bool IsFirstSpell3()
+    {
+        return tutorialState == TutorialState.FirstSpell3;
+    }
+
+    public bool IsSecondSpell1()
+    {
+        return tutorialState == TutorialState.SecondSpell1;
+    }
+
+    public bool IsSecondSpell2()
+    {
+        return tutorialState == TutorialState.SecondSpell2;
+    }
+
+    public bool IsSecondSpell3()
+    {
+        return tutorialState == TutorialState.SecondSpell3;
     }
 }

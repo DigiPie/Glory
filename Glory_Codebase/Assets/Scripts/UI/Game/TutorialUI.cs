@@ -19,6 +19,14 @@ public class TutorialUI : MonoBehaviour
     public GameObject Dash2Scene;
     public GameObject Dash3Scene;
 
+    public GameObject FirstSpell1;
+    public GameObject FirstSpell2;
+    public GameObject FirstSpell3;
+
+    public GameObject SecondSpell1;
+    public GameObject SecondSpell2;
+    public GameObject SecondSpell3;
+
     public GameObject NextWaveScene;
     public GameObject player1;
 
@@ -36,6 +44,14 @@ public class TutorialUI : MonoBehaviour
         else if (stateSystem.IsDash1())
         {
             Dash1Scene.SetActive(true);
+        }
+        else if (stateSystem.IsFirstSpell1())
+        {
+            FirstSpell1.SetActive(true);
+        }
+        else if (stateSystem.IsSecondSpell1())
+        {
+            SecondSpell1.SetActive(true);
         }
     }
 
@@ -119,7 +135,51 @@ public class TutorialUI : MonoBehaviour
             Dash3Scene.SetActive(false);
             TutorialCanvas.SetActive(false);
             stateSystem.StartGameWave();
-            // Change State here;
+            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell1);
+        }
+
+        else if (stateSystem.IsFirstSpell1())
+        {
+            FirstSpell1.SetActive(false);
+            FirstSpell2.SetActive(true);
+            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell2);
+        }
+
+        else if (stateSystem.IsFirstSpell2())
+        {
+            FirstSpell2.SetActive(false);
+            FirstSpell3.SetActive(true);
+            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell3);
+        }
+
+        else if (stateSystem.IsFirstSpell3())
+        {
+            FirstSpell3.SetActive(false);
+            TutorialCanvas.SetActive(false);
+            stateSystem.StartGameWave();
+            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell3);
+        }
+
+        else if (stateSystem.IsSecondSpell1())
+        {
+            SecondSpell1.SetActive(false);
+            SecondSpell2.SetActive(true);
+            stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell2);
+        }
+
+        else if (stateSystem.IsSecondSpell2())
+        {
+            SecondSpell2.SetActive(false);
+            SecondSpell3.SetActive(true);
+            stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell3);
+        }
+
+        else if (stateSystem.IsSecondSpell3())
+        {
+            SecondSpell3.SetActive(false);
+            TutorialCanvas.SetActive(false);
+            stateSystem.StartGameWave();
+            // Fill in state here if needed.
         }
     }
 
@@ -165,18 +225,52 @@ public class TutorialUI : MonoBehaviour
         // Dash Tutorial
         if (!stateSystem.IsDash1())
         {
-            if(stateSystem.IsDash2())
+            if (stateSystem.IsDash2())
             {
                 Dash2Scene.SetActive(false);
                 Dash1Scene.SetActive(true);
                 stateSystem.SetTutorialState(StateSystem.TutorialState.Dash1);
-            } 
+            }
 
             else if (stateSystem.IsDash3())
             {
                 Dash3Scene.SetActive(false);
                 Dash2Scene.SetActive(true);
                 stateSystem.SetTutorialState(StateSystem.TutorialState.Dash2);
+            }
+        }
+
+        if (!stateSystem.IsFirstSpell1())
+        {
+            if (stateSystem.IsFirstSpell2())
+            {
+                FirstSpell2.SetActive(false);
+                FirstSpell1.SetActive(true);
+                stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell1);
+            }
+
+            if (stateSystem.IsFirstSpell3())
+            {
+                FirstSpell3.SetActive(false);
+                FirstSpell2.SetActive(true);
+                stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell2);
+            }
+        }
+
+        if (!stateSystem.IsSecondSpell1())
+        {
+            if (stateSystem.IsSecondSpell2())
+            {
+                SecondSpell2.SetActive(false);
+                SecondSpell1.SetActive(true);
+                stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell1);
+            }
+
+            if (stateSystem.IsSecondSpell3())
+            {
+                SecondSpell3.SetActive(false);
+                SecondSpell2.SetActive(true);
+                stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell2);
             }
         }
     }

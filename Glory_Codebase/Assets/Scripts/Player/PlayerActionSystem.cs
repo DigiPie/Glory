@@ -19,9 +19,6 @@ public class PlayerActionSystem : MonoBehaviour
 
     // Abilities and Attacks
 
-    private volatile bool isSlideEnabled = false;
-    private volatile bool isSpecialAttackEnabled = true;
-
     private bool isSlideEnabled = true;
     private bool isSpell1Enabled = true;
     private bool isSpell2Enabled = true;
