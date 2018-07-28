@@ -19,7 +19,7 @@ public class StateSystem : MonoBehaviour {
      * Options: Options sub-menu shown, pause menu hidden
      */
     public enum WaveState { WaitingNextWave, WaitingWaveClear, WaitingWaveSpawn, Done };
-    public enum TutorialState { Intro, Walk, Jump, Dash, Attack, Done }
+    public enum TutorialState { Intro1, Intro2, Walk, Jump, Attack, Done, Dash1, Dash2, Dash3,  }
 
     private GameState gameState;
     private MenuState menuState;
@@ -41,6 +41,7 @@ public class StateSystem : MonoBehaviour {
         gameState = GameState.Menu;
         menuState = MenuState.Hidden;
         waveState = WaveState.WaitingNextWave;
+        tutorialState = TutorialState.Intro1;
 	}
 
     // Timescale
@@ -130,9 +131,10 @@ public class StateSystem : MonoBehaviour {
 
     public void StartGameWave()
     {
+        // Order v important dont change
+        hud.ShowNextWaveBtn();
         gameState = GameState.Wave;
         waveState = WaveState.WaitingNextWave;
-        hud.ShowNextWaveBtn();
     }
 
     // Menu State
@@ -209,9 +211,14 @@ public class StateSystem : MonoBehaviour {
         this.tutorialState = newTutorialState;
     }
 
-    public bool IsIntro()
+    public bool IsIntro1()
     {
-        return tutorialState == TutorialState.Intro;
+        return tutorialState == TutorialState.Intro1;
+    }
+
+    public bool IsIntro2()
+    {
+        return tutorialState == TutorialState.Intro2;
     }
 
     public bool IsWalk()
@@ -229,13 +236,23 @@ public class StateSystem : MonoBehaviour {
         return tutorialState == TutorialState.Attack;
     }
 
-    public bool IsDash()
-    {
-        return tutorialState == TutorialState.Dash;
-    }
-
     public bool IsDone()
     {
         return tutorialState == TutorialState.Done;
+    }
+
+    public bool IsDash1()
+    {
+        return tutorialState == TutorialState.Dash1;
+    }
+
+    public bool IsDash2()
+    {
+        return tutorialState == TutorialState.Dash2;
+    }
+
+    public bool IsDash3()
+    {
+        return tutorialState == TutorialState.Dash3;
     }
 }

@@ -17,8 +17,8 @@ public class PlayerActionSystem : MonoBehaviour
     private Vector2 slideLeftV, slideRightV; // 25% of moveLeftV and moveRightV
 
     // Abilities and Attacks
-    private bool isSlideEnabled = true;
-    private bool isSpecialAttackEnabled = true;
+    private volatile bool isSlideEnabled = false;
+    private volatile bool isSpecialAttackEnabled = true;
 
     /*** Abilities ***/
     // Slide //

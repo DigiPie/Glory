@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public CustomCamController camController;
     public ObjectiveHealth objHealth;
     public PlayerHealthSystem plyHealth;
+    public PlayerActionSystem plyActionSys;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
     public GameObject boomEffect, enemy1, enemy2, enemy3, enemy4, player1, objective;
@@ -254,5 +255,10 @@ public class GameManager : MonoBehaviour {
     public string GetNextWaveInfo()
     {
         return waveSystem.GetNextWaveInfo();
+    }
+
+    public void EnableSlide()
+    {
+        plyActionSys.EnableSlide();
     }
 }

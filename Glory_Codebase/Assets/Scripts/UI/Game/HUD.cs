@@ -8,6 +8,7 @@ public class HUD : MonoBehaviour {
 
     public GameManager gameManager;
     public StateSystem stateSystem;
+    public WaveSystem waveSystem;
     public PlayerHealthSystem playerHealthSystem;
     public ObjectiveHealth objectiveHealth;
     public GameObject popUpHUD;
@@ -19,7 +20,7 @@ public class HUD : MonoBehaviour {
     public Slider objHealthSlider;                              // Reference to the UI's health bar.
     public Slider healthSlider;                              // Reference to the UI's health bar.
 
-
+    public int dashWave, spell1Wave, spell2Wave;                // Wave for tutorial to reappear
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
     public Color flashColour2 = new Color(1f, 0f, 0f, 0.5f);    // PlayerDamageImage
@@ -58,7 +59,7 @@ public class HUD : MonoBehaviour {
             }
 
 
-            inputNext = Input.GetButton("Submit");
+            inputNext = Input.GetButtonDown("Submit");
 
             if (inputNext)
             {
@@ -70,9 +71,21 @@ public class HUD : MonoBehaviour {
 
     public void ShowNextWaveBtn()
     {
-        allowInputNext = true;
-        popUpHUD.SetActive(true);
-        txtNextWave.text = gameManager.GetNextWaveInfo();
+        // Handle states of game here
+        if (((waveSystem.GetDisplayWave() == dashWave) ||
+            (waveSystem.GetDisplayWave() == spell1Wave) ||
+            (waveSystem.GetDisplayWave() == spell2Wave)
+           ) && (stateSystem.GetGameState() != StateSystem.GameState.Tutorial))
+        {
+            stateSystem.SetGameState(StateSystem.GameState.Tutorial);
+        }
+
+        else
+        {
+            allowInputNext = true;
+            popUpHUD.SetActive(true);
+            txtNextWave.text = gameManager.GetNextWaveInfo();
+        }
     }
 
     public void OnClickNextWaveBtn()
