@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour {
     public Animator animator;
     public SpriteRenderer sprite;
-
     protected PlayerController playerController;
+    private PlayerBuff playerBuff;
 
     public bool spriteFacingLeft = false; // Initial facing of sprite, affects facingLeft boolean
     private bool facingLeft = false;
@@ -24,6 +24,15 @@ public class PlayerAnimator : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         animator.SetBool("Jumping", !playerController.GetOnGround());
+
+        if (playerBuff != null)
+        {
+            if (IsSliding())
+                playerBuff.SetToPosition(
+                    new Vector3(transform.position.x, transform.position.y - 0.65f));
+            else
+                playerBuff.SetToPosition(transform.position);
+        }
     }
 
     public void FaceForward()
@@ -127,5 +136,11 @@ public class PlayerAnimator : MonoBehaviour {
     public bool IsCastFrame()
     {
         return (IsCastAnim() && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > castFrame);
+    }
+
+    public void AddPlayerBuff(PlayerBuff playerBuff)
+    {
+        Destroy(this.playerBuff);
+        this.playerBuff = playerBuff;
     }
 }

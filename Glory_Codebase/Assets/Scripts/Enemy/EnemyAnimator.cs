@@ -22,7 +22,7 @@ public class EnemyAnimator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // Update animation
-        if (enemyController.IsIdle())
+        if (enemyController.IsIdle() || enemyController.IsStunned())
         {
             animator.SetBool("Running", false);
         }

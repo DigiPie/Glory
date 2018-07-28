@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     private bool onGround = false;
 
     // Input
-    private bool inputJump, inputSlide, inputAttack, inputSpecialAttk, inputSpecialAbility;
+    private bool inputJump, inputSlide, inputAttack, inputSpell1, inputSpell2;
     private float inputH;
 
     // Movement
@@ -88,8 +88,8 @@ public class PlayerController : MonoBehaviour {
         inputJump = Input.GetButton("Jump");
         inputSlide = Input.GetButton("Slide");
         inputAttack = Input.GetButton("Attack");
-        inputSpecialAttk = Input.GetButton("SpecialAttack");
-        inputSpecialAbility = Input.GetButton("SpecialAbility");
+        inputSpell1 = Input.GetButton("Spell1");
+        inputSpell2 = Input.GetButton("Spell2");
 
         Move();
 
@@ -125,12 +125,13 @@ public class PlayerController : MonoBehaviour {
 
         if (collider.gameObject.layer == 13)
         {
+            Destroy(collider.gameObject, 0.1f);
+
             if (actionSystem.IsInvul())
             {
                 return;
             }
 
-            Destroy(collider.gameObject, 0.1f);
             gameManager.DamagePlayer(collider.GetComponent<EnemyWeapon>().damage);
             againstEnemyAttack = true;
         }
@@ -296,9 +297,13 @@ public class PlayerController : MonoBehaviour {
             {
                 actionSystem.NormalAttack();
             }
-            else if (inputSpecialAttk)
+            else if (inputSpell1)
             {
-                actionSystem.SpecialAttack();
+                actionSystem.Spell1();
+            }
+            else if (inputSpell2)
+            {
+                actionSystem.Spell2();
             }
         }
     }

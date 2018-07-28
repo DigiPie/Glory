@@ -16,7 +16,7 @@ public abstract class EnemyController : MonoBehaviour {
     public GameObject enemyWeapon;
     
     // Forces to be applied on character
-    protected Vector2 bounceHurtLeftV, bounceHurtRightV;
+    protected Vector2 bounceHurtLeftV, bounceHurtRightV, bounceStunLeftV, bounceStunRightV;
     protected Vector2 moveLeftV, moveRightV;
 
     // States
@@ -45,6 +45,9 @@ public abstract class EnemyController : MonoBehaviour {
     protected float attackCooldown; // Minimum wait-time before next attack can be triggered
     protected float attackReadyTime = 0; // The time at which attack1Ready will be set to true again
 
+    // Being attacked
+    protected string lastCollider;
+
     // Stunned
     private float stunDuration; // How long is the character stunned when damaged by any attacks
     protected float stunEndTime = 0; // The time at which stunned is set to false again
@@ -71,6 +74,8 @@ public abstract class EnemyController : MonoBehaviour {
         moveRightV = Vector2.right * moveForce;
         bounceHurtLeftV = new Vector2(0.5f, 0.6f) * throwbackForce;
         bounceHurtRightV = new Vector2(-0.5f, 0.6f) * throwbackForce;
+        bounceStunLeftV = new Vector2(1.2f, 1.2f) * throwbackForce;
+        bounceStunRightV = new Vector2(-1.2f, 1.2f) * throwbackForce;
     }
 
     // Used by the gameManager to set up this enemy.
@@ -139,6 +144,13 @@ public abstract class EnemyController : MonoBehaviour {
 
     protected void OnTriggerEnter2D(Collider2D collider)
     {
+        if (lastCollider == collider.tag)
+        {
+            return;
+        }
+
+        lastCollider = collider.tag;
+
         if (enemyState == EnemyState.Dead)
         {
             return;
@@ -152,21 +164,35 @@ public abstract class EnemyController : MonoBehaviour {
             PlayerWeapon wep = collider.GetComponent<PlayerWeapon>();
             stunDuration = wep.GetStunDuration();
 
-            // Unable to move while stunned
-            AImoveH = 0;
-            enemyState = EnemyState.Stunned;
-            stunEndTime = Time.timeSinceLevelLoad + stunDuration;
-
             // Throwback effect
-            if (collisionOnRight)
+            if (stunDuration > 0)
             {
-                rb2d.velocity = bounceHurtRightV;
+                // Unable to move while stunned
+                AImoveH = 0;
+                enemyState = EnemyState.Stunned;
+                stunEndTime = Time.timeSinceLevelLoad + stunDuration;
+
+                if (collisionOnRight)
+                {
+                    rb2d.velocity = bounceStunRightV;
+                }
+                else
+                {
+                    rb2d.velocity = bounceStunLeftV;
+                }
             }
             else
             {
-                rb2d.velocity = bounceHurtLeftV;
+                if (collisionOnRight)
+                {
+                    rb2d.velocity = bounceHurtRightV;
+                }
+                else
+                {
+                    rb2d.velocity = bounceHurtLeftV;
+                }
             }
-
+            
             enemyAnimator.PlayHurt();
 
             // Health deduction
@@ -178,7 +204,7 @@ public abstract class EnemyController : MonoBehaviour {
             // Weapon effect
             PlayerWeaponWithEffect wepEffect = collider.GetComponent<PlayerWeaponWithEffect>();
             
-            if (wepEffect != null)
+            if (wepEffect != null && wepEffect.effect != null)
             {
                 SpawnEffect(wepEffect.effect, wepEffect.overtimeDamage, wepEffect.damageInterval, wepEffect.duration);
 
@@ -319,6 +345,11 @@ public abstract class EnemyController : MonoBehaviour {
     public bool IsIdle()
     {
         return enemyState == EnemyState.Idle;
+    }
+
+    public bool IsStunned()
+    {
+        return enemyState == EnemyState.Stunned;
     }
 
     public bool IsRunning()
