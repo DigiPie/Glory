@@ -57,7 +57,10 @@ public abstract class EnemyController : MonoBehaviour {
     private bool isSlowed = false;
     private float maxSpeedWhenSlowed;
     private float slowEndTime;
-    
+
+    // Dead body
+    public bool hasDeadBody = false;
+
     // Use this for initialization
     void Start()
     {
@@ -87,12 +90,10 @@ public abstract class EnemyController : MonoBehaviour {
     // Update is called in-step with the physics engine
     void FixedUpdate()
     {
-        Debug.Log(enemyState);
-
         if (enemyState == EnemyState.Dead)
         {
             // If death animation over
-            if (enemyAnimator.IsAnimationOver())
+            if (enemyAnimator.IsAnimationOver() && !hasDeadBody)
             {
                 // Destroy
                 Destroy(gameObject);
@@ -367,5 +368,10 @@ public abstract class EnemyController : MonoBehaviour {
     public bool IsDead()
     {
         return enemyState == EnemyState.Dead;
+    }
+
+    public void StartFadeout()
+    {
+        enemyAnimator.StartDestroy();
     }
 }

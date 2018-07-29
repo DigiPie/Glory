@@ -100,7 +100,7 @@ MonoBehaviour:
   damage: 24
   stunDuration: 0
   lifespan: 1
-  speed: 0.02
+  speed: 0.2
   damageCounterColour: {r: 1, g: 0, b: 0, a: 0}
   damageCounterSize: 6
   initialOffset: {x: 0.7, y: 0}

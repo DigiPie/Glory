@@ -14,13 +14,47 @@ public class EnemyAnimator : MonoBehaviour {
 
     public float attackFrame = 0f; // The attack animation frame at which a melee projectile is spawned
 
+    private bool isFadingIn = true;
+    private bool isFadingOut = false;
+    private float opacity = 0f;
+    private float fadeInSpeed = 6.0f;
+    private float fadeOutSpeed = 3.0f;
+
     // Use this for initialization
     void Start () {
         enemyController = GetComponent<EnemyController>();
-	}
+        sprite.color = new Color(1.0f, 1.0f, 1.0f, 0f);
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+        if (isFadingOut)
+        {
+            if (opacity > 0.1f)
+            {
+                opacity -= fadeOutSpeed * Time.fixedDeltaTime;
+                sprite.color = new Color(1.0f, 1.0f, 1.0f, opacity);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+        else if (isFadingIn)
+        {
+            if (opacity < 1.0f)
+            {
+                opacity += fadeInSpeed * Time.fixedDeltaTime;
+            }
+            else
+            {
+                opacity = 1.0f;
+                isFadingIn = false;
+            }
+
+            sprite.color = new Color(1.0f, 1.0f, 1.0f, opacity);
+        }
+
         // Update animation
         if (enemyController.IsIdle() || enemyController.IsStunned())
         {
@@ -31,6 +65,19 @@ public class EnemyAnimator : MonoBehaviour {
             FaceForward();
             animator.SetBool("Running", true);
         }
+    }
+
+    public void StartDestroy()
+    {
+        if (sprite == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        opacity = 1.0f;
+
+        isFadingOut = true;
     }
 
     public void PlayAttack()

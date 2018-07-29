@@ -321,6 +321,7 @@ MonoBehaviour:
   targetsPlayer: 1
   minAttackRange: 1
   maxAttackRange: 1.2
+  hasDeadBody: 1
 --- !u!212 &212006454098327678
 SpriteRenderer:
   m_ObjectHideFlags: 1
