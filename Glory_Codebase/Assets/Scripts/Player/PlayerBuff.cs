@@ -17,4 +17,9 @@ public class PlayerBuff : MonoBehaviour {
     {
         this.transform.position = position;
     }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

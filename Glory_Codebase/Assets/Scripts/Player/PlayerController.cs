@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     // Movement
     public float moveForce = 50f; // Since F = ma and m = 1, therefore a = F
     public float maxSpeed = 5f; // Maximum horziontal velocity
+    private float preBuffMaxSpeed;
     private float maxSpeedInAir;
     private float maxSpeedWhileAttk;
     public float throwbackForce = 200f; // When hit by enemy
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour {
         whileAttkMoveForce = moveForce * 0.4f;
         slowdownForce = moveForce;
 
+        preBuffMaxSpeed = maxSpeed;
         maxSpeedInAir = maxSpeed * 0.7f;
         maxSpeedWhileAttk = maxSpeed * 0.5f;
 
@@ -321,5 +323,15 @@ public class PlayerController : MonoBehaviour {
     public bool GetOnGround()
     {
         return onGround;
+    }
+
+    public void ResetMaxSpeed()
+    {
+        maxSpeed = preBuffMaxSpeed;
+    }
+
+    public void ApplySpeedBuff(float speedMultiplier)
+    {
+        maxSpeed = preBuffMaxSpeed * speedMultiplier;
     }
 }

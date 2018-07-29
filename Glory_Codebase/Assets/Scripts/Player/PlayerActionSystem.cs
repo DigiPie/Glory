@@ -29,7 +29,6 @@ public class PlayerActionSystem : MonoBehaviour
     // Attack speed //
     private bool isFaster = false;
     private float fasterEndTime;
-    private float preBuffMaxSpeed;
 
     /*** Actions ***/
     // Slide //
@@ -106,7 +105,7 @@ public class PlayerActionSystem : MonoBehaviour
         {
             if (Time.timeSinceLevelLoad > fasterEndTime)
             {
-                playerController.maxSpeed = preBuffMaxSpeed;
+                playerController.ResetMaxSpeed();
                 isFaster = false;
             }
         }
@@ -368,8 +367,7 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 isFaster = true;
                 fasterEndTime = Time.timeSinceLevelLoad + tempBuff.fasterSpeedDuration;
-                preBuffMaxSpeed = playerController.maxSpeed;
-                playerController.maxSpeed *= tempBuff.speedMultiplier;
+                playerController.ApplySpeedBuff(tempBuff.speedMultiplier);
 
                 // When the player animator animates slide, it will call the SetToSlideOffset() in PlayerBuffs cript
                 playerAnimator.AddPlayerBuff(tempBuff);
