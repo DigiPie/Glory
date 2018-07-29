@@ -38,13 +38,13 @@ public class Effect : MonoBehaviour {
 
     private void StartDestroy()
     {
-        opacity = 1.0f;
-
         if (rend == null)
         {
             Destroy(gameObject);
             return;
         }
+
+        opacity = 1.0f;
 
         isFadingOut = true;
     }
