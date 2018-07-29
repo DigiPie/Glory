@@ -17779,7 +17779,7 @@ MonoBehaviour:
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,
     type: 2}
-  spell1: {fileID: 1988457460587332, guid: 385865e91e9a4a64d8b0bf85e4500798, type: 2}
+  spell1: {fileID: 1899686611195332, guid: 2d73a700a8b380e4ca700f85b5d746fb, type: 2}
   spell2: {fileID: 1489714385191492, guid: 66839bde87102ec4ebfd627fc305b06f, type: 2}
   slideCooldown: 1.5
   slideInvulDuration: 1

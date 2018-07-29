@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 18
+  stunDuration: 0
   lifespan: 1.2
   speed: 0.15
   damageCounterColour: {r: 0.024414062, g: 0, b: 1, a: 0}
@@ -106,7 +107,7 @@ MonoBehaviour:
   effect: {fileID: 1419533532849190, guid: 8df728e2c59d97b4ea18c8bf2fe48969, type: 2}
   overtimeDamage: 9
   damageInterval: 2
-  duration: 4.1
+  duration: 4
   slowMultiplier: 0.25
 --- !u!212 &212771525357013506
 SpriteRenderer:

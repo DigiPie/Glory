@@ -5,7 +5,7 @@ using TMPro;
 using TMPro.Examples;
 
 public class PlayerWeapon : MonoBehaviour {
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer rend;
     private TextMeshProFloatingText floatingText_Script;
     private Vector2 dirV; // Direction of melee projectile
     public float damage = 10;
@@ -18,8 +18,19 @@ public class PlayerWeapon : MonoBehaviour {
     public Vector2 initialOffset;
     private static int uniqueID = 0;
 
+    private bool isFadingIn = true;
+    private bool isFadingOut = false;
+    private float opacity = 0f;
+    private float fadeInSpeed = 5.0f;
+    private float fadeOutSpeed = 3.0f;
+
     private void Awake()
     {
+        rend = GetComponent<SpriteRenderer>();
+        rend.color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+        Invoke("StartDestroy", lifespan);
+
         name = "Projectile_" + uniqueID;
         uniqueID++;
 
@@ -31,16 +42,14 @@ public class PlayerWeapon : MonoBehaviour {
 
     public void Setup(Vector2 dir)
     {
-        Destroy(gameObject, lifespan);
         dirV = speed * dir;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
+        
         if (dir.x < 0)
         {
             transform.Translate(-initialOffset.x, initialOffset.y, 0);
 
-            if (spriteRenderer != null)
-                spriteRenderer.flipX = !spriteRenderer.flipX;
+            if (rend != null)
+                rend.flipX = !rend.flipX;
         }
         else
         {
@@ -62,7 +71,48 @@ public class PlayerWeapon : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (isFadingOut)
+        {
+            if (opacity > 0.1f)
+            {
+                opacity -= fadeOutSpeed * Time.fixedDeltaTime;
+                rend.color = new Color(1.0f, 1.0f, 1.0f, opacity);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+        else if (isFadingIn)
+        {
+            if (opacity < 1.0f)
+            {
+                opacity += fadeInSpeed * Time.fixedDeltaTime;
+            }
+            else
+            {
+                opacity = 1.0f;
+                isFadingIn = false;
+            }
+
+            rend.color = new Color(1.0f, 1.0f, 1.0f, opacity);
+        }
+
         transform.Translate(dirV.x, dirV.y, 0);
+    }
+
+    private void StartDestroy()
+    {
+        opacity = 1.0f;
+
+        if (rend == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        isFadingOut = true;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     public void SpawnDamageCounter(Vector3 pos)

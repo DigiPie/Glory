@@ -5,6 +5,7 @@ using TMPro;
 using TMPro.Examples;
 
 public class Effect : MonoBehaviour {
+    private SpriteRenderer rend;
     private TextMeshProFloatingText floatingText_Script;
     private EnemyHealthSystem enemyHealthSystem;
     private float lifespan;
@@ -15,20 +16,71 @@ public class Effect : MonoBehaviour {
     public float damageCounterSize = 3;
     private float blinkDuration = 0.5f; // Blink duration on enemy
 
+    private bool isFadingIn = true;
+    private bool isFadingOut = false;
+    private float opacity = 0f;
+    private float fadeInSpeed = 5.0f;
+    private float fadeOutSpeed = 3.0f;
+
     public void Setup(EnemyHealthSystem enemyHealthSystem, float damage, float damageInterval, float damageDuration)
     {
+        rend = GetComponent<SpriteRenderer>();
+
         this.enemyHealthSystem = enemyHealthSystem;
         this.damage = damage;
         this.damageInterval = damageInterval;
 
         lifespan = damageDuration;
-        Destroy(gameObject, lifespan);
+        Invoke("StartDestroy", lifespan);
 
         damageReadyTime = Time.timeSinceLevelLoad + this.damageInterval;
     }
 
+    private void StartDestroy()
+    {
+        opacity = 1.0f;
+
+        if (rend == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        isFadingOut = true;
+    }
+
     private void FixedUpdate()
     {
+        if (isFadingOut)
+        {
+            if (opacity > 0.1f)
+            {
+                opacity -= fadeOutSpeed * Time.fixedDeltaTime;
+                rend.color = new Color(1.0f, 1.0f, 1.0f, opacity);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            return;
+        }
+
+        if (isFadingIn)
+        {
+            if (opacity < 1.0f)
+            {
+                opacity += fadeInSpeed * Time.fixedDeltaTime;
+            }
+            else
+            {
+                opacity = 1.0f;
+                isFadingIn = false;
+            }
+
+            rend.color = new Color(1.0f, 1.0f, 1.0f, opacity);
+        }
+
         if (Time.timeSinceLevelLoad > damageReadyTime)
         {
             enemyHealthSystem.DeductHealth(damage, blinkDuration);
