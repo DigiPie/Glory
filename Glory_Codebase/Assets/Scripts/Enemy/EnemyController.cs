@@ -87,6 +87,8 @@ public abstract class EnemyController : MonoBehaviour {
     // Update is called in-step with the physics engine
     void FixedUpdate()
     {
+        Debug.Log(enemyState);
+
         if (enemyState == EnemyState.Dead)
         {
             // If death animation over
@@ -144,8 +146,6 @@ public abstract class EnemyController : MonoBehaviour {
 
     protected void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.name);
-
         if (lastCollider == collider.name)
         {
             return;

@@ -13,13 +13,8 @@ public class EnemyController3 : EnemyController
         distToPlayerX = gameManager.GetPlayerPositionX() - transform.position.x;
         absDistToPlayerX = Mathf.Abs(distToPlayerX);
 
-        // If attacking player
-        if (enemyState == EnemyState.AttackingPlayer)
-        {
-            // Do nothing
-        }
         // If within attack range of player
-        else if (absDistToPlayerX < attackRange)
+        if (absDistToPlayerX < attackRange)
         {
             // Attack player
             // If ready

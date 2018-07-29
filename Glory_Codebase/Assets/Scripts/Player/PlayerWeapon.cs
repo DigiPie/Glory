@@ -20,8 +20,13 @@ public class PlayerWeapon : MonoBehaviour {
 
     private void Awake()
     {
-        name = name + uniqueID;
+        name = "Projectile_" + uniqueID;
         uniqueID++;
+
+        if (uniqueID > 100)
+        {
+            uniqueID = 0;
+        }
     }
 
     public void Setup(Vector2 dir)
