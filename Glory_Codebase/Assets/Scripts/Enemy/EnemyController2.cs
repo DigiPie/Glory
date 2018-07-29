@@ -19,12 +19,7 @@ public class EnemyController2 : EnemyController
         absDistToPlayerX = Mathf.Abs(distToPlayerX);
 
         // If attacking player or objective
-        if (enemyState == EnemyState.AttackingPlayer || enemyState == EnemyState.AttackingObjective)
-        {
-            // Do nothing
-        }
-        // If within attack range of player
-        else if (absDistToPlayerX < attackRange)
+        if (absDistToPlayerX < attackRange)
         {
             // Attack player
             // If ready
