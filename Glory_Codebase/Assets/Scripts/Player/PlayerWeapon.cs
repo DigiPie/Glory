@@ -16,6 +16,13 @@ public class PlayerWeapon : MonoBehaviour {
     public Color damageCounterColour; // Damage counter colour
     public float damageCounterSize = 3;
     public Vector2 initialOffset;
+    private static int uniqueID = 0;
+
+    private void Awake()
+    {
+        name = name + uniqueID;
+        uniqueID++;
+    }
 
     public void Setup(Vector2 dir)
     {

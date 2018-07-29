@@ -144,12 +144,14 @@ public abstract class EnemyController : MonoBehaviour {
 
     protected void OnTriggerEnter2D(Collider2D collider)
     {
-        if (lastCollider == collider.tag)
+        Debug.Log(collider.name);
+
+        if (lastCollider == collider.name)
         {
             return;
         }
 
-        lastCollider = collider.tag;
+        lastCollider = collider.name;
 
         if (enemyState == EnemyState.Dead)
         {
