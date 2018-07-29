@@ -79,8 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 24
-  lifespan: 0.2
-  speed: 0.05
+  stunDuration: 0
+  lifespan: 0.12
+  speed: 0.1
   damageCounterColour: {r: 1, g: 0.49019608, b: 0, a: 0}
   damageCounterSize: 5
   initialOffset: {x: 0, y: 0}
