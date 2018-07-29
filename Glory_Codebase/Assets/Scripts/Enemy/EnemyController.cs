@@ -16,7 +16,8 @@ public abstract class EnemyController : MonoBehaviour {
     public GameObject enemyWeapon;
     
     // Forces to be applied on character
-    protected Vector2 bounceHurtLeftV, bounceHurtRightV, bounceStunLeftV, bounceStunRightV;
+    protected Vector2 bounceHurtLeftV, bounceHurtRightV, bounceStunLeftV, bounceStunRightV, 
+        bounceDeadLeftV, bounceDeadRightV;
     protected Vector2 moveLeftV, moveRightV;
 
     // States
@@ -79,6 +80,8 @@ public abstract class EnemyController : MonoBehaviour {
         bounceHurtRightV = new Vector2(-0.5f, 0.6f) * throwbackForce;
         bounceStunLeftV = new Vector2(1.2f, 1.2f) * throwbackForce;
         bounceStunRightV = new Vector2(-1.2f, 1.2f) * throwbackForce;
+        bounceDeadLeftV = new Vector2(0.4f, 0.2f) * throwbackForce;
+        bounceDeadRightV = new Vector2(-0.4f, 0.2f) * throwbackForce;
     }
 
     // Used by the gameManager to set up this enemy.
@@ -154,12 +157,21 @@ public abstract class EnemyController : MonoBehaviour {
 
         lastCollider = collider.name;
 
+        collisionOnRight = collider.transform.position.x > transform.position.x;
+
         if (enemyState == EnemyState.Dead)
         {
+            if (collisionOnRight)
+            {
+                rb2d.velocity = bounceDeadRightV;
+            }
+            else
+            {
+                rb2d.velocity = bounceDeadLeftV;
+            }
+
             return;
         }
-
-        collisionOnRight = collider.transform.position.x > transform.position.x;
 
         // If colliding with projectile
         if (collider.gameObject.layer == 11)

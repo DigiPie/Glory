@@ -215,7 +215,6 @@ public class GameManager : MonoBehaviour {
     {
         if (stateSystem.IsGameWave())
         {
-            Debug.Log("clear");
             // Clear all dead bodies
             foreach (GameObject enemy in deadBodies)
             {
