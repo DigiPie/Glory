@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
     private int maxBodyCount = 2;
     private bool hasDeadEnemy;
     private bool spawnOnLeft = false;
+    private EnemyHealthSystem bossHealth;
 
     // Set to true after win/lose and game over screen is displayed.
     private bool isGameOver = false;
@@ -182,6 +183,18 @@ public class GameManager : MonoBehaviour {
 
         enemy.GetComponent<EnemyController>().Setup(this);
         enemy.GetComponent<EnemyAnimator>().SetSortingOrder(spawnSortOrder);
+
+        if (enemy.GetComponent<EnemyHealthSystem>().IsBoss())
+        {
+            bossHealth = enemy.GetComponent<EnemyHealthSystem>();
+            bossHealth.Setup(hud);
+            hud.ShowBossHealth(bossHealth.GetMaxHealth());
+        }
+        else
+        {
+            enemy.GetComponent<EnemyHealthSystem>().Setup();
+        }
+
         spawnSortOrder++;
         enemies.Add(enemy);
     }

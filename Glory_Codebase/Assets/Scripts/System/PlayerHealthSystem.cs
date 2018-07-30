@@ -55,6 +55,10 @@ public class PlayerHealthSystem : MonoBehaviour
             if (absDiffHealth < diffDeadzone)
             {
                 displayHealth = currentHealth;
+
+                if (displayHealth < 10)
+                    displayHealth = 10;
+
                 isDiff = false;
                 return;
             }

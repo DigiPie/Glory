@@ -84,8 +84,8 @@ public class WaveSystem : MonoBehaviour {
 
         // Test Wave
         CreateNewWave();
-        AddEnemy(4, 0, 0f);
-        //AddEnemy(0, 0, 1f);
+        AddEnemy(0, 0, 0f);
+        AddEnemy(4, 0, 3f);
         //AddEnemy(0, 0, 1f);
         //AddEnemy(0, 0, 1f);
         waves.Add(GetNewWave());
