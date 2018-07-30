@@ -140,7 +140,9 @@ public class PlayerAnimator : MonoBehaviour {
 
     public void AddPlayerBuff(PlayerBuff playerBuff)
     {
-        Destroy(this.playerBuff);
+        if (this.playerBuff != null)
+            this.playerBuff.Destroy();
+
         this.playerBuff = playerBuff;
     }
 }

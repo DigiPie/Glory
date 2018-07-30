@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     public PlayerActionSystem plyActionSys;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
-    public GameObject boomEffect, enemy1, enemy2, enemy3, enemy4, player1, objective;
+    public GameObject enemy1, enemy2, enemy3, enemy4, player1, objective;
 
     // Spawning and pathing
     public bool isWaveCleared = true;
@@ -26,8 +26,11 @@ public class GameManager : MonoBehaviour {
     private int waveKilled;
     private int waveCount;
     private bool getNewSpawn;
-
+    private readonly int defaultSpawnSortOrder = 20;
+    private int spawnSortOrder = 20;
     private List<GameObject> enemies;
+    private List<GameObject> deadBodies;
+    private int maxBodyCount = 2;
     private bool hasDeadEnemy;
     private bool spawnOnLeft = false;
 
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         enemies = new List<GameObject>();
+        deadBodies = new List<GameObject>();
     }
 
     // Update is called every frame
@@ -104,6 +108,10 @@ public class GameManager : MonoBehaviour {
                 plyHealth.resetFullHealth();
                 //player1.GetComponent<PlayerController>().AllowAttack(false);
                 stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
+
+                // Reset monster spawn sort order
+                spawnSortOrder = defaultSpawnSortOrder;
+
                 hud.ShowNextWaveBtn();
             }
         }
@@ -163,7 +171,8 @@ public class GameManager : MonoBehaviour {
         }
 
         enemy.GetComponent<EnemyController>().Setup(this);
-        enemy.GetComponent<EnemyAnimator>().SetSortingOrder(20 + enemies.Count);
+        enemy.GetComponent<EnemyAnimator>().SetSortingOrder(spawnSortOrder);
+        spawnSortOrder++;
         enemies.Add(enemy);
     }
 
@@ -180,8 +189,19 @@ public class GameManager : MonoBehaviour {
                 if (enemy == null || enemy.GetComponent<EnemyController>().IsDead())
                 {
                     camController.Shake(0.15f, 0.1f);
-                    //Instantiate(boomEffect, enemy.transform.position, enemy.transform.rotation);
                     enemies.Remove(enemy);
+
+                    deadBodies.Add(enemy);
+
+                    if (deadBodies.Count > maxBodyCount)
+                    {
+                        GameObject tempObj = deadBodies[0];
+                        deadBodies.RemoveAt(0);
+
+                        if (tempObj != null)
+                            tempObj.GetComponent<EnemyController>().StartFadeout();
+                    }
+
                     hasDeadEnemy = true;
                     waveKilled++;
                     return;
@@ -195,6 +215,17 @@ public class GameManager : MonoBehaviour {
     {
         if (stateSystem.IsGameWave())
         {
+            // Clear all dead bodies
+            foreach (GameObject enemy in deadBodies)
+            {
+                if (enemy != null)
+                {
+                    enemy.GetComponent<EnemyController>().StartFadeout();
+                }
+            }
+
+            deadBodies.Clear();
+
             stateSystem.SetWaveState(StateSystem.WaveState.WaitingWaveSpawn);
             waveSystem.SetNextWave();
             waveCount = waveSystem.GetWaveCount();

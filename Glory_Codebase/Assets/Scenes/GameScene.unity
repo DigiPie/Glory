@@ -2686,7 +2686,7 @@ GameObject:
   m_Component:
   - component: {fileID: 378491264}
   - component: {fileID: 378491262}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2727,7 +2727,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: 8a26d60fb45014bcd9bb392106f7c98b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8965,7 +8965,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.16183333, y: 0.16310385}
   m_AnchorMax: {x: 0.8383959, y: 0.3937013}
-  m_AnchoredPosition: {x: 0.000061035156, y: -40.087097}
+  m_AnchoredPosition: {x: 0.000061035156, y: -40.08722}
   m_SizeDelta: {x: 0, y: -154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189415328
@@ -17622,8 +17622,8 @@ MonoBehaviour:
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,
     type: 2}
-  spell1: {fileID: 1988457460587332, guid: 385865e91e9a4a64d8b0bf85e4500798, type: 2}
-  spell2: {fileID: 1489714385191492, guid: 66839bde87102ec4ebfd627fc305b06f, type: 2}
+  spell1: {fileID: 1185742128011796, guid: e764a1ab552b13a44ab5d824003c436f, type: 2}
+  spell2: {fileID: 1988457460587332, guid: 385865e91e9a4a64d8b0bf85e4500798, type: 2}
   slideCooldown: 1.5
   slideInvulDuration: 1
   consecAttkCooldown: 0.3

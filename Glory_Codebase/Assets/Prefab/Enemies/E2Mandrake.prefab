@@ -321,6 +321,7 @@ MonoBehaviour:
   targetsPlayer: 1
   minAttackRange: 0.9
   maxAttackRange: 1.1
+  hasDeadBody: 1
   chasePlayerRange: 3
 --- !u!212 &212046936305450668
 SpriteRenderer:
