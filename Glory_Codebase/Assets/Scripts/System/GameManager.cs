@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
     public HUD hud;
     public Overlay overlay;
     public CustomCamController camController;
-    public GameObject enemy1, enemy2, enemy3, enemy4, player1, objective;
+    public GameObject enemy1, enemy2, enemy3, enemy4, boss1, player1, objective;
     private ObjectiveHealthSystem objectiveHealth;
     private PlayerHealthSystem playerHealth;
     private StateSystem stateSystem;
@@ -165,6 +165,10 @@ public class GameManager : MonoBehaviour {
         else if (spawn.enemyType == 3)
         {
             enemy = enemy4;
+        }
+        else if (spawn.enemyType == 4)
+        {
+            enemy = boss1;
         }
 
         if (spawn.pathChoice == 0)

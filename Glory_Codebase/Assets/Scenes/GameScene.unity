@@ -5056,6 +5056,7 @@ MonoBehaviour:
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   enemy3: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
   enemy4: {fileID: 1201288676098374, guid: 782b2558f875e854789534c012a448a5, type: 2}
+  boss1: {fileID: 1827377921368840, guid: 2eebcc02133e055488c5bd1f425b34bd, type: 2}
   player1: {fileID: 1701403904}
   objective: {fileID: 378491261}
   spawn1: {fileID: 1204222015}
@@ -9445,7 +9446,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 1000
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
