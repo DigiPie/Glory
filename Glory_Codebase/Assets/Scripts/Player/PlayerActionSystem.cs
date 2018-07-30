@@ -63,13 +63,16 @@ public class PlayerActionSystem : MonoBehaviour
     private float spell2ReadyTime;
     private bool isSpell2 = false;
 
+    private bool isFireSpell = false;
+    private bool isEarthSpell = false;
+
     // Use this for initialization
     void Start()
     {
         isSlideEnabled = true;
         isSpell1Enabled = true;
         isSpell2Enabled = true;
-        spell1 = fireSpell;
+        spell1 = iceSpell;
         spell2 = airSpell;
 
         playerAnimator = GetComponent<PlayerAnimator>();
@@ -209,6 +212,8 @@ public class PlayerActionSystem : MonoBehaviour
             spell1 = fireSpell;
         else
             spell1 = iceSpell;
+
+        this.isFireSpell = isFireSpell;
     }
 
     public void EnableSpell2(bool isEarthSpell)
@@ -219,6 +224,8 @@ public class PlayerActionSystem : MonoBehaviour
             spell2 = earthSpell;
         else
             spell2 = airSpell;
+
+        this.isEarthSpell = isEarthSpell;
     }
 
     /*** Attacks ***/
@@ -304,16 +311,6 @@ public class PlayerActionSystem : MonoBehaviour
         // Animate with special attack
         playerAnimator.PlayCast();
 
-        // Play Sound
-        if (isSpell1)
-        {
-            audioManager.PlaySound("FireSpellSFX");
-        }
-        else
-        {
-            audioManager.PlaySound("IceSpellSFX");
-        }
-
         spell1ReadyTime = Time.timeSinceLevelLoad + spell1Cooldown;
     }
 
@@ -334,16 +331,6 @@ public class PlayerActionSystem : MonoBehaviour
 
         // Animate with special attack
         playerAnimator.PlayCast();
-
-        // PlaySound
-        if (isSpell2)
-        {
-            audioManager.PlaySound("EarthSpellSFX");
-        }
-        else
-        {
-            audioManager.PlaySound("AirSpellSFX");
-        }
 
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }
@@ -425,10 +412,30 @@ public class PlayerActionSystem : MonoBehaviour
     void StartSpell1(bool isFacingLeft)
     {
         StartSpell(spell1, isFacingLeft);
+
+        // Play Sound
+        if (isFireSpell)
+        {
+            audioManager.PlaySound("FireSpellSFX");
+        }
+        else
+        {
+            audioManager.PlaySound("IceSpellSFX");
+        }
     }
 
     void StartSpell2(bool isFacingLeft)
     {
         StartSpell(spell2, isFacingLeft);
+
+        // PlaySound
+        if (isEarthSpell)
+        {
+            audioManager.PlaySound("EarthSpellSFX");
+        }
+        else
+        {
+            audioManager.PlaySound("AirSpellSFX");
+        }
     }
 }
