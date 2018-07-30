@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour {
     // Use this for initialization
     void Awake () {
 
-        if (instance == null)
+        /*if (instance == null)
         {
             instance = this;
         }
@@ -25,9 +25,9 @@ public class AudioManager : MonoBehaviour {
         {
             Destroy(gameObject);
             return;
-        }
+        }*/
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 		foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent <AudioSource>();

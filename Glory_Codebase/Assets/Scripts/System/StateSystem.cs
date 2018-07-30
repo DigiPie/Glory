@@ -37,13 +37,13 @@ public class StateSystem : MonoBehaviour {
 
     // Use this for initialization
     public void Start () {
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
         tutorialEnabled = true;
         gameState = GameState.Menu;
         menuState = MenuState.Hidden;
         waveState = WaveState.WaitingNextWave;
         tutorialState = TutorialState.Intro1;
-	}
+    }
 
     // Timescale
     public void Pause()
@@ -119,6 +119,7 @@ public class StateSystem : MonoBehaviour {
     
     public void EnterGame()
     {
+        Unpause();
         HudUI.SetActive(true);
         if (tutorialEnabled)
         {

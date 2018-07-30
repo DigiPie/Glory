@@ -7,7 +7,9 @@ public class PlayerActionSystem : MonoBehaviour
     // References //
     private Rigidbody2D rb2d;
     public CustomCamController camController;
-    public GameObject normalAttack, criticalAttack, spell1, spell2;
+    public GameObject normalAttack, criticalAttack;
+    public GameObject fireSpell, iceSpell, earthSpell, airSpell;
+    private GameObject spell1, spell2;
     private PlayerController playerController;
     private PlayerAnimator playerAnimator;
     public AudioManager audioManager;
@@ -19,9 +21,9 @@ public class PlayerActionSystem : MonoBehaviour
     private Vector2 slideLeftV, slideRightV; // 25% of moveLeftV and moveRightV
 
     // Abilities and Attacks
-    private bool isSlideEnabled = true;
-    private bool isSpell1Enabled = true;
-    private bool isSpell2Enabled = true;
+    private bool isSlideEnabled = false;
+    private bool isSpell1Enabled = false;
+    private bool isSpell2Enabled = false;
 
     // Invulnerability //
     private bool isInvul = false; // Currently only slide triggers invulnerability
@@ -193,9 +195,24 @@ public class PlayerActionSystem : MonoBehaviour
         isSlideEnabled = true;
     }
 
-    public void DisableSlide()
+    public void EnableSpell1(bool isFireSpell)
     {
-        isSlideEnabled = true;
+        isSpell1Enabled = true;
+
+        if (isFireSpell)
+            spell1 = fireSpell;
+        else
+            spell1 = iceSpell;
+    }
+
+    public void EnableSpell2(bool isEarthSpell)
+    {
+        isSpell2Enabled = true;
+
+        if (isEarthSpell)
+            spell2 = earthSpell;
+        else
+            spell2 = airSpell;
     }
 
     /*** Attacks ***/
