@@ -10,6 +10,7 @@ public class EnemyWeapon : MonoBehaviour {
     public float damage = 10;
     public float lifespan = 0.5f; // Lifespan of melee projectile
     public float speed = 0.1f; // Speed of melee projectile
+    public Vector2 initialOffset;
 
     private bool isFadingIn = true;
     private bool isFadingOut = false;
@@ -26,8 +27,18 @@ public class EnemyWeapon : MonoBehaviour {
         dirV = speed * dir;
 
         rend = GetComponent<SpriteRenderer>();
-        if (rend != null && dir.x < 0)
-            rend.flipX = !rend.flipX;
+
+        if (dir.x < 0)
+        {
+            transform.Translate(-initialOffset.x, initialOffset.y, 0);
+
+            if (rend != null)
+                rend.flipX = !rend.flipX;
+        }
+        else
+        {
+            transform.Translate(initialOffset.x, initialOffset.y, 0);
+        }
     }
 
     public void StartDestroy()

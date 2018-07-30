@@ -149,6 +149,13 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    GameObject InstantiateGameObject(GameObject gameObject, Transform newTransform)
+    {
+        Vector3 pos = newTransform.position;
+        Quaternion rotation = newTransform.rotation;
+        return Instantiate(gameObject, pos, rotation);
+    }
+
     // Spawn an enemy using the spawn system
     void Spawn()
     {
@@ -174,11 +181,11 @@ public class GameManager : MonoBehaviour {
 
         if (spawn.pathChoice == 0)
         {
-            enemy = Instantiate(enemy, spawn1);
+            enemy = InstantiateGameObject(enemy, spawn1);
         }
         else
         {
-            enemy = Instantiate(enemy, spawn2);
+            enemy = InstantiateGameObject(enemy, spawn2);
         }
 
         enemy.GetComponent<EnemyController>().Setup(this);

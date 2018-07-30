@@ -208,7 +208,8 @@ public abstract class EnemyController : MonoBehaviour {
                 }
             }
             
-            enemyAnimator.PlayHurt();
+            if (!healthSystem.isBoss)
+                enemyAnimator.PlayHurt();
 
             // Health deduction
             healthSystem.DeductHealth(wep.GetDamage(), wep.GetBlinkDuration());
@@ -311,10 +312,17 @@ public abstract class EnemyController : MonoBehaviour {
         enemyAnimator.FaceTarget(distToTargetX);
     }
 
+    GameObject InstantiateGameObject(GameObject gameObject)
+    {
+        Vector3 pos = transform.position;
+        Quaternion rotation = transform.rotation;
+        return Instantiate(gameObject, pos, rotation);
+    }
+
     protected void SpawnAttackProjectile()
     {
         // Create a melee projectile
-        GameObject projectile = Instantiate(enemyWeapon, this.transform);
+        GameObject projectile = InstantiateGameObject(enemyWeapon);
 
         // Assign weapon direction
         if (enemyAnimator.IsFacingLeft())
