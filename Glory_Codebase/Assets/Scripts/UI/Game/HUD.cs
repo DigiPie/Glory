@@ -34,11 +34,10 @@ public class HUD : MonoBehaviour {
     }
     // Update is called in-step with the physics engine
     void FixedUpdate() {
+        txtInfo.text = gameManager.GetInfo();
+
         if (stateSystem.IsGameWave())
         {
-            // Hot Fix
-            txtInfo.text = gameManager.GetInfo() + 1;
-
             if (isPlayerRedFlash)
             {
                 playerRedFlash.color = Color.Lerp(playerRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);

@@ -218,7 +218,7 @@ MonoBehaviour:
   outlineRend: {fileID: 0}
   frontRend: {fileID: 0}
   backRend: {fileID: 0}
-  health: 300
+  health: 400
   isBoss: 1
 --- !u!114 &114732406927410688
 MonoBehaviour:

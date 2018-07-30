@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private int spawnSortOrder = 20;
     private List<GameObject> enemies;
     private List<GameObject> deadBodies;
-    private int maxBodyCount = 2;
+    private int maxBodyCount = 10;
     private bool hasDeadEnemy;
     private bool spawnOnLeft = false;
     private EnemyHealthSystem bossHealth;
@@ -219,7 +219,7 @@ public class GameManager : MonoBehaviour
             {
                 if (enemy == null || enemy.GetComponent<EnemyController>().IsDead())
                 {
-                    camController.Shake(0.15f, 0.1f);
+                    //camController.Shake(0.05f, 0.05f);
                     enemies.Remove(enemy);
 
                     deadBodies.Add(enemy);
@@ -280,7 +280,7 @@ public class GameManager : MonoBehaviour
     // Used by spawned enemies to damage the player
     public void DamagePlayer(int damage)
     {
-        camController.Shake(0.1f, 0.15f);
+        //camController.Shake(0.1f, 0.15f);
         hud.UpdatePlayerHealth(playerHealth.TakeDamage(damage));
     }
 

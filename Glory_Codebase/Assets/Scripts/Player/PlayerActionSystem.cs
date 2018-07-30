@@ -69,12 +69,6 @@ public class PlayerActionSystem : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        isSlideEnabled = true;
-        isSpell1Enabled = true;
-        isSpell2Enabled = true;
-        spell1 = iceSpell;
-        spell2 = airSpell;
-
         playerAnimator = GetComponent<PlayerAnimator>();
         playerController = GetComponent<PlayerController>();
         rb2d = GetComponent<Rigidbody2D>();

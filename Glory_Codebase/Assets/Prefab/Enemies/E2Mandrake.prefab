@@ -300,7 +300,8 @@ MonoBehaviour:
   outlineRend: {fileID: 212939577931393956}
   frontRend: {fileID: 212689859091266968}
   backRend: {fileID: 212046936305450668}
-  health: 60
+  health: 70
+  isBoss: 0
 --- !u!114 &114496522365020728
 MonoBehaviour:
   m_ObjectHideFlags: 1

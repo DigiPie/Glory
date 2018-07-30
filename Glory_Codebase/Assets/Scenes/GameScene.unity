@@ -746,7 +746,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -200
   m_Sprite: {fileID: 21300000, guid: 8e160a2a620644cd6afef9119dad1093, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1720,7 +1720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &268144717
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2394,7 +2394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -15}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &333180217
@@ -2430,8 +2430,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'You are Yi-Shun, the last remaining swordsman of our great city. Only you
-    can save us from the undead army of Ma Ti. I am Kay Po, a magical floating piece
-    of paper who will assist you.
+    can save us from the undead army of Ma Ti. I am Kay Po, a helpful magical piece
+    of paper.
 
 
     Press the buttons or ENTER and BACKSPACE to navigate me.'
@@ -7554,7 +7554,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 897010360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25, y: 1, z: 0}
+  m_LocalPosition: {x: 22, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 647856006}
@@ -9604,7 +9604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.16183333, y: 0.16310385}
   m_AnchorMax: {x: 0.8383959, y: 0.3937013}
-  m_AnchoredPosition: {x: 0.000061035156, y: -40.087402}
+  m_AnchoredPosition: {x: 0.000061035156, y: -40.087585}
   m_SizeDelta: {x: 0, y: -154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189415328
@@ -9735,7 +9735,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1204222014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10, y: 1, z: 0}
+  m_LocalPosition: {x: -22, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 647856006}
@@ -13492,11 +13492,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'That''s all for now. Remember, you are our last line of defence from the
-    monsters of Ma Ti.
+  m_Text: 'That''s all for now. One final note: Monsters will come from the left and
+    right so stick close to the gate house.
 
 
-    One final note: Press ENTER or the Next Wave Button to start each wave. Good luck!'
+    Oh ya, do press ENTER or the Next Wave Button to start each wave. Good luck!'
 --- !u!222 &1287050632
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13801,9 +13801,9 @@ MonoBehaviour:
   objHealthSlider: {fileID: 1701422120}
   healthSlider: {fileID: 1360661161}
   bossSlider: {fileID: 1472156687}
-  dashWave: 2
-  spell1Wave: 3
-  spell2Wave: 4
+  dashWave: 3
+  spell1Wave: 6
+  spell2Wave: 9
   flashSpeed: 5
 --- !u!1 &1311095389
 GameObject:
@@ -15084,7 +15084,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press K or right-mouse click to CAST.
+  m_Text: 'Press K or right-mouse click to CAST.
+
+    You can only cast every 10 seconds.'
 --- !u!222 &1386402391
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15549,7 +15551,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press L or middle-mouse click to CAST.
+  m_Text: 'Press L or middle-mouse click to CAST.
+
+    You can only cast every 10 seconds.'
 --- !u!222 &1429469259
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16012,7 +16016,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -50
   m_Sprite: {fileID: 21300000, guid: f7187675ec12e4aacaeb0e97ad31230a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -16661,7 +16665,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Our undeground city is only accessible by the gate house. You must ensure
-    that the door does not get destroyed while remaining alive
+    that the door does not get destroyed while remaining alive.
 
 
     The yellow bar above indicates the door''s structural integrity. The green bar
@@ -17079,7 +17083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1551670491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18490,8 +18494,8 @@ MonoBehaviour:
   slideInvulDuration: 1
   consecAttkCooldown: 0.3
   newAttkCooldown: 0.6
-  spell1Cooldown: 1
-  spell2Cooldown: 1
+  spell1Cooldown: 10
+  spell2Cooldown: 10
 --- !u!114 &1701403912
 MonoBehaviour:
   m_ObjectHideFlags: 0
