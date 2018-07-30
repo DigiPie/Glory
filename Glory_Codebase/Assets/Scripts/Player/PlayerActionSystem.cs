@@ -10,6 +10,7 @@ public class PlayerActionSystem : MonoBehaviour
     public GameObject normalAttack, criticalAttack, spell1, spell2;
     private PlayerController playerController;
     private PlayerAnimator playerAnimator;
+    public AudioManager audioManager;
 
     // Forces
     private readonly Vector2 leftDir = new Vector2(-1, 0);
@@ -222,6 +223,7 @@ public class PlayerActionSystem : MonoBehaviour
 
                 // Animate
                 playerAnimator.PlayAttackCriticalStrike();
+                audioManager.PlaySound("Sword3SFX");
 
                 // Combo count reset
                 comboCount = 0;
@@ -235,6 +237,7 @@ public class PlayerActionSystem : MonoBehaviour
 
                 // Animate either attack 1 or 2 randomly
                 playerAnimator.PlayAttack();
+                audioManager.PlaySound("Sword2SFX");
 
                 // Short cooldown to next attack since combo is ongoing.
                 attkReadyTime = Time.timeSinceLevelLoad + consecAttkCooldown;
@@ -253,6 +256,7 @@ public class PlayerActionSystem : MonoBehaviour
 
             // Randomly select between attack 1 and attack 2 animation
             playerAnimator.PlayAttack();
+            audioManager.PlaySound("Sword1SFX");
 
             // Short cooldown to next attack since combo is ongoing.
             attkReadyTime = Time.timeSinceLevelLoad + consecAttkCooldown;

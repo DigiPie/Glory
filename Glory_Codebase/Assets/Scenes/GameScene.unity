@@ -2225,6 +2225,78 @@ MonoBehaviour:
     spatialBlend: 0
     loop: 0
     source: {fileID: 0}
+  - name: FireSpellSFX
+    clip: {fileID: 8300000, guid: 3e744dd90bd11c0459847a8af633204e, type: 3}
+    outputAudioMixerGroup: {fileID: 243704657514770606, guid: 524c11ba8f057a14db0fd80c7ca1c09d,
+      type: 2}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: IceSpellSFX
+    clip: {fileID: 8300000, guid: 622dc388cab8ffb469df82f0c7e54a60, type: 3}
+    outputAudioMixerGroup: {fileID: 243704657514770606, guid: 524c11ba8f057a14db0fd80c7ca1c09d,
+      type: 2}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Sword1SFX
+    clip: {fileID: 8300000, guid: a9a084834c488d847a2fe2e192b87970, type: 3}
+    outputAudioMixerGroup: {fileID: 243704657514770606, guid: 524c11ba8f057a14db0fd80c7ca1c09d,
+      type: 2}
+    volume: 0.7
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Sword2SFX
+    clip: {fileID: 8300000, guid: a9a084834c488d847a2fe2e192b87970, type: 3}
+    outputAudioMixerGroup: {fileID: 243704657514770606, guid: 524c11ba8f057a14db0fd80c7ca1c09d,
+      type: 2}
+    volume: 0.75
+    pitch: 0.9
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Sword3SFX
+    clip: {fileID: 8300000, guid: a9a084834c488d847a2fe2e192b87970, type: 3}
+    outputAudioMixerGroup: {fileID: 243704657514770606, guid: 524c11ba8f057a14db0fd80c7ca1c09d,
+      type: 2}
+    volume: 0.85
+    pitch: 0.7
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: MenuBGM
+    clip: {fileID: 8300000, guid: f468928fe1f63fc4a811656600fcac6d, type: 3}
+    outputAudioMixerGroup: {fileID: 24300002, guid: c8384cf242ee2f74ba428edce1367675,
+      type: 2}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: MenuBGM
+    clip: {fileID: 8300000, guid: f468928fe1f63fc4a811656600fcac6d, type: 3}
+    outputAudioMixerGroup: {fileID: 24300002, guid: c8384cf242ee2f74ba428edce1367675,
+      type: 2}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: MenuBGM
+    clip: {fileID: 8300000, guid: f468928fe1f63fc4a811656600fcac6d, type: 3}
+    outputAudioMixerGroup: {fileID: 24300002, guid: c8384cf242ee2f74ba428edce1367675,
+      type: 2}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 1
+    source: {fileID: 0}
   - name: MenuBGM
     clip: {fileID: 8300000, guid: f468928fe1f63fc4a811656600fcac6d, type: 3}
     outputAudioMixerGroup: {fileID: 24300002, guid: c8384cf242ee2f74ba428edce1367675,
@@ -3195,8 +3267,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.7038506}
   m_AnchorMax: {x: 0.848146, y: 0.7814481}
-  m_AnchoredPosition: {x: 71.25, y: -0.54992676}
-  m_SizeDelta: {x: -142.5, y: -1.1}
+  m_AnchoredPosition: {x: -23.4, y: -0.5500488}
+  m_SizeDelta: {x: -251.3, y: -1.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &415095683
 MonoBehaviour:
@@ -3581,8 +3653,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.7038506}
   m_AnchorMax: {x: 0.848146, y: 0.7814481}
-  m_AnchoredPosition: {x: 71.24994, y: -145}
-  m_SizeDelta: {x: -142.5, y: -1.1}
+  m_AnchoredPosition: {x: 5.100006, y: -145}
+  m_SizeDelta: {x: -194.3, y: -1.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &457214506
 MonoBehaviour:
@@ -4815,8 +4887,8 @@ RectTransform:
   m_Father: {fileID: 1741472886}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -15.599976, y: -0.000030517578}
   m_SizeDelta: {x: 128.9, y: 12.5}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4985,7 +5057,6 @@ MonoBehaviour:
   plyActionSys: {fileID: 1701403911}
   stateSystem: {fileID: 647856011}
   waveSystem: {fileID: 647856008}
-  boomEffect: {fileID: 1580309508211972, guid: 63bac3298792c154c88fd6c61b80441c, type: 2}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   enemy3: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
@@ -9280,7 +9351,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0.00018310547, y: 0}
   m_SizeDelta: {x: 0.00030518, y: -9.15}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15752,10 +15823,10 @@ RectTransform:
   m_Father: {fileID: 1663310069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.92952085, y: 0.7814481}
-  m_AnchorMax: {x: 0.99252087, y: 0.8767469}
-  m_AnchoredPosition: {x: -5, y: -6}
-  m_SizeDelta: {x: -9.800049, y: -15.599976}
+  m_AnchorMin: {x: 0.78900003, y: 0.7223864}
+  m_AnchorMax: {x: 0.8383959, y: 0.79342043}
+  m_AnchoredPosition: {x: -6.700012, y: -0.000030517578}
+  m_SizeDelta: {x: -9.099998, y: -1.0000076}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1492167877
 MonoBehaviour:
@@ -17624,6 +17695,7 @@ MonoBehaviour:
     type: 2}
   spell1: {fileID: 1185742128011796, guid: e764a1ab552b13a44ab5d824003c436f, type: 2}
   spell2: {fileID: 1988457460587332, guid: 385865e91e9a4a64d8b0bf85e4500798, type: 2}
+  audioManager: {fileID: 337224283}
   slideCooldown: 1.5
   slideInvulDuration: 1
   consecAttkCooldown: 0.3
@@ -18013,8 +18085,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.7038506}
   m_AnchorMax: {x: 0.848146, y: 0.7814481}
-  m_AnchoredPosition: {x: 71.25, y: -285.26}
-  m_SizeDelta: {x: -142.5, y: -1.0999908}
+  m_AnchoredPosition: {x: -68.9, y: -282}
+  m_SizeDelta: {x: -342.2, y: -1.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1745760385
 MonoBehaviour:
