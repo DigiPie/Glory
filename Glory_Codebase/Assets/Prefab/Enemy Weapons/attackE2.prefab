@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 2
-  damage: 12
+  damage: 10
   lifespan: 0.1
   speed: 0.1
 --- !u!212 &212202889397029226

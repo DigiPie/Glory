@@ -291,8 +291,9 @@ MonoBehaviour:
   maxSpeed: 1.2
   throwbackForce: 2
   targetsPlayer: 1
-  minAttackRange: 3
-  maxAttackRange: 4
+  minAttackRange: 4
+  maxAttackRange: 5
+  hasDeadBody: 0
 --- !u!114 &114536968078075136
 MonoBehaviour:
   m_ObjectHideFlags: 1

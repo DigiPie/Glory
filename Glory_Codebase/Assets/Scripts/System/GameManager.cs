@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public HUD hud;
     public Overlay overlay;
     public CustomCamController camController;
-    public GameObject enemy1, enemy2, enemy3, enemy4, player1, objective;
+    public GameObject enemy1, enemy2, enemy3, enemy4, boss1, player1, objective;
     private ObjectiveHealthSystem objectiveHealth;
     private PlayerHealthSystem playerHealth;
     private StateSystem stateSystem;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private int maxBodyCount = 2;
     private bool hasDeadEnemy;
     private bool spawnOnLeft = false;
+    private EnemyHealthSystem bossHealth;
 
     // Set to true after win/lose and game over screen is displayed.
     private bool isGameOver = false;
@@ -149,6 +150,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    GameObject InstantiateGameObject(GameObject gameObject, Transform newTransform)
+    {
+        Vector3 pos = newTransform.position;
+        Quaternion rotation = newTransform.rotation;
+        return Instantiate(gameObject, pos, rotation);
+    }
+
     // Spawn an enemy using the spawn system
     void Spawn()
     {
@@ -167,18 +175,34 @@ public class GameManager : MonoBehaviour
         {
             enemy = enemy4;
         }
+        else if (spawn.enemyType == 4)
+        {
+            enemy = boss1;
+        }
 
         if (spawn.pathChoice == 0)
         {
-            enemy = Instantiate(enemy, spawn1);
+            enemy = InstantiateGameObject(enemy, spawn1);
         }
         else
         {
-            enemy = Instantiate(enemy, spawn2);
+            enemy = InstantiateGameObject(enemy, spawn2);
         }
 
         enemy.GetComponent<EnemyController>().Setup(this);
         enemy.GetComponent<EnemyAnimator>().SetSortingOrder(spawnSortOrder);
+
+        if (enemy.GetComponent<EnemyHealthSystem>().IsBoss())
+        {
+            bossHealth = enemy.GetComponent<EnemyHealthSystem>();
+            bossHealth.Setup(hud);
+            hud.ShowBossHealth(bossHealth.GetMaxHealth());
+        }
+        else
+        {
+            enemy.GetComponent<EnemyHealthSystem>().Setup();
+        }
+
         spawnSortOrder++;
         enemies.Add(enemy);
     }

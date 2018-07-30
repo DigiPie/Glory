@@ -4,40 +4,61 @@ using UnityEngine;
 
 public class EnemyHealthSystem : MonoBehaviour {
     protected BlinkSystem blinkSystem; // Handles blinking effect
+    private HUD hud;
     public SpriteRenderer outlineRend, frontRend, backRend;
-
     public float health = 100;
+    public bool isBoss = false;
     private float currentHealth = 1;
 
     // Use this for initialization
     void Start () {
         blinkSystem = GetComponent<BlinkSystem>();
         currentHealth = health;
+    }
 
+    public void Setup()
+    {
         // Hide it at first, only show when not at full health
         outlineRend.enabled = false;
         frontRend.enabled = false;
         backRend.enabled = false;
     }
 
+    public void Setup(HUD hud)
+    {
+        this.hud = hud;
+    }
+
     public void DeductHealth(float damage)
     {
         currentHealth -= damage;
 
-        if (currentHealth <= 0)
+        if (isBoss)
         {
-            outlineRend.enabled = false;
-            frontRend.enabled = false;
-            backRend.enabled = false;
+            hud.UpdateBossHealth(currentHealth);
+
+            if (currentHealth <= 0)
+            {
+                hud.HideBossHealth();
+            }
         }
         else
         {
-            SetHealthBarScale((currentHealth + 1) / health);
+            if (currentHealth <= 0)
+            {
+                outlineRend.enabled = false;
+                frontRend.enabled = false;
+                backRend.enabled = false;
+            }
+            else
+            {
+                SetHealthBarScale((currentHealth + 1) / health);
 
-            // If invisible, show
-            outlineRend.enabled = true;
-            frontRend.enabled = true;
-            backRend.enabled = true;
+                // If invisible, show
+                outlineRend.enabled = true;
+                frontRend.enabled = true;
+                backRend.enabled = true;
+            }
         }
     }
 
@@ -49,11 +70,29 @@ public class EnemyHealthSystem : MonoBehaviour {
 
     private void SetHealthBarScale(float scale)
     {
+        if (isBoss)
+            return;
+
         frontRend.transform.localScale = new Vector3(scale, 1, 1);
     }
 
     public bool IsDead()
     {
         return currentHealth < 1;
+    }
+
+    public bool IsBoss()
+    {
+        return isBoss;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return (int)currentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return (int)health;
     }
 }

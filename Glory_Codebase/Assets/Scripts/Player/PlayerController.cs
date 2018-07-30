@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour {
 
         if (collider.gameObject.layer == 13)
         {
-            Destroy(collider.gameObject, 0.1f);
+            collider.GetComponent<EnemyWeapon>().StartDestroy();
 
             if (actionSystem.IsInvul())
             {

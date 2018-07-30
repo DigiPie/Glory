@@ -12,13 +12,16 @@ public class HUD : MonoBehaviour {
     public GameObject popUpHUD;
     public Image objectiveRedFlash;                                   // Reference to an image to flash on the screen on being hurt.
     public Image playerRedFlash;
+    public Image bossRedFlash;
     private bool isObjectiveRedFlash = false;
     private bool isPlayerRedFlash = false;
+    private bool isBossRedFlash = false;
 
     public TextMeshProUGUI txtInfo;
     public TextMeshProUGUI txtNextWave;
     public Slider objHealthSlider;                              // Reference to the UI's health bar.
     public Slider healthSlider;                              // Reference to the UI's health bar.
+    public Slider bossSlider;                              // Reference to the UI's health bar.
 
     public int dashWave, spell1Wave, spell2Wave;                // Wave for tutorial to reappear
     public float flashSpeed = 2.0f;                               // The speed the objectiveRedFlash will fade at.
@@ -57,6 +60,17 @@ public class HUD : MonoBehaviour {
                 }
             }
 
+            if (isBossRedFlash)
+            {
+                bossRedFlash.color = Color.Lerp(bossRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
+
+                if (bossRedFlash.color.a < 0.1f)
+                {
+                    bossRedFlash.color = Color.clear;
+                    isBossRedFlash = false;
+                }
+            }
+
             inputNext = Input.GetButtonDown("Submit");
 
             if (inputNext)
@@ -88,6 +102,30 @@ public class HUD : MonoBehaviour {
     public void UpdateObjectiveHealth(float health)
     {
         UpdateObjectiveHealth((int)health);
+    }
+
+    public void ShowBossHealth(int maxHealth)
+    {
+        bossSlider.gameObject.active = true;
+        bossSlider.maxValue = maxHealth;
+        bossSlider.value = maxHealth;
+    }
+
+    public void HideBossHealth()
+    {
+        bossSlider.gameObject.active = false;
+    }
+
+    public void UpdateBossHealth(int health)
+    {
+        bossSlider.value = health;
+        bossRedFlash.color = Color.white;
+        isBossRedFlash = true;
+    }
+
+    public void UpdateBossHealth(float health)
+    {
+        UpdateBossHealth((int)health);
     }
 
     public void ShowNextWaveBtn()
