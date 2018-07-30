@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ObjectiveHealth : MonoBehaviour
+public class ObjectiveHealthSystem : MonoBehaviour
 {
     public int startingHealth = 200;                            // The amount of health the objective starts the game with.
     public int currentHealth;                                   // The current health the player has.
@@ -22,8 +22,6 @@ public class ObjectiveHealth : MonoBehaviour
     // Animator anim;                                              // Reference to the Animator component.
     // AudioSource playerAudio;                                    // Reference to the AudioSource component.
     public bool isDestroyed;                                       // Whether the objective is destroyed.
-    public bool damaged;                                                  // True when the objective gets damaged.
-
 
     void Awake()
     {
@@ -42,23 +40,6 @@ public class ObjectiveHealth : MonoBehaviour
 
     void FixedUpdate()
     {
-        /*
-        // If the player has just been damaged...
-        if (damaged)
-        {
-            // ... set the colour of the damageImage to the flash colour.
-            damageImage.color = flashColour;
-        }
-        // Otherwise...
-        else
-        {
-            // ... transition the colour back to clear.
-            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-        }
-        */
-        // Reset the damaged flag.
-        damaged = false;
-
         if (isDiff)
         {
             diffHealth = currentHealth - displayHealth;
@@ -103,12 +84,9 @@ public class ObjectiveHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage(int amount)
+    public int TakeDamage(int amount)
     {
         isDiff = true;
-
-        // Set the damaged flag so the screen will flash.
-        damaged = true;
 
         // Reduce the current health by the damage amount.
         currentHealth -= amount;
@@ -125,6 +103,8 @@ public class ObjectiveHealth : MonoBehaviour
             // ... it should die.
             Destroyed();
         }
+
+        return currentHealth;
     }
     
     public float getCurrentHealth()

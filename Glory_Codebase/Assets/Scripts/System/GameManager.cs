@@ -8,17 +8,16 @@ public class GameManager : MonoBehaviour {
     public HUD hud;
     public Overlay overlay;
     public CustomCamController camController;
-    public ObjectiveHealth objHealth;
-    public PlayerHealthSystem plyHealth;
-    public PlayerActionSystem plyActionSys;
-    public StateSystem stateSystem;
-    public WaveSystem waveSystem;
     public GameObject enemy1, enemy2, enemy3, enemy4, player1, objective;
+    private ObjectiveHealthSystem objectiveHealth;
+    private PlayerHealthSystem playerHealth;
+    private StateSystem stateSystem;
+    private WaveSystem waveSystem;
+    private PlayerActionSystem playerAction;
 
     // Spawning and pathing
-    public bool isWaveCleared = true;
-
     public Transform spawn1, spawn2;
+    private bool isWaveCleared = true;
     private WaveSystem.Spawn spawn;
     private bool isWaveFullySpawned = true;
     private bool startNextWave = false;
@@ -39,6 +38,13 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
+        objectiveHealth = GetComponent<ObjectiveHealthSystem>();
+        playerHealth = GetComponent<PlayerHealthSystem>();
+        stateSystem = GetComponent<StateSystem>();
+        waveSystem = GetComponent<WaveSystem>();
+
+        playerAction = player1.GetComponent<PlayerActionSystem>();
+
         enemies = new List<GameObject>();
         deadBodies = new List<GameObject>();
     }
@@ -80,7 +86,7 @@ public class GameManager : MonoBehaviour {
             isGameOver = true;
             return true;
         }
-        else if(plyHealth.isDead || objHealth.isDestroyed)
+        else if(playerHealth.isDead || objectiveHealth.isDestroyed)
         {
             stateSystem.SetGameState(StateSystem.GameState.Lose);
             overlay.ShowGameoverUI(false);
@@ -105,7 +111,7 @@ public class GameManager : MonoBehaviour {
         {
             if (enemies.Count == 0)
             {
-                plyHealth.resetFullHealth();
+                playerHealth.ResetFullHealth();
                 //player1.GetComponent<PlayerController>().AllowAttack(false);
                 stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
 
@@ -238,8 +244,7 @@ public class GameManager : MonoBehaviour {
     // Called by spawned enemies to damage the objective
     public void DamageObjective(int damage)
     {
-        //camController.Shake(0.05f, 0.15f);
-        objHealth.TakeDamage(damage);
+        hud.UpdateObjectiveHealth(objectiveHealth.TakeDamage(damage));
     }
 
     public void DamageObjective(float damage)
@@ -250,8 +255,8 @@ public class GameManager : MonoBehaviour {
     // Used by spawned enemies to damage the player
     public void DamagePlayer(int damage)
     {
-        camController.Shake(0.1f, 0.2f);
-        plyHealth.TakeDamage(damage);
+        camController.Shake(0.1f, 0.15f);
+        hud.UpdatePlayerHealth(playerHealth.TakeDamage(damage));
     }
 
     public void DamagePlayer(float damage)
@@ -290,6 +295,6 @@ public class GameManager : MonoBehaviour {
 
     public void EnableSlide()
     {
-        plyActionSys.EnableSlide();
+        playerAction.EnableSlide();
     }
 }

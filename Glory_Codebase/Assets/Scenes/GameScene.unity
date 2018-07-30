@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 68635688}
   - component: {fileID: 68635687}
   m_Layer: 5
-  m_Name: objDamageImage
+  m_Name: objectiveRedFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -717,13 +717,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1303328453}
-  m_RootOrder: 0
+  m_Father: {fileID: 1701422119}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 200, y: -30}
+  m_SizeDelta: {x: -400, y: -60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &68635687
 MonoBehaviour:
@@ -738,13 +738,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: affc5d30df29f934b9f18ccf1e14a1c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5322,19 +5322,12 @@ MonoBehaviour:
   hud: {fileID: 1303328454}
   overlay: {fileID: 1596415190}
   camController: {fileID: 519420030}
-  objHealth: {fileID: 647856010}
-  plyHealth: {fileID: 647856009}
-  plyActionSys: {fileID: 1701403911}
-  stateSystem: {fileID: 647856011}
-  waveSystem: {fileID: 647856008}
-  boomEffect: {fileID: 1580309508211972, guid: 63bac3298792c154c88fd6c61b80441c, type: 2}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   enemy3: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
   enemy4: {fileID: 1201288676098374, guid: 782b2558f875e854789534c012a448a5, type: 2}
   player1: {fileID: 1701403904}
   objective: {fileID: 378491261}
-  isWaveCleared: 1
   spawn1: {fileID: 1204222015}
   spawn2: {fileID: 897010361}
 --- !u!114 &647856008
@@ -5363,7 +5356,6 @@ MonoBehaviour:
   currentHealth: 100
   deathClip: {fileID: 0}
   isDead: 0
-  damaged: 0
 --- !u!114 &647856010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5378,7 +5370,6 @@ MonoBehaviour:
   startingHealth: 200
   currentHealth: 200
   isDestroyed: 0
-  damaged: 0
 --- !u!114 &647856011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8545,7 +8536,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1701422119}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9198,7 +9189,7 @@ GameObject:
   - component: {fileID: 1189251131}
   - component: {fileID: 1189251130}
   m_Layer: 5
-  m_Name: playerDamageImage
+  m_Name: playerRedFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9215,12 +9206,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1360661160}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 23.25, y: 18.07}
-  m_SizeDelta: {x: -106.5, y: -53.86}
+  m_AnchoredPosition: {x: 30, y: 20}
+  m_SizeDelta: {x: -80, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189251130
 MonoBehaviour:
@@ -13519,7 +13510,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 68635686}
   - {fileID: 2039385222}
   - {fileID: 1360661160}
   - {fileID: 1701422119}
@@ -13546,11 +13536,9 @@ MonoBehaviour:
   gameManager: {fileID: 647856007}
   stateSystem: {fileID: 647856011}
   waveSystem: {fileID: 647856008}
-  playerHealthSystem: {fileID: 647856009}
-  objectiveHealth: {fileID: 647856010}
   popUpHUD: {fileID: 2039385221}
-  damageImage: {fileID: 68635687}
-  playerDamageImage: {fileID: 1189251130}
+  objectiveRedFlash: {fileID: 68635687}
+  playerRedFlash: {fileID: 1189251130}
   txtInfo: {fileID: 652482222}
   txtNextWave: {fileID: 489998824}
   objHealthSlider: {fileID: 1701422120}
@@ -13559,8 +13547,7 @@ MonoBehaviour:
   spell1Wave: 7
   spell2Wave: 12
   flashSpeed: 5
-  flashColour: {r: 1, g: 0, b: 0, a: 0.1}
-  flashColour2: {r: 1, g: 0, b: 0, a: 0.5}
+  flashColour: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1311095389
 GameObject:
   m_ObjectHideFlags: 0
@@ -14508,10 +14495,10 @@ RectTransform:
   m_Children:
   - {fileID: 2070044015}
   - {fileID: 1543446918}
-  - {fileID: 1867646221}
   - {fileID: 1189251129}
+  - {fileID: 1867646221}
   m_Father: {fileID: 1303328453}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16565,7 +16552,7 @@ RectTransform:
   m_Children:
   - {fileID: 652482221}
   m_Father: {fileID: 1303328453}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -17833,9 +17820,10 @@ RectTransform:
   m_Children:
   - {fileID: 319425332}
   - {fileID: 956759875}
+  - {fileID: 68635686}
   - {fileID: 1002273619}
   m_Father: {fileID: 1303328453}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -19364,7 +19352,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1360661160}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -20127,7 +20115,7 @@ RectTransform:
   m_Children:
   - {fileID: 697821862}
   m_Father: {fileID: 1303328453}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
