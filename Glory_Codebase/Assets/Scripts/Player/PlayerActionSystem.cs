@@ -304,6 +304,16 @@ public class PlayerActionSystem : MonoBehaviour
         // Animate with special attack
         playerAnimator.PlayCast();
 
+        // Play Sound
+        if (isSpell1)
+        {
+            audioManager.PlaySound("FireSpellSFX");
+        }
+        else
+        {
+            audioManager.PlaySound("IceSpellSFX");
+        }
+
         spell1ReadyTime = Time.timeSinceLevelLoad + spell1Cooldown;
     }
 
@@ -324,6 +334,16 @@ public class PlayerActionSystem : MonoBehaviour
 
         // Animate with special attack
         playerAnimator.PlayCast();
+
+        // PlaySound
+        if (isSpell2)
+        {
+            audioManager.PlaySound("EarthSpellSFX");
+        }
+        else
+        {
+            audioManager.PlaySound("AirSpellSFX");
+        }
 
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }

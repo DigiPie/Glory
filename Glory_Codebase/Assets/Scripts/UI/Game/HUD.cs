@@ -36,7 +36,8 @@ public class HUD : MonoBehaviour {
     void FixedUpdate() {
         if (stateSystem.IsGameWave())
         {
-            txtInfo.text = gameManager.GetInfo();
+            // Hot Fix
+            txtInfo.text = gameManager.GetInfo() + 1;
 
             if (isPlayerRedFlash)
             {
