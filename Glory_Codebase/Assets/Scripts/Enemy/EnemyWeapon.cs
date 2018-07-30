@@ -30,8 +30,10 @@ public class EnemyWeapon : MonoBehaviour {
             rend.flipX = !rend.flipX;
     }
 
-    private void StartDestroy()
+    public void StartDestroy()
     {
+        GetComponent<Collider2D>().enabled = false;
+
         if (rend == null)
         {
             Destroy(gameObject);
