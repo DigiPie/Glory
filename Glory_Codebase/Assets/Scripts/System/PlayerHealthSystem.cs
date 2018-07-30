@@ -28,8 +28,6 @@ public class PlayerHealthSystem : MonoBehaviour
     //PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
     PlayerController playerController;
     public bool isDead;                                                // Whether the player is dead.
-    public bool damaged;                                               // True when the player gets damaged.
-
 
     void Awake()
     {
@@ -49,9 +47,6 @@ public class PlayerHealthSystem : MonoBehaviour
 
     void FixedUpdate()
     { 
-        // Reset the damaged flag.
-        damaged = false;
-
         if (isDiff)
         {
             diffHealth = currentHealth - displayHealth;
@@ -76,11 +71,10 @@ public class PlayerHealthSystem : MonoBehaviour
     }
 
     // Important to be public as it is called by other functions.
-    public void TakeDamage(int amount)
+    public int TakeDamage(int amount)
     {
         isDiff = true;
         // Set the damaged flag so the screen will flash.
-        damaged = true;
 
         // Reduce the current health by the damage amount.
         currentHealth -= amount;
@@ -97,6 +91,8 @@ public class PlayerHealthSystem : MonoBehaviour
             // ... it should die.
             Death();
         }
+
+        return currentHealth;
     }
 
     // Self implemented function for future use
@@ -116,13 +112,13 @@ public class PlayerHealthSystem : MonoBehaviour
         // healthSlider.value = currentHealth;
     }
 
-    public void resetFullHealth()
+    public void ResetFullHealth()
     {
         isDiff = true;
         currentHealth = startingHealth;
     }
 
-    public float getCurrentHealth()
+    public float GetCurrentHealth()
     {
         return displayHealth;
     }

@@ -9,11 +9,11 @@ public class HUD : MonoBehaviour {
     public GameManager gameManager;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
-    public PlayerHealthSystem playerHealthSystem;
-    public ObjectiveHealth objectiveHealth;
     public GameObject popUpHUD;
-    public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
-    public Image playerDamageImage;
+    public Image objectiveRedFlash;                                   // Reference to an image to flash on the screen on being hurt.
+    public Image playerRedFlash;
+    private bool isObjectiveRedFlash = false;
+    private bool isPlayerRedFlash = false;
 
     public TextMeshProUGUI txtInfo;
     public TextMeshProUGUI txtNextWave;
@@ -21,10 +21,7 @@ public class HUD : MonoBehaviour {
     public Slider healthSlider;                              // Reference to the UI's health bar.
 
     public int dashWave, spell1Wave, spell2Wave;                // Wave for tutorial to reappear
-    public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
-    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
-    public Color flashColour2 = new Color(1f, 0f, 0f, 0.5f);    // PlayerDamageImage
-
+    public float flashSpeed = 2.0f;                               // The speed the objectiveRedFlash will fade at.
     private bool inputNext;
     private bool allowInputNext = true;
 
@@ -36,28 +33,29 @@ public class HUD : MonoBehaviour {
     void FixedUpdate() {
         if (stateSystem.IsGameWave())
         {
-            objHealthSlider.value = objectiveHealth.getCurrentHealth();
-            healthSlider.value = playerHealthSystem.getCurrentHealth();
             txtInfo.text = gameManager.GetInfo();
 
-            if (objectiveHealth.damaged)
+            if (isPlayerRedFlash)
             {
-                damageImage.color = flashColour;
-            }
-            else
-            {
-                damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+                playerRedFlash.color = Color.Lerp(playerRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
+
+                if (playerRedFlash.color.a < 0.1f)
+                {
+                    playerRedFlash.color = Color.clear;
+                    isPlayerRedFlash = false;
+                }
             }
 
-            if (playerHealthSystem.damaged)
+            if (isObjectiveRedFlash)
             {
-                playerDamageImage.color = flashColour2;
-            }
-            else
-            {
-                playerDamageImage.color = Color.Lerp(playerDamageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-            }
+                objectiveRedFlash.color = Color.Lerp(objectiveRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
 
+                if (objectiveRedFlash.color.a < 0.1f)
+                {
+                    objectiveRedFlash.color = Color.clear;
+                    isObjectiveRedFlash = false;
+                }
+            }
 
             inputNext = Input.GetButtonDown("Submit");
 
@@ -68,18 +66,40 @@ public class HUD : MonoBehaviour {
         }
     }
 
+    public void UpdatePlayerHealth(int health)
+    {
+        healthSlider.value = health;
+        playerRedFlash.color = Color.white;
+        isPlayerRedFlash = true;
+    }
+
+    public void UpdatePlayerHealth(float health)
+    {
+        UpdatePlayerHealth((int)health);
+    }
+
+    public void UpdateObjectiveHealth(int health)
+    {
+        objHealthSlider.value = health;
+        objectiveRedFlash.color = Color.white;
+        isObjectiveRedFlash = true;
+    }
+
+    public void UpdateObjectiveHealth(float health)
+    {
+        UpdateObjectiveHealth((int)health);
+    }
 
     public void ShowNextWaveBtn()
     {
         // Handle states of game here
         if (((waveSystem.GetDisplayWave() == dashWave) ||
             (waveSystem.GetDisplayWave() == spell1Wave) ||
-            (waveSystem.GetDisplayWave() == spell2Wave)
-           ) && (stateSystem.GetGameState() != StateSystem.GameState.Tutorial))
+            (waveSystem.GetDisplayWave() == spell2Wave)) && 
+            (stateSystem.GetGameState() != StateSystem.GameState.Tutorial))
         {
             stateSystem.SetGameState(StateSystem.GameState.Tutorial);
         }
-
         else
         {
             allowInputNext = true;
