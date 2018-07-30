@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     // References
     public HUD hud;
     public Overlay overlay;
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour {
         }
 
 
-        if(stateSystem.IsGameTutorial())
+        if (stateSystem.IsGameTutorial())
         {
             overlay.ShowTutorialUI();
         }
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour {
             isGameOver = true;
             return true;
         }
-        else if(playerHealth.isDead || objectiveHealth.isDestroyed)
+        else if (playerHealth.isDead || objectiveHealth.isDestroyed)
         {
             stateSystem.SetGameState(StateSystem.GameState.Lose);
             overlay.ShowGameoverUI(false);
@@ -285,7 +286,7 @@ public class GameManager : MonoBehaviour {
 
     public void DamagePlayer(float damage)
     {
-        DamagePlayer((int) damage);
+        DamagePlayer((int)damage);
     }
 
     public float GetPlayerPositionX()
@@ -320,5 +321,15 @@ public class GameManager : MonoBehaviour {
     public void EnableSlide()
     {
         playerAction.EnableSlide();
+    }
+
+    public void EnableSpell1(bool isFireSpell)
+    {
+        playerAction.EnableSpell1(isFireSpell);
+    }
+
+    public void EnableSpell2(bool isEarthSpell)
+    {
+        playerAction.EnableSpell2(isEarthSpell);
     }
 }

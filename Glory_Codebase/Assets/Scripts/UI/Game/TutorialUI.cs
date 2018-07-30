@@ -111,7 +111,6 @@ public class TutorialUI : MonoBehaviour
             DoneScene.SetActive(false);
             TutorialCanvas.SetActive(false);
             stateSystem.StartGameWave();
-            stateSystem.SetTutorialState(StateSystem.TutorialState.Dash1);
         }
 
         else if (stateSystem.IsDash1())
@@ -135,7 +134,6 @@ public class TutorialUI : MonoBehaviour
             Dash3Scene.SetActive(false);
             TutorialCanvas.SetActive(false);
             stateSystem.StartGameWave();
-            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell1);
         }
 
         else if (stateSystem.IsFirstSpell1())
@@ -157,7 +155,6 @@ public class TutorialUI : MonoBehaviour
             FirstSpell3.SetActive(false);
             TutorialCanvas.SetActive(false);
             stateSystem.StartGameWave();
-            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell3);
         }
 
         else if (stateSystem.IsSecondSpell1())
@@ -273,5 +270,17 @@ public class TutorialUI : MonoBehaviour
                 stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell2);
             }
         }
+    }
+
+    public void SelectSpell1(bool isFireSpell)
+    {
+        NextState();
+        gameManager.EnableSpell1(isFireSpell);
+    }
+
+    public void SelectSpell2(bool isEarthSpell)
+    {
+        NextState();
+        gameManager.EnableSpell2(isEarthSpell);
     }
 }
