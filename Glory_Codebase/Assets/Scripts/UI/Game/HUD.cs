@@ -92,12 +92,23 @@ public class HUD : MonoBehaviour {
 
     public void ShowNextWaveBtn()
     {
-        // Handle states of game here
-        if (((waveSystem.GetDisplayWave() == dashWave) ||
-            (waveSystem.GetDisplayWave() == spell1Wave) ||
-            (waveSystem.GetDisplayWave() == spell2Wave)) && 
-            (stateSystem.GetGameState() != StateSystem.GameState.Tutorial))
+        if (stateSystem.tutorialEnabled == true && (stateSystem.GetTutorialState() == StateSystem.TutorialState.Intro1))
         {
+            stateSystem.SetGameState(StateSystem.GameState.Tutorial);
+        }
+        else if ((waveSystem.GetDisplayWave() == dashWave) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.Dash3))
+        {
+            stateSystem.SetTutorialState(StateSystem.TutorialState.Dash1);
+            stateSystem.SetGameState(StateSystem.GameState.Tutorial);
+        }
+        else if ((waveSystem.GetDisplayWave() == spell1Wave) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.FirstSpell3))
+        {
+            stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell1);
+            stateSystem.SetGameState(StateSystem.GameState.Tutorial);
+        }
+        else if ((waveSystem.GetDisplayWave() == spell2Wave) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.SecondSpell3))
+        {
+            stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell1);
             stateSystem.SetGameState(StateSystem.GameState.Tutorial);
         }
         else
@@ -110,6 +121,7 @@ public class HUD : MonoBehaviour {
 
     public void OnClickNextWaveBtn()
     {
+        
         if (allowInputNext)
         {
             allowInputNext = false;
