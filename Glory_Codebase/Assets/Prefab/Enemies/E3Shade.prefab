@@ -54,9 +54,9 @@ GameObject:
   - component: {fileID: 50447819047954624}
   - component: {fileID: 61310499804067820}
   - component: {fileID: 114026364741133698}
+  - component: {fileID: 114758672018712480}
   - component: {fileID: 114487707666439500}
   - component: {fileID: 114536968078075136}
-  - component: {fileID: 114758672018712480}
   m_Layer: 10
   m_Name: E3Shade
   m_TagString: Enemy

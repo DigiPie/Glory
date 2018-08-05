@@ -54,9 +54,9 @@ GameObject:
   - component: {fileID: 50917694003616164}
   - component: {fileID: 61800179843745586}
   - component: {fileID: 114450177597228574}
+  - component: {fileID: 114254642842862142}
   - component: {fileID: 114652070875060596}
   - component: {fileID: 114643690287629332}
-  - component: {fileID: 114254642842862142}
   m_Layer: 10
   m_Name: E4Djinn
   m_TagString: Enemy

@@ -102,9 +102,9 @@ GameObject:
   - component: {fileID: 50321861668913476}
   - component: {fileID: 61338821252778624}
   - component: {fileID: 114544597889018228}
+  - component: {fileID: 114969878401304544}
   - component: {fileID: 114335003495568256}
   - component: {fileID: 114026440984356966}
-  - component: {fileID: 114969878401304544}
   m_Layer: 10
   m_Name: E1Rat
   m_TagString: Enemy
@@ -307,6 +307,7 @@ MonoBehaviour:
   frontRend: {fileID: 212650282654000034}
   backRend: {fileID: 212642641949238862}
   health: 40
+  isBoss: 0
 --- !u!114 &114969878401304544
 MonoBehaviour:
   m_ObjectHideFlags: 1

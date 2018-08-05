@@ -53,9 +53,9 @@ GameObject:
   - component: {fileID: 50451788028628856}
   - component: {fileID: 61575376040069460}
   - component: {fileID: 114309740578844794}
+  - component: {fileID: 114252462904257462}
   - component: {fileID: 114496522365020728}
   - component: {fileID: 114062101358030524}
-  - component: {fileID: 114252462904257462}
   m_Layer: 10
   m_Name: E2Mandrake
   m_TagString: Enemy

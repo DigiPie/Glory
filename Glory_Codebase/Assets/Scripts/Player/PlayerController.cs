@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
 
     // Forces to be applied on character
-    private Vector2 bounceWallLeftV, bounceWallRightV;
     private Vector2 bounceEnemyLeftV, bounceEnemyRightV;
     private Vector2 slowdownLeft, slowdownRightV;
     private Vector2 moveLeftV, moveRightV;
@@ -21,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     private bool againstWall = false;
     private bool againstEnemyAttack = false;
     private bool collisionOnRight = false;
+    private bool exceedOnRight = false; // Exceed the bounds of the map
     private bool onGround = false;
 
     // Input
@@ -64,8 +64,6 @@ public class PlayerController : MonoBehaviour {
 
         // Calculate the static vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
-        bounceWallLeftV = Vector2.right * moveForce;
-        bounceWallRightV = Vector2.left * moveForce;
         bounceEnemyLeftV = new Vector2(1, 0.5f) * throwbackForce;
         bounceEnemyRightV = new Vector2(-1, 0.5f) * throwbackForce;
         slowdownLeft = Vector2.left * slowdownForce;
@@ -101,31 +99,16 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        collisionOnRight = collision.contacts[0].point.x > transform.position.x;
-
-        // If colliding with wall
-        if (collision.gameObject.layer == 9)
-        {
-            againstWall = true;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        // If colliding with wall
-        if (collision.gameObject.layer == 9)
-        {
-            againstWall = false;
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D collider)
     {
         collisionOnRight = collider.transform.position.x > transform.position.x;
 
-        if (collider.gameObject.layer == 13)
+        if (collider.gameObject.layer == 9)
+        {
+            exceedOnRight = collisionOnRight;
+            againstWall = true;
+        }
+        else if (collider.gameObject.layer == 13)
         {
             collider.GetComponent<EnemyWeapon>().StartDestroy();
 
@@ -139,25 +122,32 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        // If colliding with wall
+        if (collider.gameObject.layer == 9)
+        {
+            againstWall = false;
+        }
+    }
+
     // Move character
     void Move()
     {
         // Apply bounce-off forces when colliding with wall and enemies.
-        if (HandleBounceOff())
+        HandleBounceOff();
+        /*if (HandleBounceOff())
         {
             return; // If bouncing off, do not allow user movement while doing so
-        }
-
+        }*/
         if (inputH == 0)
         {
             // If there is no horizontal input
-            playerAnimator.PlayRun(false);
             HandleSlowdown(); // Slow down velocity on the x-axis
         }
         else
         {
             // If there is horizontal input
-            playerAnimator.PlayRun(true);
             playerAnimator.FaceForward();
             HandleRunning();
         }
@@ -174,19 +164,6 @@ public class PlayerController : MonoBehaviour {
     // Apply bounce-off forces when colliding with wall and enemies.
     bool HandleBounceOff()
     {
-        // If against wall
-        if (againstWall)
-        {
-            if (collisionOnRight)
-            {
-                rb2d.AddForce(bounceWallRightV);
-            }
-            else
-            {
-                rb2d.AddForce(bounceWallLeftV);
-            }
-        }
-
         if (againstEnemyAttack)
         {
             if (collisionOnRight)
@@ -202,7 +179,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Return true if bouncing off either against wall or enemy
-        return againstWall || againstEnemyAttack;
+        return againstEnemyAttack;
     }
 
     void HandleSlide()
@@ -228,6 +205,8 @@ public class PlayerController : MonoBehaviour {
                 rb2d.AddForce(slowdownRightV);
             }
         }
+
+        playerAnimator.PlayRun(false);
     }
 
     // Apply horizontal movement forces if horizontal input is registered.
@@ -261,11 +240,27 @@ public class PlayerController : MonoBehaviour {
         {
             if (inputH < 0)
             {
+                // Prevent further left movement if against wall
+                if (againstWall && !exceedOnRight)
+                {
+                    playerAnimator.PlayRun(false);
+                    return;
+                }
+
                 rb2d.AddForce(moveLeftV);
+                playerAnimator.PlayRun(true);
             }
             else
             {
+                // Prevent further right movement if against wall
+                if (againstWall && exceedOnRight)
+                {
+                    playerAnimator.PlayRun(false);
+                    return;
+                }
+
                 rb2d.AddForce(moveRightV);
+                playerAnimator.PlayRun(true);
             }
         }
     }

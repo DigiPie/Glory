@@ -54,9 +54,9 @@ GameObject:
   - component: {fileID: 50307668304845714}
   - component: {fileID: 61252015656345504}
   - component: {fileID: 114418621161140514}
+  - component: {fileID: 114282257559810524}
   - component: {fileID: 114101921111106826}
   - component: {fileID: 114732406927410688}
-  - component: {fileID: 114282257559810524}
   m_Layer: 10
   m_Name: E5Golem
   m_TagString: Enemy
