@@ -75,7 +75,7 @@ public class PlayerHealthSystem : MonoBehaviour
     }
 
     // Important to be public as it is called by other functions.
-    public int TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
         isDiff = true;
         // Set the damaged flag so the screen will flash.
@@ -95,12 +95,9 @@ public class PlayerHealthSystem : MonoBehaviour
             // ... it should die.
             Death();
         }
-
-        return currentHealth;
     }
 
-    // Self implemented function for future use
-    public void HealDamage(int amount)
+    public void Heal(int amount)
     {
         isDiff = true;
 
@@ -122,7 +119,7 @@ public class PlayerHealthSystem : MonoBehaviour
         currentHealth = startingHealth;
     }
 
-    public float GetCurrentHealth()
+    public float GetDisplayHealth()
     {
         return displayHealth;
     }

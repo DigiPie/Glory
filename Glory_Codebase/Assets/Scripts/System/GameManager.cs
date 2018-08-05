@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
             return; // If game won or lost, display game over screen and stop running the rest of the code
         }
 
+        HandleHUD();
 
         if (stateSystem.IsGameTutorial())
         {
@@ -100,6 +101,11 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    void HandleHUD()
+    {
+        hud.UpdatePlayerHealth(playerHealth.GetDisplayHealth());
+    }
+
     void HandleWave()
     {
         if (stateSystem.IsWaitingNextWave())
@@ -114,6 +120,7 @@ public class GameManager : MonoBehaviour
             if (enemies.Count == 0)
             {
                 playerHealth.ResetFullHealth();
+
                 //player1.GetComponent<PlayerController>().AllowAttack(false);
                 stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
 
@@ -281,7 +288,8 @@ public class GameManager : MonoBehaviour
     public void DamagePlayer(int damage)
     {
         //camController.Shake(0.1f, 0.15f);
-        hud.UpdatePlayerHealth(playerHealth.TakeDamage(damage));
+        playerHealth.TakeDamage(damage);
+        hud.RedFlash();
     }
 
     public void DamagePlayer(float damage)

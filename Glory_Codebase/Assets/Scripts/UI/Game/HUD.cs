@@ -80,11 +80,15 @@ public class HUD : MonoBehaviour {
         }
     }
 
+    public void RedFlash()
+    {
+        playerRedFlash.color = Color.white;
+        isPlayerRedFlash = true;
+    }
+
     public void UpdatePlayerHealth(int health)
     {
         healthSlider.value = health;
-        playerRedFlash.color = Color.white;
-        isPlayerRedFlash = true;
     }
 
     public void UpdatePlayerHealth(float health)
