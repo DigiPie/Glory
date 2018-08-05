@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     private int waveCount;
     private bool getNewSpawn;
     private readonly int defaultSpawnSortOrder = 20;
+    private readonly int maxSpawnSortOrder = 100;
+    private readonly int spawnSortOrderIncrement = 3;
     private int spawnSortOrder = 20;
     private List<GameObject> enemies;
     private List<GameObject> deadBodies;
@@ -196,8 +198,14 @@ public class GameManager : MonoBehaviour
             enemy = InstantiateGameObject(enemy, spawn2);
         }
 
-        enemy.GetComponent<EnemyController>().Setup(this);
-        enemy.GetComponent<EnemyAnimator>().SetSortingOrder(spawnSortOrder);
+        enemy.GetComponent<EnemyController>().Setup(this, spawnSortOrder);
+
+        spawnSortOrder += spawnSortOrderIncrement;
+
+        if (spawnSortOrder > maxSpawnSortOrder)
+        {
+            spawnSortOrder = defaultSpawnSortOrder;
+        }
 
         if (enemy.GetComponent<EnemyHealthSystem>().IsBoss())
         {
@@ -210,7 +218,6 @@ public class GameManager : MonoBehaviour
             enemy.GetComponent<EnemyHealthSystem>().Setup();
         }
 
-        spawnSortOrder++;
         enemies.Add(enemy);
     }
 

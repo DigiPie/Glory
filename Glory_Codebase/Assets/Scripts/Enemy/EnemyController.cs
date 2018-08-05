@@ -66,8 +66,7 @@ public abstract class EnemyController : MonoBehaviour {
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        enemyAnimator = GetComponent<EnemyAnimator>();
-        healthSystem = GetComponent<EnemyHealthSystem>();
+        
 
         attackCooldown = enemyWeapon.GetComponent<EnemyWeapon>().cooldown;
         attackRange = Random.Range(minAttackRange, maxAttackRange); // Get a unique engagement range
@@ -85,9 +84,15 @@ public abstract class EnemyController : MonoBehaviour {
     }
 
     // Used by the gameManager to set up this enemy.
-    public void Setup(GameManager gameManager)
+    public void Setup(GameManager gameManager, int sortOrder)
     {
         this.gameManager = gameManager;
+
+        enemyAnimator = GetComponent<EnemyAnimator>();
+        healthSystem = GetComponent<EnemyHealthSystem>();
+
+        enemyAnimator.SetSortingOrder(sortOrder);
+        healthSystem.SetSortingOrder(sortOrder);
     }
 
     // Update is called in-step with the physics engine

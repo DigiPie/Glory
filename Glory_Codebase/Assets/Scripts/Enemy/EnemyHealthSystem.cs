@@ -95,4 +95,11 @@ public class EnemyHealthSystem : MonoBehaviour {
     {
         return (int)health;
     }
+
+    public void SetSortingOrder(int sortingOrder)
+    {
+        backRend.sortingOrder = sortingOrder;
+        frontRend.sortingOrder = backRend.sortingOrder + 1;
+        outlineRend.sortingOrder = frontRend.sortingOrder + 1;
+    }
 }

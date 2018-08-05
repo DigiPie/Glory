@@ -82,6 +82,7 @@ public class WaveSystem : MonoBehaviour {
     void Start () {
         waves = new List<List<Spawn>>();
 
+        /*
         // Test Wave 1
         CreateNewWave();
         AddEnemy(1, 0, 0f);
@@ -90,7 +91,7 @@ public class WaveSystem : MonoBehaviour {
         // Test Wave 2
         CreateNewWave();
         AddEnemy(1, 0, 0f);
-        waves.Add(GetNewWave());
+        waves.Add(GetNewWave());*/
 
         // Wave 1
         CreateNewWave();
