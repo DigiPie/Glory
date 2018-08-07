@@ -122,6 +122,12 @@ public class HUD : MonoBehaviour {
         }
     }
 
+    public void ResetAllCooldownIndicators()
+    {
+        spell1Slider.value = 0;
+        spell2Slider.value = 0;
+    }
+
     public void RedFlash()
     {
         playerRedFlash.color = Color.white;

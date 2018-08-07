@@ -341,6 +341,12 @@ public class PlayerActionSystem : MonoBehaviour
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }
 
+    public void ResetAllCooldowns()
+    {
+        spell1ReadyTime = 0;
+        spell2ReadyTime = 0;
+    }
+
     GameObject InstantiateGameObject(GameObject gameObject)
     {
         Vector3 pos = transform.position;

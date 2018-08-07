@@ -122,6 +122,8 @@ public class GameManager : MonoBehaviour
             if (enemies.Count == 0)
             {
                 playerHealth.ResetFullHealth();
+                playerAction.ResetAllCooldowns();
+                hud.ResetAllCooldownIndicators();
 
                 //player1.GetComponent<PlayerController>().AllowAttack(false);
                 stateSystem.SetWaveState(StateSystem.WaveState.WaitingNextWave);
@@ -270,6 +272,9 @@ public class GameManager : MonoBehaviour
             }
 
             deadBodies.Clear();
+
+            playerAction.ResetAllCooldowns();
+            hud.ResetAllCooldownIndicators();
 
             stateSystem.SetWaveState(StateSystem.WaveState.WaitingWaveSpawn);
             waveSystem.SetNextWave();

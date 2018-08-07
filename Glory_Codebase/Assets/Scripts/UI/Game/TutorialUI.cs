@@ -95,7 +95,6 @@ public class TutorialUI : MonoBehaviour
             JumpScene.SetActive(false);
             AttackScene.SetActive(true);
             stateSystem.SetTutorialState(StateSystem.TutorialState.Attack);
-            //player1.GetComponent<PlayerController>().AllowAttack(true);
         }
 
         else if (stateSystem.IsAttack())

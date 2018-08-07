@@ -17588,7 +17588,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1551670491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19085,8 +19085,8 @@ MonoBehaviour:
   slideReady: 1
   consecAttkCooldown: 0.3
   newAttkCooldown: 0.6
-  spell1Cooldown: 1
-  spell2Cooldown: 1
+  spell1Cooldown: 8
+  spell2Cooldown: 8
 --- !u!114 &1701403912
 MonoBehaviour:
   m_ObjectHideFlags: 0
