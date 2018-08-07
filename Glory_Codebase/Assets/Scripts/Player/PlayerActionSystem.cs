@@ -306,6 +306,9 @@ public class PlayerActionSystem : MonoBehaviour
         // Animate with special attack
         playerAnimator.PlayCast();
 
+        // Update HUD
+        hud.StartSpell1CooldownAnim();
+
         spell1ReadyTime = Time.timeSinceLevelLoad + spell1Cooldown;
     }
 
@@ -326,6 +329,9 @@ public class PlayerActionSystem : MonoBehaviour
 
         // Animate with special attack
         playerAnimator.PlayCast();
+
+        // Update HUD
+        hud.StartSpell1CooldownAnim();
 
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }

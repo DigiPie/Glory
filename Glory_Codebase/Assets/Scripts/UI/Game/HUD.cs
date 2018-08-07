@@ -25,16 +25,10 @@ public class HUD : MonoBehaviour {
     public Slider bossSlider;                              // Reference to the UI's health bar.
     public GameObject bossSliderObj;
 
-    public Slider slideCooldown;
-    public GameObject slideCooldownObj;
+    public Slider slideCooldownSlider;
+    public Slider spell1CooldownSlider;
+    public Slider spell2CooldownSlider;
 
-    public Slider spell1Cooldown;
-    public GameObject spell1CooldownObj;
-
-    public Slider spell2Cooldown;
-    public GameObject spell2CooldownObj;
-
-    public int dashWave, spell1Wave, spell2Wave;                // Wave for tutorial to reappear
     public float flashSpeed = 2.0f;                               // The speed the objectiveRedFlash will fade at.
     private bool inputNext;
     private bool allowInputNext = true;
@@ -42,17 +36,48 @@ public class HUD : MonoBehaviour {
     private void Awake()
     {
         txtInfo.text = "";
-        slideCooldown.value = 0;
+        slideCooldownSlider.value = 0;
+        spell1CooldownSlider.value = 0;
+        spell2CooldownSlider.value = 0;
     }
     // Update is called in-step with the physics engine
     void FixedUpdate() {
         txtInfo.text = gameManager.GetInfo();
 
-        if (slideCooldown.value != 0)
+        HandleCooldown();
+        HandleFlash();
+
+        if (stateSystem.IsGameWave())
         {
-            slideCooldown.value -= (slideCooldown.maxValue * Time.deltaTime) / playerActionSystem.slideCooldown;
+            inputNext = Input.GetButtonDown("Submit");
+
+            if (inputNext)
+            {
+                OnClickNextWaveBtn();
+            }
+        }
+    }
+
+    public void HandleCooldown()
+    {
+        if (slideCooldownSlider.value != 0)
+        {
+            slideCooldownSlider.value -= (slideCooldownSlider.maxValue * Time.deltaTime) / playerActionSystem.slideCooldown;
         }
 
+        if (spell1CooldownSlider.value != 0)
+        {
+            spell1CooldownSlider.value -= (spell1CooldownSlider.maxValue * Time.deltaTime) / playerActionSystem.spell1Cooldown;
+        }
+
+        if (spell2CooldownSlider.value != 0)
+        {
+            spell2CooldownSlider.value -= (spell2CooldownSlider.maxValue * Time.deltaTime) / playerActionSystem.spell2Cooldown;
+        }
+    }
+
+    public void HandleFlash()
+    {
         if (isPlayerRedFlash)
         {
             playerRedFlash.color = Color.Lerp(playerRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
@@ -83,16 +108,6 @@ public class HUD : MonoBehaviour {
             {
                 bossRedFlash.color = Color.clear;
                 isBossRedFlash = false;
-            }
-        }
-
-        if (stateSystem.IsGameWave())
-        {
-            inputNext = Input.GetButtonDown("Submit");
-
-            if (inputNext)
-            {
-                OnClickNextWaveBtn();
             }
         }
     }
@@ -155,17 +170,17 @@ public class HUD : MonoBehaviour {
         {
             stateSystem.SetGameState(StateSystem.GameState.Tutorial);
         }
-        else if ((waveSystem.GetDisplayWave() == dashWave) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.Dash3))
+        else if ((waveSystem.IsDashUnlockWave()) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.Dash3))
         {
             stateSystem.SetTutorialState(StateSystem.TutorialState.Dash1);
             stateSystem.SetGameState(StateSystem.GameState.Tutorial);
         }
-        else if ((waveSystem.GetDisplayWave() == spell1Wave) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.FirstSpell3))
+        else if ((waveSystem.IsSpell1UnlockWave()) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.FirstSpell3))
         {
             stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell1);
             stateSystem.SetGameState(StateSystem.GameState.Tutorial);
         }
-        else if ((waveSystem.GetDisplayWave() == spell2Wave) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.SecondSpell3))
+        else if ((waveSystem.IsSpell2UnlockWave()) && (stateSystem.GetTutorialState() != StateSystem.TutorialState.SecondSpell3))
         {
             stateSystem.SetTutorialState(StateSystem.TutorialState.SecondSpell1);
             stateSystem.SetGameState(StateSystem.GameState.Tutorial);
@@ -191,7 +206,16 @@ public class HUD : MonoBehaviour {
 
     public void StartSlideCooldownAnim()
     {
-        slideCooldown.value = slideCooldown.maxValue;
-        Debug.Log("start cooldown");
+        slideCooldownSlider.value = slideCooldownSlider.maxValue;
+    }
+
+    public void StartSpell1CooldownAnim()
+    {
+        spell1CooldownSlider.value = spell1CooldownSlider.maxValue;
+    }
+
+    public void StartSpell2CooldownAnim()
+    {
+        spell2CooldownSlider.value = spell2CooldownSlider.maxValue;
     }
 }

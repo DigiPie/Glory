@@ -35,6 +35,10 @@ public class WaveSystem : MonoBehaviour {
     private int nextWaveNumber = 1;
     private int totalWaves;
 
+    public int dashUnlockWave;
+    public int spell1UnlockWave;
+    public int spell2UnlockWave;
+
     void CreateNewWave()
     {
         tempWave = new List<Spawn>();
@@ -238,9 +242,24 @@ public class WaveSystem : MonoBehaviour {
         nextWaveNumber++;
     }
 
-    public int GetDisplayWave()
+    public int GetWave()
     {
         return waveNumber;
+    }
+
+    public bool IsDashUnlockWave()
+    {
+        return waveNumber == dashUnlockWave;
+    }
+
+    public bool IsSpell1UnlockWave()
+    {
+        return waveNumber == dashUnlockWave;
+    }
+
+    public bool IsSpell2UnlockWave()
+    {
+        return waveNumber == dashUnlockWave;
     }
 
     public int GetWaveCount()
