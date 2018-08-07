@@ -63,6 +63,10 @@ public class TutorialUI : MonoBehaviour
         }
         else if (Input.GetButtonDown("Submit"))
         {
+            if (stateSystem.IsFirstSpell2() || stateSystem.IsSecondSpell2())
+            {
+                return;
+            }
             NextState();
         }
     }
