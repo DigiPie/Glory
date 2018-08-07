@@ -136,14 +136,12 @@ public class PlayerController : MonoBehaviour {
     {
         // Apply bounce-off forces when colliding with wall and enemies.
         HandleBounceOff();
-        /*if (HandleBounceOff())
+
+        // If there is no horizontal input or player is casting a spell
+        if (inputH == 0 || playerAnimator.IsCastAnim())
         {
-            return; // If bouncing off, do not allow user movement while doing so
-        }*/
-        if (inputH == 0)
-        {
-            // If there is no horizontal input
-            HandleSlowdown(); // Slow down velocity on the x-axis
+            // Do not run and start slowing down
+            HandleSlowdown();
         }
         else
         {
