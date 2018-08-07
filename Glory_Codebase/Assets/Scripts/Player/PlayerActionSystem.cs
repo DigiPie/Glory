@@ -197,6 +197,7 @@ public class PlayerActionSystem : MonoBehaviour
     public void EnableSlide()
     {
         isSlideEnabled = true;
+        hud.ShowDashCooldownIndicator();
     }
 
     public void EnableSpell1(bool isFireSpell)
@@ -209,6 +210,8 @@ public class PlayerActionSystem : MonoBehaviour
             spell1 = iceSpell;
 
         this.isFireSpell = isFireSpell;
+
+        hud.ShowSpell1CooldownIndicator();
     }
 
     public void EnableSpell2(bool isEarthSpell)
@@ -221,6 +224,8 @@ public class PlayerActionSystem : MonoBehaviour
             spell2 = airSpell;
 
         this.isEarthSpell = isEarthSpell;
+
+        hud.ShowSpell2CooldownIndicator();
     }
 
     /*** Attacks ***/
@@ -331,7 +336,7 @@ public class PlayerActionSystem : MonoBehaviour
         playerAnimator.PlayCast();
 
         // Update HUD
-        hud.StartSpell1CooldownAnim();
+        hud.StartSpell2CooldownAnim();
 
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }

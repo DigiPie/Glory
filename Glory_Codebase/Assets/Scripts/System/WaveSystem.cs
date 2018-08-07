@@ -86,26 +86,21 @@ public class WaveSystem : MonoBehaviour {
     void Start () {
         waves = new List<List<Spawn>>();
 
-        // Test Wave 1
+        // Test Wave
         CreateNewWave();
         AddEnemy(0, 0, 1f);
         waves.Add(GetNewWave());
 
         // Test Wave 2
         CreateNewWave();
-        AddEnemy(1, 0, 1f);
+        AddEnemy(0, 0, 1f);
         waves.Add(GetNewWave());
 
         // Test Wave 3
         CreateNewWave();
-        AddEnemy(2, 0, 1f);
+        AddEnemy(0, 0, 1f);
         waves.Add(GetNewWave());
 
-        // Test Wave 4
-        CreateNewWave();
-        AddEnemy(3, 0, 1f);
-
-        waves.Add(GetNewWave());
         // Wave 1
         CreateNewWave();
         AddEnemy(0, 0, 0, 3, 2f);
@@ -254,12 +249,12 @@ public class WaveSystem : MonoBehaviour {
 
     public bool IsSpell1UnlockWave()
     {
-        return waveNumber == dashUnlockWave;
+        return waveNumber == spell1UnlockWave;
     }
 
     public bool IsSpell2UnlockWave()
     {
-        return waveNumber == dashUnlockWave;
+        return waveNumber == spell2UnlockWave;
     }
 
     public int GetWaveCount()
