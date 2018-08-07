@@ -48,55 +48,52 @@ public class HUD : MonoBehaviour {
     void FixedUpdate() {
         txtInfo.text = gameManager.GetInfo();
 
+        if (slideCooldown.value != 0)
+        {
+            slideCooldown.value -= (slideCooldown.maxValue * Time.deltaTime) / playerActionSystem.slideCooldown;
+        }
+
+        if (isPlayerRedFlash)
+        {
+            playerRedFlash.color = Color.Lerp(playerRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
+
+            if (playerRedFlash.color.a < 0.1f)
+            {
+                playerRedFlash.color = Color.clear;
+                isPlayerRedFlash = false;
+            }
+        }
+
+        if (isObjectiveRedFlash)
+        {
+            objectiveRedFlash.color = Color.Lerp(objectiveRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
+
+            if (objectiveRedFlash.color.a < 0.1f)
+            {
+                objectiveRedFlash.color = Color.clear;
+                isObjectiveRedFlash = false;
+            }
+        }
+
+        if (isBossRedFlash)
+        {
+            bossRedFlash.color = Color.Lerp(bossRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
+
+            if (bossRedFlash.color.a < 0.1f)
+            {
+                bossRedFlash.color = Color.clear;
+                isBossRedFlash = false;
+            }
+        }
+
         if (stateSystem.IsGameWave())
         {
-            if (isPlayerRedFlash)
-            {
-                playerRedFlash.color = Color.Lerp(playerRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
-
-                if (playerRedFlash.color.a < 0.1f)
-                {
-                    playerRedFlash.color = Color.clear;
-                    isPlayerRedFlash = false;
-                }
-            }
-
-            if (isObjectiveRedFlash)
-            {
-                objectiveRedFlash.color = Color.Lerp(objectiveRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
-
-                if (objectiveRedFlash.color.a < 0.1f)
-                {
-                    objectiveRedFlash.color = Color.clear;
-                    isObjectiveRedFlash = false;
-                }
-            }
-
-            if (isBossRedFlash)
-            {
-                bossRedFlash.color = Color.Lerp(bossRedFlash.color, Color.clear, flashSpeed * Time.deltaTime);
-
-                if (bossRedFlash.color.a < 0.1f)
-                {
-                    bossRedFlash.color = Color.clear;
-                    isBossRedFlash = false;
-                }
-            }
-
             inputNext = Input.GetButtonDown("Submit");
 
             if (inputNext)
             {
                 OnClickNextWaveBtn();
             }
-        }
-    }
-
-    private void Update()
-    {
-        if (slideCooldown.value != 0)
-        {
-            slideCooldown.value -= (slideCooldown.maxValue*Time.deltaTime)/playerActionSystem.slideCooldown;
         }
     }
 
