@@ -13,6 +13,7 @@ public class PlayerActionSystem : MonoBehaviour
     private PlayerController playerController;
     private PlayerAnimator playerAnimator;
     public AudioManager audioManager;
+    public HUD hud;
 
     // Forces
     private readonly Vector2 leftDir = new Vector2(-1, 0);
@@ -37,7 +38,7 @@ public class PlayerActionSystem : MonoBehaviour
     // Slide //
     public float slideCooldown = 2f; // Minimum wait-time before next slide can be triggered
     public float slideInvulDuration = 1f; // How long is the character invulnerable for when slideing
-    private bool slideReady = true; // Reliant on slideCooldown
+    public bool slideReady = true; // Reliant on slideCooldown
     private float slideReadyTime; // The time at which slideReady will be set to true again
 
     /*** Attacks ***/
@@ -178,7 +179,7 @@ public class PlayerActionSystem : MonoBehaviour
             }
 
             playerAnimator.PlaySlide();
-
+            hud.StartSlideCooldownAnim();
             slideReady = false;
             slideReadyTime = Time.timeSinceLevelLoad + slideCooldown;
             isInvul = true;

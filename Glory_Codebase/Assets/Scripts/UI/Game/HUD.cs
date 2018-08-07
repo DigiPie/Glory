@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour {
     public GameManager gameManager;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
+    public PlayerActionSystem playerActionSystem;
     public GameObject popUpHUD;
     public Image objectiveRedFlash;                                   // Reference to an image to flash on the screen on being hurt.
     public Image playerRedFlash;
@@ -22,6 +23,16 @@ public class HUD : MonoBehaviour {
     public Slider objHealthSlider;                              // Reference to the UI's health bar.
     public Slider healthSlider;                              // Reference to the UI's health bar.
     public Slider bossSlider;                              // Reference to the UI's health bar.
+    public GameObject bossSliderObj;
+
+    public Slider slideCooldown;
+    public GameObject slideCooldownObj;
+
+    public Slider spell1Cooldown;
+    public GameObject spell1CooldownObj;
+
+    public Slider spell2Cooldown;
+    public GameObject spell2CooldownObj;
 
     public int dashWave, spell1Wave, spell2Wave;                // Wave for tutorial to reappear
     public float flashSpeed = 2.0f;                               // The speed the objectiveRedFlash will fade at.
@@ -31,6 +42,7 @@ public class HUD : MonoBehaviour {
     private void Awake()
     {
         txtInfo.text = "";
+        slideCooldown.value = 0;
     }
     // Update is called in-step with the physics engine
     void FixedUpdate() {
@@ -80,6 +92,14 @@ public class HUD : MonoBehaviour {
         }
     }
 
+    private void Update()
+    {
+        if (slideCooldown.value != 0)
+        {
+            slideCooldown.value -= (slideCooldown.maxValue*Time.deltaTime)/playerActionSystem.slideCooldown;
+        }
+    }
+
     public void RedFlash()
     {
         playerRedFlash.color = Color.white;
@@ -110,14 +130,14 @@ public class HUD : MonoBehaviour {
 
     public void ShowBossHealth(int maxHealth)
     {
-        bossSlider.gameObject.active = true;
+        bossSliderObj.SetActive(true);
         bossSlider.maxValue = maxHealth;
         bossSlider.value = maxHealth;
     }
 
     public void HideBossHealth()
     {
-        bossSlider.gameObject.active = false;
+        bossSliderObj.SetActive(true);
     }
 
     public void UpdateBossHealth(int health)
@@ -170,5 +190,11 @@ public class HUD : MonoBehaviour {
             popUpHUD.SetActive(false);
             gameManager.StartNextWave();
         }
+    }
+
+    public void StartSlideCooldownAnim()
+    {
+        slideCooldown.value = slideCooldown.maxValue;
+        Debug.Log("start cooldown");
     }
 }
