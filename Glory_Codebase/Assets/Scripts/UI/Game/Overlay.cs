@@ -15,6 +15,7 @@ public class Overlay : MonoBehaviour {
     public GameObject optionsUI;
     public GameObject tutorialUI;
     public GameObject mainMenuUI;
+    public GameObject creditsUI;
 
     // Update is called once per frame
     void Update () {
@@ -110,6 +111,22 @@ public class Overlay : MonoBehaviour {
         gameOverUI.SetActive(true);
         stateSystem.Pause();
         txtGameOver.text = (isWin) ? "VICTORY!" : "DEFEAT!";
+    }
+
+    public void ShowCredits()
+    {
+        creditsUI.SetActive(true);
+        mainMenuUI.SetActive(false);
+        // To let credits scroll
+        Time.timeScale = 1f;
+
+    }
+
+    public void HideCredits()
+    {
+        creditsUI.SetActive(false);
+        mainMenuUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     // Trigger exit to menu
