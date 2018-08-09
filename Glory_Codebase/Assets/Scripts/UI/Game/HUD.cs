@@ -9,7 +9,6 @@ public class HUD : MonoBehaviour {
     public GameManager gameManager;
     public StateSystem stateSystem;
     public WaveSystem waveSystem;
-    public PlayerActionSystem playerActionSystem;
     public GameObject popUpHUD;
     public Image objectiveRedFlash;                                   // Reference to an image to flash on the screen on being hurt.
     public Image playerRedFlash;
@@ -26,10 +25,17 @@ public class HUD : MonoBehaviour {
     public GameObject slideSliderObj;
     public GameObject spell1SliderObj;
     public GameObject spell2SliderObj;
+    public GameObject invulSliderObj;
     private Slider bossSlider;
     private Slider slideSlider;
     private Slider spell1Slider;
     private Slider spell2Slider;
+    private Slider invulSlider;
+
+    private float slideCooldown;
+    private float spell1Cooldown;
+    private float spell2Cooldown;
+    private float invulDuration;
 
     public float flashSpeed = 2.0f;                               // The speed the objectiveRedFlash will fade at.
     private bool inputNext;
@@ -42,14 +48,26 @@ public class HUD : MonoBehaviour {
         slideSliderObj.SetActive(false);
         spell1SliderObj.SetActive(false);
         spell2SliderObj.SetActive(false);
+        invulSliderObj.SetActive(false);
         bossSlider = bossSliderObj.GetComponent<Slider>();
         slideSlider = slideSliderObj.GetComponent<Slider>();
         spell1Slider = spell1SliderObj.GetComponent<Slider>();
         spell2Slider = spell2SliderObj.GetComponent<Slider>();
+        invulSlider = invulSliderObj.GetComponent<Slider>();
+
         slideSlider.value = 0;
         spell1Slider.value = 0;
         spell2Slider.value = 0;
+        invulSlider.value = 0;
     }
+
+    public void Setup(float slideCooldown, float spell1Cooldown, float spell2Cooldown)
+    {
+        this.slideCooldown = slideCooldown;
+        this.spell1Cooldown = spell1Cooldown;
+        this.spell2Cooldown = spell2Cooldown;
+    }
+
     // Update is called in-step with the physics engine
     void FixedUpdate() {
         txtInfo.text = gameManager.GetInfo();
@@ -72,17 +90,26 @@ public class HUD : MonoBehaviour {
     {
         if (slideSlider.value != 0)
         {
-            slideSlider.value -= (slideSlider.maxValue * Time.deltaTime) / playerActionSystem.slideCooldown;
+            slideSlider.value -= (slideSlider.maxValue * Time.deltaTime) / slideCooldown;
         }
 
         if (spell1Slider.value != 0)
         {
-            spell1Slider.value -= (spell1Slider.maxValue * Time.deltaTime) / playerActionSystem.spell1Cooldown;
+            spell1Slider.value -= (spell1Slider.maxValue * Time.deltaTime) / spell1Cooldown;
         }
 
         if (spell2Slider.value != 0)
         {
-            spell2Slider.value -= (spell2Slider.maxValue * Time.deltaTime) / playerActionSystem.spell2Cooldown;
+            spell2Slider.value -= (spell2Slider.maxValue * Time.deltaTime) / spell2Cooldown;
+        }
+
+        if (invulSlider.value != 0)
+        {
+            invulSlider.value -= (invulSlider.maxValue * Time.deltaTime) / invulDuration;
+        }
+        else
+        {
+            invulSliderObj.SetActive(false);
         }
     }
 
@@ -248,5 +275,12 @@ public class HUD : MonoBehaviour {
     public void StartSpell2CooldownAnim()
     {
         spell2Slider.value = spell2Slider.maxValue;
+    }
+
+    public void StartInvulDurationAnim(float invulDuration)
+    {
+        this.invulDuration = invulDuration;
+        invulSliderObj.SetActive(true);
+        invulSlider.value = invulSlider.maxValue;
     }
 }

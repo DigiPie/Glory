@@ -73,6 +73,7 @@ public class PlayerActionSystem : MonoBehaviour
         playerAnimator = GetComponent<PlayerAnimator>();
         playerController = GetComponent<PlayerController>();
         rb2d = GetComponent<Rigidbody2D>();
+        hud.Setup(slideCooldown, spell1Cooldown, spell2Cooldown);
     }
 
     public void Setup(Vector2 moveLeftV, Vector2 moveRightV)
@@ -122,7 +123,6 @@ public class PlayerActionSystem : MonoBehaviour
     {
         return isFaster;
     }
-
 
     void HandleProjectiles()
     {
@@ -179,11 +179,15 @@ public class PlayerActionSystem : MonoBehaviour
             }
 
             playerAnimator.PlaySlide();
-            hud.StartSlideCooldownAnim();
+
             slideReady = false;
             slideReadyTime = Time.timeSinceLevelLoad + slideCooldown;
             isInvul = true;
             invulEndTime = Time.timeSinceLevelLoad + slideInvulDuration;
+
+            // Update HUD
+            hud.StartInvulDurationAnim(slideInvulDuration);
+            hud.StartSlideCooldownAnim();
         }
         else
         {
@@ -407,6 +411,9 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 isInvul = true;
                 invulEndTime = Time.timeSinceLevelLoad + tempBuff.invulDuration;
+
+                // Update HUD
+                hud.StartInvulDurationAnim(tempBuff.invulDuration);
             }
 
             if (tempBuff.fasterSpeedDuration > 0)
