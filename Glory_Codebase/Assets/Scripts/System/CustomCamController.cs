@@ -4,81 +4,104 @@ using UnityEngine;
 
 public class CustomCamController : MonoBehaviour
 {
-    public Transform camTarget;
-    public float maxShakeAmount = 1.2f;
-    private float shakeDuration = 0f;
-    private float shakeAmount;
+    public Transform childCamera; // The actual camera which is a child of this object, a camera container
+    public Transform cameraTarget;
 
+    // Chase handled by this object
+    public float maxChaseSpeed = 0.2f;
+    public float chaseAcceleration = 0.15f;
+    public float startChaseFactor = 0.03f; // Only start chasing target when this far from target
+    public float stopChaseFactor = 0.01f; // Only stop chasing target when this close to target
     private Vector3 targetPos;
-    private float chaseSpeed = 0.2f;
-    private float chaseDeadzone = 0.05f; // Only start chasing target is chaseDeadzone distance away
-    private bool startChase = false;
+    private float chaseSpeed = 0f;
+    private bool isChasing = false;
+
+    // Shake handled by the camera, a child of this object
+    public float maxShakeAmount = 1.0f;
+    public float shakeReductionSpeed = 0.2f;
+    private float shakeAmount = 0f;
+    private bool isShaking = false;
+
+    private void Start()
+    {
+        // Get target position, the player's position but -10 on Z-axis
+        targetPos = new Vector3(cameraTarget.position.x, 1, -10);
+        transform.position = targetPos;
+    }
 
     void FixedUpdate()
     {
-        if (shakeDuration > 0)
+        HandleCameraChase(); // This object, the cameraContainer will chase the target.
+        HandleCameraShake(); // The camera, a child of this object, will execute the camera shake.
+    }
+
+    void HandleCameraChase()
+    {
+        // Get target position, the player's position but -10 on Z-axis
+        targetPos = new Vector3(cameraTarget.position.x, 1, -10);
+
+        // Start chase
+        if (isChasing)
         {
-            transform.position = new Vector3(
-                camTarget.position.x + Random.insideUnitSphere.x * shakeAmount,
-                camTarget.position.y + Random.insideUnitSphere.y * shakeAmount, 
-                -10);
-
-            shakeDuration -= Time.deltaTime;
-
-            // Shaking is reduced over time.
-            shakeAmount -= Time.deltaTime * 0.2f;
-
-            if (shakeAmount < 0)
+            // Accelerate chase speed
+            if (chaseSpeed < maxChaseSpeed)
             {
-                shakeDuration = 0;
-            }
-        }
-        else
-        {
-            targetPos = new Vector3(camTarget.position.x, camTarget.position.y, -10);
+                chaseSpeed += Time.fixedDeltaTime * chaseAcceleration;
 
-            // If player is chaseDeadzone distance away from camera, start chase
-            if (Vector3.Distance(transform.position, targetPos) > chaseDeadzone)
-            {
-                startChase = true;
-            }
-
-            if (startChase)
-            {
-                transform.position = Vector3.Lerp(transform.position, targetPos, chaseSpeed); // Chase
-
-                // If player is minimal distance from camera, stop chase
-                if (Vector3.Distance(transform.position, targetPos) < 0.01f)
+                if (chaseSpeed > maxChaseSpeed)
                 {
-                    startChase = false;
+                    chaseSpeed = maxChaseSpeed;
                 }
             }
+
+            // Move towards target position
+            transform.position = Vector3.Lerp(transform.position, targetPos, chaseSpeed);
+
+            // If this object is less than stopChaseFactor distance from target
+            if (Vector3.Distance(transform.position, targetPos) < stopChaseFactor)
+            {
+                // Stop chasing
+                isChasing = false;
+                chaseSpeed = 0;
+            }
+        }
+        // Else if not chasing and if this object is more than startChaseFactor distance from target
+        else if(Vector3.Distance(transform.position, targetPos) > startChaseFactor)
+        {
+            // Start chasing
+            isChasing = true;
+        }
+    }
+
+    void HandleCameraShake()
+    {
+        // Update shaking status
+        isShaking = shakeAmount > 0;
+        if (isShaking)
+        {
+            shakeAmount -= Time.deltaTime;
+        }
+
+        childCamera.position = transform.position;
+
+        if (isShaking) {
+            childCamera.Translate(Random.insideUnitSphere * shakeAmount);
         }
     }
 
     // Shaking is stackable; if already shaking, and this function is called, shake even more.
-    public void Shake(float addShakeAmount, float shakeDuration)
+    public void Shake(float addShakeAmount)
     {
-        if (shakeAmount > 0)
-        {
-            shakeAmount += addShakeAmount * 0.5f;
-        }
-        else
-        {
-            shakeAmount += addShakeAmount;
-        }
+        shakeAmount += addShakeAmount;
 
         if (shakeAmount > maxShakeAmount)
         {
             shakeAmount = maxShakeAmount;
         }
-
-        this.shakeDuration = shakeDuration;
     }
 
     public void StopShake()
     {
         shakeAmount = 0;
-        shakeDuration = 0;
     }
 }

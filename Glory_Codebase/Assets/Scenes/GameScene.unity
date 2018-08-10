@@ -3398,7 +3398,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 647856006}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &380301576
 GameObject:
@@ -5040,7 +5040,6 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420029}
   m_Layer: 12
   m_Name: mainCamera
@@ -5056,19 +5055,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce95f58ff050b94b8a644e542bf79fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camTarget: {fileID: 1701403907}
-  maxShakeAmount: 1.2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -5116,11 +5102,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 647856006}
-  m_RootOrder: 2
+  m_Father: {fileID: 828905234}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &558737546
 GameObject:
@@ -5606,8 +5592,8 @@ Transform:
   m_Children:
   - {fileID: 1204222015}
   - {fileID: 897010361}
-  - {fileID: 519420032}
   - {fileID: 378491264}
+  - {fileID: 828905234}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5624,7 +5610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hud: {fileID: 1303328454}
   overlay: {fileID: 1596415190}
-  camController: {fileID: 519420030}
+  camController: {fileID: 0}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
   enemy3: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
@@ -7263,6 +7249,55 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 823407413}
   m_CullTransparentMesh: 0
+--- !u!1 &828905233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 828905234}
+  - component: {fileID: 828905235}
+  m_Layer: 0
+  m_Name: cameraContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &828905234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 828905233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 519420032}
+  m_Father: {fileID: 647856006}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &828905235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 828905233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce95f58ff050b94b8a644e542bf79fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childCamera: {fileID: 519420032}
+  cameraTarget: {fileID: 1701403907}
+  maxChaseSpeed: 0.2
+  chaseAcceleration: 0.1
+  startChaseFactor: 0.5
+  stopChaseFactor: 0.1
+  maxShakeAmount: 1
+  shakeReductionSpeed: 0.2
 --- !u!1 &848972913
 GameObject:
   m_ObjectHideFlags: 0
@@ -10502,7 +10537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.16183333, y: 0.16310385}
   m_AnchorMax: {x: 0.8383959, y: 0.3937013}
-  m_AnchoredPosition: {x: 0.000061035156, y: -40.087585}
+  m_AnchoredPosition: {x: 0.000061035156, y: -40.087708}
   m_SizeDelta: {x: 0, y: -154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189415328
@@ -19997,7 +20032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64dd9bfda5540341964af7368369fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camController: {fileID: 519420030}
+  camController: {fileID: 0}
   normalAttack: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258,
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,

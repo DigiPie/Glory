@@ -352,4 +352,10 @@ public class GameManager : MonoBehaviour
     {
         playerAction.EnableSpell2(isEarthSpell);
     }
+
+    // Used by the PlayerActionSystem to shake the camera
+    public void Shake(float addShakeAmount)
+    {
+        camController.Shake(addShakeAmount);
+    }
 }

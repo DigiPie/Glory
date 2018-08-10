@@ -6,7 +6,7 @@ public class PlayerActionSystem : MonoBehaviour
 {
     // References //
     private Rigidbody2D rb2d;
-    public CustomCamController camController;
+    public GameManager gameManager;
     public GameObject normalAttack, criticalAttack;
     public GameObject fireSpell, iceSpell, earthSpell, airSpell;
     private GameObject spell1, spell2;
@@ -133,6 +133,7 @@ public class PlayerActionSystem : MonoBehaviour
                 // Attack projectile
                 StartNormalAttack(playerAnimator.IsFacingLeft());
                 isAttack = false;
+                gameManager.Shake(0.05f);
             }
         }
         else if (isCriticalAttk && playerAnimator.IsAttack3Anim())
@@ -142,6 +143,7 @@ public class PlayerActionSystem : MonoBehaviour
                 // Critical attack projectile
                 StartCriticalStrike(playerAnimator.IsFacingLeft());
                 isCriticalAttk = false;
+                gameManager.Shake(0.10f);
             }
         }
         else if (isSpell1 && playerAnimator.IsCastAnim())
@@ -150,7 +152,7 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 StartSpell1(playerAnimator.IsFacingLeft());
                 isSpell1 = false;
-                camController.Shake(0.015f, 0.15f);
+                //camController.Shake(0.15f);
             }
         }
         else if (isSpell2 && playerAnimator.IsCastAnim())
@@ -159,7 +161,7 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 StartSpell2(playerAnimator.IsFacingLeft());
                 isSpell2 = false;
-                camController.Shake(0.015f, 0.15f);
+                //camController.Shake(0.15f);
             }
         }
     }

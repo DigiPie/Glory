@@ -90,22 +90,22 @@ public class HUD : MonoBehaviour {
     {
         if (slideSlider.value != 0)
         {
-            slideSlider.value -= (slideSlider.maxValue * Time.deltaTime) / slideCooldown;
+            slideSlider.value -= (slideSlider.maxValue * Time.fixedDeltaTime) / slideCooldown;
         }
 
         if (spell1Slider.value != 0)
         {
-            spell1Slider.value -= (spell1Slider.maxValue * Time.deltaTime) / spell1Cooldown;
+            spell1Slider.value -= (spell1Slider.maxValue * Time.fixedDeltaTime) / spell1Cooldown;
         }
 
         if (spell2Slider.value != 0)
         {
-            spell2Slider.value -= (spell2Slider.maxValue * Time.deltaTime) / spell2Cooldown;
+            spell2Slider.value -= (spell2Slider.maxValue * Time.fixedDeltaTime) / spell2Cooldown;
         }
 
         if (invulSlider.value != 0)
         {
-            invulSlider.value -= (invulSlider.maxValue * Time.deltaTime) / invulDuration;
+            invulSlider.value -= (invulSlider.maxValue * Time.fixedDeltaTime) / invulDuration;
         }
         else
         {
