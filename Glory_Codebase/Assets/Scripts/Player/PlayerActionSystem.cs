@@ -7,13 +7,15 @@ public class PlayerActionSystem : MonoBehaviour
     // References //
     private Rigidbody2D rb2d;
     public GameManager gameManager;
+    public AudioManager audioManager;
+    public HUD hud;
+
     public GameObject normalAttack, criticalAttack;
     public GameObject fireSpell, iceSpell, earthSpell, airSpell;
     private GameObject spell1, spell2;
+
     private PlayerController playerController;
     private PlayerAnimator playerAnimator;
-    public AudioManager audioManager;
-    public HUD hud;
 
     // Forces
     private readonly Vector2 leftDir = new Vector2(-1, 0);
@@ -152,7 +154,7 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 StartSpell1(playerAnimator.IsFacingLeft());
                 isSpell1 = false;
-                //camController.Shake(0.15f);
+                gameManager.Shake(0.5f);
             }
         }
         else if (isSpell2 && playerAnimator.IsCastAnim())
@@ -161,7 +163,7 @@ public class PlayerActionSystem : MonoBehaviour
             {
                 StartSpell2(playerAnimator.IsFacingLeft());
                 isSpell2 = false;
-                //camController.Shake(0.15f);
+                gameManager.Shake(0.5f);
             }
         }
     }
