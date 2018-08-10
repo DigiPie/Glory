@@ -116,7 +116,6 @@ public class Overlay : MonoBehaviour {
     public void ShowCredits()
     {
         creditsUI.SetActive(true);
-        mainMenuUI.SetActive(false);
         // To let credits scroll
         Time.timeScale = 1f;
 
@@ -125,7 +124,6 @@ public class Overlay : MonoBehaviour {
     public void HideCredits()
     {
         creditsUI.SetActive(false);
-        mainMenuUI.SetActive(true);
         Time.timeScale = 0f;
     }
 
