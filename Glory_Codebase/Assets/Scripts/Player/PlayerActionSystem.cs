@@ -8,7 +8,6 @@ public class PlayerActionSystem : MonoBehaviour
     private Rigidbody2D rb2d;
     public GameManager gameManager;
     public AudioManager audioManager;
-    public HUD hud;
 
     public GameObject normalAttack, criticalAttack;
     public GameObject fireSpell, iceSpell, earthSpell, airSpell;
@@ -75,7 +74,8 @@ public class PlayerActionSystem : MonoBehaviour
         playerAnimator = GetComponent<PlayerAnimator>();
         playerController = GetComponent<PlayerController>();
         rb2d = GetComponent<Rigidbody2D>();
-        hud.Setup(slideCooldown, spell1Cooldown, spell2Cooldown);
+
+        gameManager.SetupHUD(slideCooldown, spell1Cooldown, spell2Cooldown);
     }
 
     public void Setup(Vector2 moveLeftV, Vector2 moveRightV)
@@ -190,8 +190,7 @@ public class PlayerActionSystem : MonoBehaviour
             invulEndTime = Time.timeSinceLevelLoad + slideInvulDuration;
 
             // Update HUD
-            hud.StartInvulDurationAnim(slideInvulDuration);
-            hud.StartSlideCooldownAnim();
+            gameManager.StartSlideAnim(slideInvulDuration);
         }
         else
         {
@@ -205,7 +204,7 @@ public class PlayerActionSystem : MonoBehaviour
     public void EnableSlide()
     {
         isSlideEnabled = true;
-        hud.ShowDashCooldownIndicator();
+        gameManager.ShowDashCooldownIndicator();
     }
 
     public void EnableSpell1(bool isFireSpell)
@@ -219,7 +218,7 @@ public class PlayerActionSystem : MonoBehaviour
 
         this.isFireSpell = isFireSpell;
 
-        hud.ShowSpell1CooldownIndicator();
+        gameManager.ShowSpell1CooldownIndicator();
     }
 
     public void EnableSpell2(bool isEarthSpell)
@@ -233,7 +232,7 @@ public class PlayerActionSystem : MonoBehaviour
 
         this.isEarthSpell = isEarthSpell;
 
-        hud.ShowSpell2CooldownIndicator();
+        gameManager.ShowSpell2CooldownIndicator();
     }
 
     /*** Attacks ***/
@@ -320,7 +319,7 @@ public class PlayerActionSystem : MonoBehaviour
         playerAnimator.PlayCast();
 
         // Update HUD
-        hud.StartSpell1CooldownAnim();
+        gameManager.StartSpell1CooldownAnim();
 
         spell1ReadyTime = Time.timeSinceLevelLoad + spell1Cooldown;
     }
@@ -344,7 +343,7 @@ public class PlayerActionSystem : MonoBehaviour
         playerAnimator.PlayCast();
 
         // Update HUD
-        hud.StartSpell2CooldownAnim();
+        gameManager.StartSpell2CooldownAnim();
 
         spell2ReadyTime = Time.timeSinceLevelLoad + spell2Cooldown;
     }
@@ -417,7 +416,7 @@ public class PlayerActionSystem : MonoBehaviour
                 invulEndTime = Time.timeSinceLevelLoad + tempBuff.invulDuration;
 
                 // Update HUD
-                hud.StartInvulDurationAnim(tempBuff.invulDuration);
+                gameManager.StartInvulDurationAnim(tempBuff.invulDuration);
             }
 
             if (tempBuff.fasterSpeedDuration > 0)

@@ -93,14 +93,25 @@ public class WaveSystem : MonoBehaviour {
 
         // Test Wave 2
         CreateNewWave();
-        AddEnemy(0, 0, 1f);
+        AddEnemy(1, 0, 1f);
         waves.Add(GetNewWave());
 
         // Test Wave 3
         CreateNewWave();
-        AddEnemy(0, 0, 1f);
+        AddEnemy(2, 0, 1f);
         waves.Add(GetNewWave());
 
+        // Test Wave 4
+        CreateNewWave();
+        AddEnemy(3, 0, 1f);
+        waves.Add(GetNewWave());
+
+        // Test Wave 5
+        CreateNewWave();
+        AddEnemy(4, 0, 1f);
+        waves.Add(GetNewWave());
+
+        /*
         // Wave 1
         CreateNewWave();
         AddEnemy(0, 0, 0, 3, 2f);
@@ -220,6 +231,7 @@ public class WaveSystem : MonoBehaviour {
         CreateNewWave();
         AddEnemy(4, 0, 0);
         waves.Add(GetNewWave());
+        */
 
         totalWaves = waves.Count;
     }

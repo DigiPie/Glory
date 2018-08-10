@@ -9,36 +9,43 @@ public class GameManager : MonoBehaviour
     public HUD hud;
     public Overlay overlay;
     public CustomCamController camController;
-    public GameObject enemy1, enemy2, enemy3, enemy4, boss1, player1, objective;
+    public GameObject enemy1, enemy2, enemy3, enemy4, boss1;
+    public GameObject player1;
+    public GameObject objective;
+    private PlayerActionSystem playerAction; // GetComponent from player1
+
     private ObjectiveHealthSystem objectiveHealth;
     private PlayerHealthSystem playerHealth;
     private StateSystem stateSystem;
     private WaveSystem waveSystem;
-    private PlayerActionSystem playerAction;
+
+    // States
+    private bool isWaveCleared = true;
+    private bool isWaveFullySpawned = true;
+    private bool startNextWave = false;
+    private bool isGameOver = false; // Set to true after win/lose and game over screen is displayed.
 
     // Spawning and pathing
     public Transform spawn1, spawn2;
-    private bool isWaveCleared = true;
     private WaveSystem.Spawn spawn;
-    private bool isWaveFullySpawned = true;
-    private bool startNextWave = false;
     private float spawnReadyTime;
+    private bool spawnOnLeft = false;
     private int waveKilled;
     private int waveCount;
     private bool getNewSpawn;
+
+    // For visual
     private readonly int defaultSpawnSortOrder = 20;
     private readonly int maxSpawnSortOrder = 100;
     private readonly int spawnSortOrderIncrement = 3;
     private int spawnSortOrder = 20;
+
+    // Enemy tracking
+    private EnemyHealthSystem bossHealth;
     private List<GameObject> enemies;
     private List<GameObject> deadBodies;
     private int maxBodyCount = 10;
     private bool hasDeadEnemy;
-    private bool spawnOnLeft = false;
-    private EnemyHealthSystem bossHealth;
-
-    // Set to true after win/lose and game over screen is displayed.
-    private bool isGameOver = false;
 
     void Awake()
     {
@@ -161,13 +168,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    GameObject InstantiateGameObject(GameObject gameObject, Transform newTransform)
-    {
-        Vector3 pos = newTransform.position;
-        Quaternion rotation = newTransform.rotation;
-        return Instantiate(gameObject, pos, rotation);
-    }
-
     // Spawn an enemy using the spawn system
     void Spawn()
     {
@@ -223,6 +223,13 @@ public class GameManager : MonoBehaviour
         enemies.Add(enemy);
     }
 
+    GameObject InstantiateGameObject(GameObject gameObject, Transform newTransform)
+    {
+        Vector3 pos = newTransform.position;
+        Quaternion rotation = newTransform.rotation;
+        return Instantiate(gameObject, pos, rotation);
+    }
+
     // Clear dead enemies
     void HandleDead()
     {
@@ -235,9 +242,7 @@ public class GameManager : MonoBehaviour
             {
                 if (enemy == null || enemy.GetComponent<EnemyController>().IsDead())
                 {
-                    //camController.Shake(0.05f, 0.05f);
                     enemies.Remove(enemy);
-
                     deadBodies.Add(enemy);
 
                     if (deadBodies.Count > maxBodyCount)
@@ -273,19 +278,20 @@ public class GameManager : MonoBehaviour
 
             deadBodies.Clear();
 
+            // Reset cooldown for all abilities
             playerAction.ResetAllCooldowns();
             hud.ResetAllCooldownIndicators();
 
+            // Update states
             stateSystem.SetWaveState(StateSystem.WaveState.WaitingWaveSpawn);
             waveSystem.SetNextWave();
             waveCount = waveSystem.GetWaveCount();
             waveKilled = 0;
             getNewSpawn = true;
-            //player1.GetComponent<PlayerController>().AllowAttack(true);
         }
     }
 
-    // Called by spawned enemies to damage the objective
+    // Damage Dealing //
     public void DamageObjective(int damage)
     {
         hud.UpdateObjectiveHealth(objectiveHealth.TakeDamage(damage));
@@ -296,10 +302,9 @@ public class GameManager : MonoBehaviour
         DamageObjective((int)damage);
     }
 
-    // Used by spawned enemies to damage the player
     public void DamagePlayer(int damage)
     {
-        //camController.Shake(0.1f, 0.15f);
+        Shake(0.3f);
         playerHealth.TakeDamage(damage);
         hud.RedFlash();
     }
@@ -309,6 +314,13 @@ public class GameManager : MonoBehaviour
         DamagePlayer((int)damage);
     }
 
+    // Used by DamagePlayer and PlayerActionSystem to shake the camera
+    public void Shake(float addShakeAmount)
+    {
+        camController.Shake(addShakeAmount);
+    }
+
+    // Positions //
     public float GetPlayerPositionX()
     {
         return player1.transform.position.x;
@@ -319,7 +331,7 @@ public class GameManager : MonoBehaviour
         return objective.transform.position.x;
     }
 
-    // Used by the HUD script and displayed by txtInfo under the objective health
+    // HUD //
     public string GetInfo()
     {
         if (stateSystem.IsWaitingNextWave())
@@ -332,12 +344,60 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Used by the HUD script and displayed by txtNextWave which is on the next wave button
     public string GetNextWaveInfo()
     {
         return waveSystem.GetNextWaveInfo();
     }
 
+    public void SetupHUD(float slideCooldown, float spell1Cooldown, float spell2Cooldown)
+    {
+        hud.Setup(slideCooldown, spell1Cooldown, spell2Cooldown);
+    }
+
+    // Called by PlayerActionSystem
+    public void StartSlideAnim(float slideInvulDuration)
+    {
+        hud.StartInvulDurationAnim(slideInvulDuration);
+        hud.StartSlideCooldownAnim();
+    }
+
+    // Called by PlayerActionSystem
+    public void StartInvulDurationAnim(float slideInvulDuration)
+    {
+        hud.StartInvulDurationAnim(slideInvulDuration);
+    }
+
+    // Called by PlayerActionSystem
+    public void ShowDashCooldownIndicator()
+    {
+        hud.ShowDashCooldownIndicator();
+    }
+
+    // Called by PlayerActionSystem
+    public void ShowSpell1CooldownIndicator()
+    {
+        hud.ShowSpell1CooldownIndicator();
+    }
+
+    // Called by PlayerActionSystem
+    public void ShowSpell2CooldownIndicator()
+    {
+        hud.ShowSpell2CooldownIndicator();
+    }
+
+    // Called by PlayerActionSystem
+    public void StartSpell1CooldownAnim()
+    {
+        hud.StartSpell1CooldownAnim();
+    }
+
+    // Called by PlayerActionSystem
+    public void StartSpell2CooldownAnim()
+    {
+        hud.StartSpell2CooldownAnim();
+    }
+
+    // Player Action System //
     public void EnableSlide()
     {
         playerAction.EnableSlide();
@@ -351,11 +411,5 @@ public class GameManager : MonoBehaviour
     public void EnableSpell2(bool isEarthSpell)
     {
         playerAction.EnableSpell2(isEarthSpell);
-    }
-
-    // Used by the PlayerActionSystem to shake the camera
-    public void Shake(float addShakeAmount)
-    {
-        camController.Shake(addShakeAmount);
     }
 }
