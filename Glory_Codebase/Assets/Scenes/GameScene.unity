@@ -5613,8 +5613,8 @@ MonoBehaviour:
   camController: {fileID: 828905235}
   enemy1: {fileID: 1966347777649626, guid: 2023e79a3a0e4ba4e9cd3af8de7fe343, type: 2}
   enemy2: {fileID: 1527357480767754, guid: ec8d55be33c5c1c478b4dad10ef8e039, type: 2}
-  enemy3: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
-  enemy4: {fileID: 1201288676098374, guid: 782b2558f875e854789534c012a448a5, type: 2}
+  enemy3: {fileID: 1201288676098374, guid: 782b2558f875e854789534c012a448a5, type: 2}
+  enemy4: {fileID: 1627935103789886, guid: 29ebc6b98e5c4414cb79b89ad4bc1ec6, type: 2}
   boss1: {fileID: 1827377921368840, guid: 2eebcc02133e055488c5bd1f425b34bd, type: 2}
   player1: {fileID: 1701403904}
   objective: {fileID: 378491261}
@@ -20033,6 +20033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 647856007}
+  audioManager: {fileID: 337224283}
   normalAttack: {fileID: 1869048837186720, guid: 7ff6eb63344fa6949bd23b5931961258,
     type: 2}
   criticalAttack: {fileID: 1244592901111154, guid: 2c3ea7d2e7f339d45830f2117392eeac,
@@ -20041,8 +20042,6 @@ MonoBehaviour:
   iceSpell: {fileID: 1185742128011796, guid: e764a1ab552b13a44ab5d824003c436f, type: 2}
   earthSpell: {fileID: 1988457460587332, guid: 385865e91e9a4a64d8b0bf85e4500798, type: 2}
   airSpell: {fileID: 1489714385191492, guid: 66839bde87102ec4ebfd627fc305b06f, type: 2}
-  audioManager: {fileID: 337224283}
-  hud: {fileID: 1303328454}
   slideCooldown: 2
   slideInvulDuration: 0.75
   slideReady: 1

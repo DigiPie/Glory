@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114652070875060596}
   - component: {fileID: 114643690287629332}
   m_Layer: 10
-  m_Name: E4Djinn
+  m_Name: E3Djinn
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

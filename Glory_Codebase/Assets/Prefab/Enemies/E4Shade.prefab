@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114487707666439500}
   - component: {fileID: 114536968078075136}
   m_Layer: 10
-  m_Name: E3Shade
+  m_Name: E4Shade
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
