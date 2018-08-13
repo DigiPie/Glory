@@ -26,6 +26,8 @@ public class HUD : MonoBehaviour {
     public GameObject spell1SliderObj;
     public GameObject spell2SliderObj;
     public GameObject invulSliderObj;
+    public GameObject indicatorLeft;
+    public GameObject indicatorRight;
     private Slider bossSlider;
     private Slider slideSlider;
     private Slider spell1Slider;
@@ -49,6 +51,8 @@ public class HUD : MonoBehaviour {
         spell1SliderObj.SetActive(false);
         spell2SliderObj.SetActive(false);
         invulSliderObj.SetActive(false);
+        indicatorLeft.SetActive(false);
+        indicatorRight.SetActive(false);
         bossSlider = bossSliderObj.GetComponent<Slider>();
         slideSlider = slideSliderObj.GetComponent<Slider>();
         spell1Slider = spell1SliderObj.GetComponent<Slider>();
@@ -282,5 +286,15 @@ public class HUD : MonoBehaviour {
         this.invulDuration = invulDuration;
         invulSliderObj.SetActive(true);
         invulSlider.value = invulSlider.maxValue;
+    }
+
+    public void ShowIndicatorLeft(bool show)
+    {
+        indicatorLeft.SetActive(show);
+    }
+
+    public void ShowIndicatorRight(bool show)
+    {
+        indicatorRight.SetActive(show);
     }
 }

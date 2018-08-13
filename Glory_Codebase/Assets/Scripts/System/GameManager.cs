@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
     private List<GameObject> deadBodies;
     private int maxBodyCount = 10;
     private bool hasDeadEnemy;
+    private bool hasEnemyOnLeft; // and beyond camera. Used to trigger enemy off-screen indicator
+    private bool hasEnemyOnRight;
 
     void Awake()
     {
@@ -87,7 +89,7 @@ public class GameManager : MonoBehaviour
         else if (stateSystem.IsGameWave())
         {
             HandleWave();
-            HandleDead();
+            HandleEnemies();
         }
     }
 
@@ -236,9 +238,11 @@ public class GameManager : MonoBehaviour
     }
 
     // Clear dead enemies
-    void HandleDead()
+    void HandleEnemies()
     {
         hasDeadEnemy = false;
+        hasEnemyOnLeft = false;
+        hasEnemyOnRight = false;
 
         // Runs at least once, terminates if there is no dead enemies in the list
         do
@@ -263,8 +267,25 @@ public class GameManager : MonoBehaviour
                     waveKilled++;
                     return;
                 }
+                else
+                {
+                    float xDiff = enemy.transform.position.x - player1.transform.position.x;
+
+                    // If alive, check if out of camera bounds
+                    if(xDiff < -10)
+                    {
+                        hasEnemyOnLeft = true;
+                    }
+                    else if (xDiff > 10)
+                    {
+                        hasEnemyOnRight = true;
+                    }
+                }
             }
         } while (hasDeadEnemy);
+
+        hud.ShowIndicatorLeft(hasEnemyOnLeft);
+        hud.ShowIndicatorRight(hasEnemyOnRight);
     }
 
     // Called by the HUD script upon clicking of next wave button or Enter key press
