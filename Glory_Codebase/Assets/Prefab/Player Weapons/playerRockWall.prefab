@@ -105,10 +105,11 @@ MonoBehaviour:
   damageCounterSize: 5
   initialOffset: {x: 0.7, y: -0.2}
   effect: {fileID: 1474442280019286, guid: ae7c8289b4675b74bae516c2148f8223, type: 2}
-  overtimeDamage: 6
-  damageInterval: 1
+  overtimeDamage: 0
+  damageInterval: 0
   duration: 2
   slowMultiplier: 0
+  isAboveHead: 1
 --- !u!212 &212074325291728212
 SpriteRenderer:
   m_ObjectHideFlags: 1

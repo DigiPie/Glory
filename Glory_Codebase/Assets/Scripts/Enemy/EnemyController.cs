@@ -45,6 +45,7 @@ public abstract class EnemyController : MonoBehaviour {
     // Attack
     protected float attackCooldown; // Minimum wait-time before next attack can be triggered
     protected float attackReadyTime = 0; // The time at which attack1Ready will be set to true again
+    private bool isBoss;
 
     // Being attacked
     protected string lastCollider;
@@ -54,6 +55,7 @@ public abstract class EnemyController : MonoBehaviour {
     protected float stunEndTime = 0; // The time at which stunned is set to false again
 
     // Effects
+    public float offsetY; // Offset for effects that are supposed to appear above the enemy's head.
     private GameObject tempEffect;
     private bool isSlowed = false;
     private float maxSpeedWhenSlowed;
@@ -70,6 +72,7 @@ public abstract class EnemyController : MonoBehaviour {
 
         attackCooldown = enemyWeapon.GetComponent<EnemyWeapon>().cooldown;
         attackRange = Random.Range(minAttackRange, maxAttackRange); // Get a unique engagement range
+        isBoss = healthSystem.isBoss; // If boss, shake camera when attacking
 
         // Calculate the bounce-off vectors here instead of FixedUpdate() so we only
         // calculate them once, as they never change. For optimisation.
@@ -227,7 +230,8 @@ public abstract class EnemyController : MonoBehaviour {
             
             if (wepEffect != null && wepEffect.effect != null)
             {
-                SpawnEffect(wepEffect.effect, wepEffect.overtimeDamage, wepEffect.damageInterval, wepEffect.duration);
+                SpawnEffect(wepEffect.effect, wepEffect.isAboveHead, wepEffect.overtimeDamage, 
+                    wepEffect.damageInterval, wepEffect.duration);
 
                 if (wepEffect.slowMultiplier != 0)
                 {
@@ -338,12 +342,24 @@ public abstract class EnemyController : MonoBehaviour {
         {
             projectile.GetComponent<EnemyWeapon>().Setup(new Vector2(1, 0));
         }
+
+        if (isBoss)
+        {
+            gameManager.Shake(0.5f);
+        }
     }
 
-    protected void SpawnEffect(GameObject effect, float overtimeDamage, float damageInterval, float duration)
+    protected void SpawnEffect(GameObject effect, bool isAboveHead, float overtimeDamage, 
+        float damageInterval, float duration)
     {
         Destroy(tempEffect);
         tempEffect = Instantiate(effect, transform);
+
+        if (isAboveHead)
+        {
+            tempEffect.transform.Translate(new Vector2(0, offsetY));
+        }
+
         tempEffect.transform.parent = transform;
         tempEffect.GetComponent<Effect>().Setup(healthSystem, overtimeDamage, damageInterval, duration);
     }

@@ -15,6 +15,7 @@ public class Effect : MonoBehaviour {
     public Color damageCounterColour; // Damage counter colour
     public float damageCounterSize = 3;
     private float blinkDuration = 0.5f; // Blink duration on enemy
+    private bool hasDamageOverTime;
 
     private bool isFadingIn = true;
     private bool isFadingOut = false;
@@ -29,6 +30,8 @@ public class Effect : MonoBehaviour {
         this.enemyHealthSystem = enemyHealthSystem;
         this.damage = damage;
         this.damageInterval = damageInterval;
+
+        hasDamageOverTime = damageInterval > 0;
 
         lifespan = damageDuration;
         Invoke("StartDestroy", lifespan);
@@ -81,7 +84,7 @@ public class Effect : MonoBehaviour {
             rend.color = new Color(1.0f, 1.0f, 1.0f, opacity);
         }
 
-        if (Time.timeSinceLevelLoad > damageReadyTime)
+        if (hasDamageOverTime && Time.timeSinceLevelLoad > damageReadyTime)
         {
             enemyHealthSystem.DeductHealth(damage, blinkDuration);
             damageReadyTime = Time.timeSinceLevelLoad + damageInterval;

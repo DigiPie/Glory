@@ -98,6 +98,11 @@ public class EnemyHealthSystem : MonoBehaviour {
 
     public void SetSortingOrder(int sortingOrder)
     {
+        if (isBoss)
+        {
+            return;
+        }
+
         backRend.sortingOrder = sortingOrder;
         frontRend.sortingOrder = backRend.sortingOrder + 1;
         outlineRend.sortingOrder = frontRend.sortingOrder + 1;

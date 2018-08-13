@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour
 
         enemies = new List<GameObject>();
         deadBodies = new List<GameObject>();
+
+        // Testing
+        EnableSpell1(true);
+        EnableSpell2(true);
     }
 
     // Update is called every frame
@@ -214,6 +218,7 @@ public class GameManager : MonoBehaviour
             bossHealth = enemy.GetComponent<EnemyHealthSystem>();
             bossHealth.Setup(hud);
             hud.ShowBossHealth(bossHealth.GetMaxHealth());
+            Shake(1.0f);
         }
         else
         {

@@ -188,6 +188,7 @@ MonoBehaviour:
   targetsPlayer: 1
   minAttackRange: 5
   maxAttackRange: 6
+  offsetY: 0.9
   hasDeadBody: 1
 --- !u!114 &114282257559810524
 MonoBehaviour:

@@ -9,4 +9,5 @@ public class PlayerWeaponWithEffect : PlayerWeapon
     public float damageInterval;
     public float duration;
     public float slowMultiplier = 0;
+    public bool isAboveHead;
 }
