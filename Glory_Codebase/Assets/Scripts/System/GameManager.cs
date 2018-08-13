@@ -272,11 +272,11 @@ public class GameManager : MonoBehaviour
                     float xDiff = enemy.transform.position.x - player1.transform.position.x;
 
                     // If alive, check if out of camera bounds
-                    if(xDiff < -10)
+                    if(!hasEnemyOnLeft && xDiff < -10)
                     {
                         hasEnemyOnLeft = true;
                     }
-                    else if (xDiff > 10)
+                    else if (!hasEnemyOnRight && xDiff > 10)
                     {
                         hasEnemyOnRight = true;
                     }

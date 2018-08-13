@@ -1990,10 +1990,10 @@ RectTransform:
   m_Father: {fileID: 1596415194}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.028208336, y: 0.55113524}
-  m_AnchorMax: {x: 0.4177292, y: 0.9107468}
-  m_AnchoredPosition: {x: 0.050048828, y: -1.9993896}
-  m_SizeDelta: {x: -0.10004, y: -3.9989}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -330}
+  m_SizeDelta: {x: 747.89996, y: 385.0011}
   m_Pivot: {x: 0.50000006, y: 0.5}
 --- !u!114 &268144718
 MonoBehaviour:
@@ -5155,7 +5155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.88235295}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7529412}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9202,7 +9202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.88235295}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7529412}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -14881,6 +14881,8 @@ MonoBehaviour:
   spell1SliderObj: {fileID: 97082549}
   spell2SliderObj: {fileID: 2087311984}
   invulSliderObj: {fileID: 1725445500}
+  indicatorLeft: {fileID: 966034106}
+  indicatorRight: {fileID: 531129052}
   flashSpeed: 5
 --- !u!1 &1311095389
 GameObject:

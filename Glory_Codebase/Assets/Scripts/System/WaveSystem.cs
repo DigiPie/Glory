@@ -86,6 +86,7 @@ public class WaveSystem : MonoBehaviour {
     void Start () {
         waves = new List<List<Spawn>>();
 
+        /*
         // Test Wave
         CreateNewWave();
         AddEnemy(4, 0, 1f);
@@ -110,8 +111,8 @@ public class WaveSystem : MonoBehaviour {
         CreateNewWave();
         AddEnemy(4, 0, 1f);
         waves.Add(GetNewWave());
-
-        /*
+        */
+        
         // Wave 1
         CreateNewWave();
         AddEnemy(0, 0, 0, 3, 2f);
@@ -231,7 +232,6 @@ public class WaveSystem : MonoBehaviour {
         CreateNewWave();
         AddEnemy(4, 0, 0);
         waves.Add(GetNewWave());
-        */
 
         totalWaves = waves.Count;
     }

@@ -88,6 +88,12 @@ public class PlayerController : MonoBehaviour {
         inputJump = Input.GetButton("Jump");
         inputSlide = Input.GetButton("Slide");
         inputAttack = Input.GetButton("Attack");
+
+        if (Input.GetMouseButton(0) && Input.mousePosition.y < 200)
+        {
+            inputAttack = false;
+        }
+
         inputSpell1 = Input.GetButton("Spell1");
         inputSpell2 = Input.GetButton("Spell2");
 
