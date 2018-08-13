@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         deadBodies = new List<GameObject>();
 
         // Testing
-        EnableSpell1(true);
-        EnableSpell2(true);
+        //EnableSpell1(true);
+        //EnableSpell2(true);
     }
 
     // Update is called every frame
