@@ -16,6 +16,7 @@ public class Overlay : MonoBehaviour {
     public GameObject tutorialUI;
     public GameObject mainMenuUI;
     public GameObject creditsUI;
+    public GameObject helpUI;
 
     // Update is called once per frame
     void Update () {
@@ -125,6 +126,16 @@ public class Overlay : MonoBehaviour {
     {
         creditsUI.SetActive(false);
         Time.timeScale = 0f;
+    }
+
+    public void ShowHelp()
+    {
+        helpUI.SetActive(true);
+    }
+
+    public void HideHelp()
+    {
+        helpUI.SetActive(false);
     }
 
     // Trigger exit to menu

@@ -24,6 +24,21 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void Help()
+    {
+        overlay.ShowHelp();
+    }
+
+    public void Options()
+    {
+        overlay.ShowOptionsUI();
+    }
+
+    public void Credits()
+    {
+        overlay.ShowCredits();
+    }
+
     public void PlaySound(string name)
     {
         FindObjectOfType<AudioManager>().PlaySound(name);
