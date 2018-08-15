@@ -8,7 +8,8 @@ public class Overlay : MonoBehaviour {
     public StateSystem stateSystem;
     public GameObject hudUI;
     public GameObject gameOverUI;
-    public TextMeshProUGUI txtGameOver;
+    public GameObject winScreen;
+    public GameObject loseScreen;
 
     public GameObject OverlayCanvas;
     public GameObject pauseMenuUI;
@@ -111,7 +112,14 @@ public class Overlay : MonoBehaviour {
         optionsUI.SetActive(false);
         gameOverUI.SetActive(true);
         stateSystem.Pause();
-        txtGameOver.text = (isWin) ? "VICTORY!" : "DEFEAT!";
+        if(isWin)
+        {
+            winScreen.SetActive(true);
+        }
+        else
+        {
+            loseScreen.SetActive(true);
+        }
     }
 
     public void ShowCredits()
