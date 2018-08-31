@@ -112,6 +112,7 @@ public class Overlay : MonoBehaviour {
         optionsUI.SetActive(false);
         gameOverUI.SetActive(true);
         stateSystem.Pause();
+
         if(isWin)
         {
             winScreen.SetActive(true);
