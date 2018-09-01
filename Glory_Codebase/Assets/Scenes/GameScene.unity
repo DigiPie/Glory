@@ -2867,20 +2867,20 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
-    m_FontSize: 30
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 30
+    m_MinSize: 3
+    m_MaxSize: 32
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You are Yi-Shun, the last remaining swordsman of our great city. Only you
-    can save us from the undead army of Ma Ti. I am Kay Po, a helpful magical piece
-    of paper.
+  m_Text: 'Hi I''m Kay Po, your friendly neighbourhood magical piece of paper! You
+    are Yi-Shun, the last remaining swordsman of our great city. Only you can save
+    us from the undead army of Ma Ti.
 
 
     Press the buttons or ENTER and BACKSPACE to navigate me.'
@@ -4534,10 +4534,10 @@ RectTransform:
   m_Father: {fileID: 1955337849}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: 5.4449997, y: -147.90001}
-  m_SizeDelta: {x: -10.89, y: -183.5}
+  m_AnchoredPosition: {x: 103.800026, y: -160.10002}
+  m_SizeDelta: {x: -207.6, y: -159.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &457099520
 MonoBehaviour:
@@ -4562,8 +4562,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
+    m_BestFit: 1
+    m_MinSize: 20
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -5688,9 +5688,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 35
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 20
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -6049,8 +6049,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: 51.828, y: -113}
-  m_SizeDelta: {x: 103.65643, y: -100.42583}
+  m_AnchoredPosition: {x: 51.828, y: -128}
+  m_SizeDelta: {x: 103.7, y: -70.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &585378750
 MonoBehaviour:
@@ -7933,8 +7933,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: 0, y: -134.1}
-  m_SizeDelta: {x: -0, y: -151.4}
+  m_AnchoredPosition: {x: 0, y: -145.5}
+  m_SizeDelta: {x: 0, y: -128.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &815353281
 MonoBehaviour:
@@ -7959,8 +7959,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
+    m_BestFit: 1
+    m_MinSize: 20
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -10991,8 +10991,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: 56.668, y: -126}
-  m_SizeDelta: {x: 113.3363, y: -94.808105}
+  m_AnchoredPosition: {x: 56.668, y: -160.7}
+  m_SizeDelta: {x: 113.3, y: -25.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1054936087
 MonoBehaviour:
@@ -11017,8 +11017,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
+    m_BestFit: 1
+    m_MinSize: 20
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -11508,8 +11508,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: -0.000015258789, y: -87.05301}
-  m_SizeDelta: {x: -135.60535, y: -174.10608}
+  m_AnchoredPosition: {x: 0.000015258789, y: -109.899994}
+  m_SizeDelta: {x: -135.6, y: -128.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163728889
 MonoBehaviour:
@@ -11534,8 +11534,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
+    m_BestFit: 1
+    m_MinSize: 20
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -11795,7 +11795,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.16183333, y: 0.16310385}
   m_AnchorMax: {x: 0.8383959, y: 0.3937013}
-  m_AnchoredPosition: {x: 0.000061035156, y: -40.08777}
+  m_AnchoredPosition: {x: 0.000061035156, y: -40.08783}
   m_SizeDelta: {x: 0, y: -154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189415328
@@ -15842,11 +15842,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
-    m_FontSize: 30
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 30
+    m_MinSize: 3
+    m_MaxSize: 32
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -15854,10 +15854,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'That''s all for now. One final note: Monsters will come from the left and
-    right so stick close to the gate house.
+    right so stick close to the gatehouse.
 
 
-    Oh ya, do press ENTER or the Next Wave Button to start each wave. Good luck!'
+    Oh yes, do press ENTER or the Next Wave Button to start each wave. Good luck!'
 --- !u!222 &1287050632
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19215,19 +19215,19 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
-    m_FontSize: 30
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 30
+    m_MinSize: 3
+    m_MaxSize: 32
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Our undeground city is only accessible by the gate house. You must ensure
-    that the door does not get destroyed while remaining alive.
+  m_Text: 'Our undeground city is only accessible by the gate house. Please defend
+    the gatehouse while staying alive! You are our last hope....
 
 
     The yellow bar above indicates the door''s structural integrity. The green bar
@@ -22007,10 +22007,10 @@ RectTransform:
   m_Father: {fileID: 1955337849}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: -221.33, y: -147.9}
-  m_SizeDelta: {x: -10.890015, y: -183.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -113, y: -164.6}
+  m_SizeDelta: {x: -228.2, y: -168.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762191875
 MonoBehaviour:
@@ -22035,8 +22035,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
+    m_BestFit: 1
+    m_MinSize: 20
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -24339,8 +24339,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9635481}
-  m_AnchoredPosition: {x: 90, y: -158}
-  m_SizeDelta: {x: 0, y: -89.2}
+  m_AnchoredPosition: {x: 94, y: -176}
+  m_SizeDelta: {x: 0, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1953791963
 MonoBehaviour:
@@ -24365,8 +24365,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 99c685933aec84bddaefa87367b68483, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
+    m_BestFit: 1
+    m_MinSize: 20
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
