@@ -60,10 +60,6 @@ public class GameManager : MonoBehaviour
 
         enemies = new List<GameObject>();
         deadBodies = new List<GameObject>();
-
-        // Testing
-        //EnableSpell1(true);
-        //EnableSpell2(true);
     }
 
     // Update is called every frame
