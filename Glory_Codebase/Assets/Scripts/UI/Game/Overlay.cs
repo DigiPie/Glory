@@ -36,7 +36,7 @@ public class Overlay : MonoBehaviour {
             else if (stateSystem.IsMenuOptions())
             {
                 // Hide options menu, show main pause menu
-                ShowPauseUI();
+                HideOptionsUI();
             }
         }
     }
@@ -51,7 +51,6 @@ public class Overlay : MonoBehaviour {
         stateSystem.SetMenuState(StateSystem.MenuState.Hidden);
 
         pauseMenuUI.SetActive(false);
-        optionsUI.SetActive(false);
 
         hudUI.SetActive(true);
     }
@@ -83,19 +82,19 @@ public class Overlay : MonoBehaviour {
     {
         // Update state
         stateSystem.SetMenuState(StateSystem.MenuState.Options);
-        if (stateSystem.IsGameMenu())
+
+        pauseMenuUI.SetActive(false);
+        optionsUI.SetActive(true);
+    }
+
+    public void HideOptionsUI()
+    {
+        if(!stateSystem.IsGameMenu())
         {
-            pauseMenuUI.SetActive(false);
-            OverlayCanvas.SetActive(true);
-            optionsUI.SetActive(true);
+            pauseMenuUI.SetActive(true);
+            stateSystem.SetMenuState(StateSystem.MenuState.Main);
         }
-        else {
-            hudUI.SetActive(false);
-            pauseMenuUI.SetActive(false);
-            OverlayCanvas.SetActive(true);
-            optionsUI.SetActive(true);
-            stateSystem.SetMenuState(StateSystem.MenuState.Hidden);
-        }
+        optionsUI.SetActive(false);
     }
 
     public void ShowTutorialUI()
