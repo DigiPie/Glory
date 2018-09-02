@@ -94,6 +94,7 @@ public class Overlay : MonoBehaviour {
             pauseMenuUI.SetActive(false);
             OverlayCanvas.SetActive(true);
             optionsUI.SetActive(true);
+            stateSystem.SetMenuState(StateSystem.MenuState.Hidden);
         }
     }
 
