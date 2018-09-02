@@ -57,6 +57,30 @@ public class TutorialUI : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (stateSystem.IsFirstSpell2())
+        {
+            if (Input.GetAxis("LeftTrigger") > 0)
+            {
+                SelectSpell1(false);
+            }
+            else if (Input.GetAxis("RightTrigger") > 0)
+            {
+                SelectSpell1(true);
+            }
+        }
+        else if (stateSystem.IsSecondSpell2())
+        {
+            if (Input.GetAxis("LeftTrigger") > 0)
+            {
+                SelectSpell2(false);
+            }
+            else if (Input.GetAxis("RightTrigger") > 0)
+            {
+                SelectSpell2(true);
+            }
+        }
+
+
         if (Input.GetButtonDown("Previous"))
         {
             PrevState();
@@ -67,6 +91,7 @@ public class TutorialUI : MonoBehaviour
             {
                 return;
             }
+
             NextState();
         }
     }
@@ -152,7 +177,6 @@ public class TutorialUI : MonoBehaviour
             FirstSpell3.SetActive(true);
             stateSystem.SetTutorialState(StateSystem.TutorialState.FirstSpell3);
         }
-
         else if (stateSystem.IsFirstSpell3())
         {
             FirstSpell3.SetActive(false);
