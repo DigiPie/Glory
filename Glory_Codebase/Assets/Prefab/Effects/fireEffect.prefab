@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7aa81eae1286341bbdb34015c863a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  font: {fileID: 11400000, guid: f76ef802b8b940c46a31f9027f2b0158, type: 2}
   damageCounterColour: {r: 1, g: 0, b: 0, a: 0}
   damageCounterSize: 4
 --- !u!212 &212722084903459334

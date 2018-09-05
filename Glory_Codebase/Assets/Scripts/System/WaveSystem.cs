@@ -218,7 +218,7 @@ public class WaveSystem : MonoBehaviour {
         CreateNewWave();
         AddEnemy(0, 0, 0, 4, 1f);
         AddEnemy(0, 1, 4f, 4, 1f);
-        AddEnemy(0, 0, 2f, 6, 0.8f);
+        AddEnemy(0, 0, 2f, 4, 0.8f);
         waves.Add(GetNewWave());
 
         // Wave 3
@@ -226,17 +226,15 @@ public class WaveSystem : MonoBehaviour {
         AddEnemy(1, 0, 0);
         AddEnemy(0, 1, 5f, 4, 1f);
         AddEnemy(1, 1, 5f, 2, 2f);
-        AddEnemy(0, 1, 2f, 8, 0.8f);
+        AddEnemy(0, 1, 2f, 6, 0.8f);
         waves.Add(GetNewWave());
 
         // Wave 4
         CreateNewWave();
         AddEnemy(1, 0, 0);
         AddEnemy(1, 1, 0);
-        AddEnemy(0, 1, 5f, 8, 0.8f);
-        AddEnemy(0, 0, 2f, 8, 0.8f);
-        AddEnemy(1, 0, 2f);
-        AddEnemy(1, 1, 0);
+        AddEnemy(0, 1, 4f, 4, 0.8f);
+        AddEnemy(0, 0, 2f, 4, 0.8f);
         AddEnemy(1, 0, 2f);
         AddEnemy(1, 1, 0);
         waves.Add(GetNewWave());
@@ -244,62 +242,46 @@ public class WaveSystem : MonoBehaviour {
         // Wave 5
         CreateNewWave();
         AddEnemy(2, 0, 0);
-        AddEnemy(2, 1, 6f, 2, 2.5f);
-        AddEnemy(0, 1, 4f, 8, 0.8f);
+        AddEnemy(2, 1, 6f);
+        AddEnemy(0, 1, 4f, 4, 0.8f);
         AddEnemy(2, 0, 4f, 2, 1.5f);
-        AddEnemy(0, 0, 2f, 10, 0.6f);
+        AddEnemy(0, 0, 2f, 6, 0.6f);
         waves.Add(GetNewWave());
 
         // Wave 6
         CreateNewWave();
-        AddEnemy(2, 0, 0, 3, 2.5f);
-        AddEnemy(0, 1, 4f, 8, 0.8f);
+        AddEnemy(2, 0, 0, 2, 2.5f);
+        AddEnemy(0, 1, 4f, 6, 0.8f);
         AddEnemy(1, 0, 2f, 4, 1.5f);
-        AddEnemy(0, 0, 2f, 10, 0.6f);
-        AddEnemy(2, 0, 4f, 3, 2.5f);
+        AddEnemy(2, 0, 4f, 2, 2.5f);
         waves.Add(GetNewWave());
 
         // Wave 7
         CreateNewWave();
-        AddEnemy(3, 1, 0, 2, 4f);
-        AddEnemy(3, 0, 8f, 3, 2f);
-        AddEnemy(0, 1, 2f, 8, 0.6f);
-        AddEnemy(0, 0, 2f, 8, 0.6f);
+        AddEnemy(3, 1, 0);
+        AddEnemy(3, 0, 8f);
+        AddEnemy(0, 1, 2f, 4, 0.6f);
+        AddEnemy(0, 0, 2f, 4, 0.6f);
         AddEnemy(1, 0, 6f, 4, 1.3f);
-        AddEnemy(2, 1, 2f, 4, 1.3f);
-        AddEnemy(0, 1, 2f, 8, 0.6f);
-        AddEnemy(0, 0, 2f, 8, 0.6f);
+        AddEnemy(3, 1, 2f, 2, 2f);
         waves.Add(GetNewWave());
 
         // Wave 8
         CreateNewWave();
-        AddEnemy(2, 1, 0, 4, 2f);
-        AddEnemy(3, 0, 0, 4, 2f);
-        AddEnemy(0, 1, 2f, 8, 0.6f);
-        AddEnemy(0, 0, 2f, 8, 0.6f);
+        AddEnemy(2, 1, 0, 2, 2f);
+        AddEnemy(0, 1, 2f, 4, 0.6f);
         AddEnemy(1, 0, 6f, 4, 1.3f);
-        AddEnemy(1, 0, 2f, 4, 1.3f);
-        AddEnemy(0, 1, 2f, 8, 0.6f);
-        AddEnemy(0, 0, 2f, 8, 0.6f);
+        AddEnemy(3, 0, 0, 2, 2f);
+        AddEnemy(0, 1, 2f, 6, 0.6f);
+        AddEnemy(3, 1, 4f, 2, 2f);
         waves.Add(GetNewWave());
 
         // Wave 9
         CreateNewWave();
-        AddEnemy(1, 1, 0f, 4, 1f);
-        AddEnemy(1, 0, 6f, 2, 1.3f);
-        AddEnemy(2, 1, 10f, 2, 1.8f);
-        AddEnemy(2, 0, 4f, 2, 1.8f);
-        AddEnemy(0, 1, 10f, 2, 0.6f);
-        AddEnemy(0, 0, 0.6f, 2, 0.6f);
-        AddEnemy(0, 1, 0.6f, 2, 0.6f);
-        AddEnemy(0, 0, 0.6f, 2, 0.6f);
-        AddEnemy(3, 1, 14f, 2, 1.8f);
-        AddEnemy(3, 0, 8f, 2, 1.8f);
-        AddEnemy(4, 0, 8f);
-        AddEnemy(0, 1, 14f, 6, 0.6f);
-        AddEnemy(0, 0, 12f, 6, 0.6f);
+        AddEnemy(4, 0, 2f);
+        AddEnemy(0, 1, 10f, 4, 0.6f);
+        AddEnemy(0, 0, 10f, 6, 0.6f);
         AddEnemy(0, 1, 10f, 8, 0.6f);
-        AddEnemy(0, 0, 8f, 8, 0.6f);
         waves.Add(GetNewWave());
 
         totalWaves = waves.Count;

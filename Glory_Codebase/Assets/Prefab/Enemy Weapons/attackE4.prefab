@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56d52db8d1598b4a995cc69239bbb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 1.2
+  cooldown: 1.4
   damage: 8
   lifespan: 0.14
   speed: 0.1

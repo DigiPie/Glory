@@ -12,6 +12,7 @@ public class Effect : MonoBehaviour {
     private float damage;
     private float damageInterval;
     private float damageReadyTime;
+    public TMP_FontAsset font;
     public Color damageCounterColour; // Damage counter colour
     public float damageCounterSize = 3;
     private float blinkDuration = 0.5f; // Blink duration on enemy
@@ -108,7 +109,7 @@ public class Effect : MonoBehaviour {
         textMeshPro.alignment = TextAlignmentOptions.Bottom;
         textMeshPro.fontSize = damageCounterSize;
         textMeshPro.enableKerning = false;
-
+        textMeshPro.font = font;
         textMeshPro.color = damageCounterColour;
         textMeshPro.text = damage.ToString();
 
