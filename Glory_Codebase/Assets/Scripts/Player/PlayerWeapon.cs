@@ -13,6 +13,7 @@ public class PlayerWeapon : MonoBehaviour {
     private float blinkDuration = 1.0f; // Blink duration on enemy
     public float lifespan = 0.2f; // Lifespan of melee projectile
     public float speed = 0.05f; // Speed of melee projectile
+    public TMP_FontAsset font;
     public Color damageCounterColour; // Damage counter colour
     public float damageCounterSize = 3;
     public Vector2 initialOffset;
@@ -129,6 +130,7 @@ public class PlayerWeapon : MonoBehaviour {
         textMeshPro.rectTransform.pivot = new Vector2(0.5f, 0);
 
         textMeshPro.alignment = TextAlignmentOptions.Bottom;
+        textMeshPro.font = font;
         textMeshPro.fontSize = damageCounterSize;
         textMeshPro.enableKerning = false;
 

@@ -6366,9 +6366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0304e25000778734db3a5693b4b00f07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashUnlockWave: 3
-  spell1UnlockWave: 6
-  spell2UnlockWave: 9
+  dashUnlockWave: 2
+  spell1UnlockWave: 4
+  spell2UnlockWave: 6
 --- !u!114 &647856009
 MonoBehaviour:
   m_ObjectHideFlags: 0

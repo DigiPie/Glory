@@ -101,7 +101,8 @@ MonoBehaviour:
   stunDuration: 0
   lifespan: 1
   speed: 0.2
-  damageCounterColour: {r: 1, g: 0, b: 0, a: 0}
+  font: {fileID: 11400000, guid: f76ef802b8b940c46a31f9027f2b0158, type: 2}
+  damageCounterColour: {r: 1, g: 0, b: 0, a: 1}
   damageCounterSize: 6
   initialOffset: {x: 0.7, y: 0}
   effect: {fileID: 1086838553737868, guid: a68c9028bacbfab4dbf651e0a08ed173, type: 2}
@@ -109,6 +110,7 @@ MonoBehaviour:
   damageInterval: 1
   duration: 4
   slowMultiplier: 0
+  isAboveHead: 0
 --- !u!212 &212349417817121472
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -79,9 +79,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 2
-  damage: 10
+  damage: 12
   lifespan: 0.1
   speed: 0.1
+  initialOffset: {x: 0, y: 0}
 --- !u!212 &212202889397029226
 SpriteRenderer:
   m_ObjectHideFlags: 1

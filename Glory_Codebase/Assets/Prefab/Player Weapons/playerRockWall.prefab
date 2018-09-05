@@ -101,7 +101,8 @@ MonoBehaviour:
   stunDuration: 2
   lifespan: 1
   speed: 0.2
-  damageCounterColour: {r: 0.7176471, g: 0.38431373, b: 0, a: 0}
+  font: {fileID: 11400000, guid: f76ef802b8b940c46a31f9027f2b0158, type: 2}
+  damageCounterColour: {r: 0.7176471, g: 0.38431373, b: 0, a: 1}
   damageCounterSize: 5
   initialOffset: {x: 0.7, y: -0.2}
   effect: {fileID: 1474442280019286, guid: ae7c8289b4675b74bae516c2148f8223, type: 2}

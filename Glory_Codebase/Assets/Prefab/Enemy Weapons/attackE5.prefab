@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 2
-  damage: 14
+  damage: 18
   lifespan: 0.8
   speed: 0.17
   initialOffset: {x: 0, y: -0.25}
